@@ -1,4 +1,4 @@
-name: Release & Update Latest Tag
+name: Release & Update Latest Tags
 
 on:
   push:
@@ -15,60 +15,66 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Find updated hex file
+      - name: Find updated hex files
         id: hexinfo
         run: |
-          FILE=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^hex/.*\.hex$' | head -n 1)
-          echo "Found file: $FILE"
+          mkdir hexinfo_outputs
+          FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | grep '^hex/.*\.hex$')
 
-          if [[ "$FILE" == hex/QuadLeg_b91_f* ]]; then
-            TYPE=QuadLeg
-          elif [[ "$FILE" == hex/PDU_b40_f* ]]; then
-            TYPE=PDU
-          else
-            echo "Unrecognized hex file format"
-            exit 1
-          fi
+          for FILE in $FILES; do
+            echo "Found file: $FILE"
 
-          F_VER=$(echo "$FILE" | grep -oP 'f\K[0-9]+')
-          MAJOR=0
-          MINOR=$((F_VER / 10))
-          PATCH=$((F_VER % 10))
-          VERSION=v${MAJOR}.${MINOR}.${PATCH}
+            if [[ "$FILE" == hex/QuadLeg_b* ]]; then
+              TYPE=QuadLeg
+            elif [[ "$FILE" == hex/PDU_b* ]]; then
+              TYPE=PDU
+            else
+              echo "Unrecognized hex file format: $FILE"
+              continue
+            fi
 
-          echo "type=$TYPE" >> $GITHUB_OUTPUT
-          echo "version_tag=${TYPE}-${VERSION}" >> $GITHUB_OUTPUT
-          echo "latest_tag=${TYPE}-latest" >> $GITHUB_OUTPUT
-          echo "filename=$(basename $FILE)" >> $GITHUB_OUTPUT
-          echo "filepath=$FILE" >> $GITHUB_OUTPUT
+            F_VER=$(echo "$FILE" | grep -oP 'f\K[0-9]+')
+            MAJOR=0
+            MINOR=$((F_VER / 10))
+            PATCH=$((F_VER % 10))
+            VERSION=v${MAJOR}.${MINOR}.${PATCH}
 
-      - name: Create version tag
+            echo "type=$TYPE" >> hexinfo_outputs/${TYPE}.env
+            echo "version_tag=${TYPE}-${VERSION}" >> hexinfo_outputs/${TYPE}.env
+            echo "latest_tag=${TYPE}-latest" >> hexinfo_outputs/${TYPE}.env
+            echo "filename=$(basename $FILE)" >> hexinfo_outputs/${TYPE}.env
+            echo "filepath=$FILE" >> hexinfo_outputs/${TYPE}.env
+          done
+
+      - name: Process and tag each hex
         run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-          git tag ${{ steps.hexinfo.outputs.version_tag }} $GITHUB_SHA
-          git push origin ${{ steps.hexinfo.outputs.version_tag }}
+          for ENV_FILE in hexinfo_outputs/*.env; do
+            source $ENV_FILE
 
-      - name: Update latest tag (force)
-        run: |
-          git tag -f ${{ steps.hexinfo.outputs.latest_tag }} $GITHUB_SHA
-          git push -f origin ${{ steps.hexinfo.outputs.latest_tag }}
+            echo "Processing $type ($filename)"
+            git config user.name "github-actions"
+            git config user.email "github-actions@github.com"
 
-      - name: Create tar.gz for latest
-        run: |
-          mkdir -p tmp_release
-          cp ${{ steps.hexinfo.outputs.filepath }} tmp_release/
-          tar -czf ${{ steps.hexinfo.outputs.type }}.tar.gz -C tmp_release $(basename ${{ steps.hexinfo.outputs.filepath }})
+            # Create version tag
+            git tag $version_tag $GITHUB_SHA || true
+            git push origin $version_tag || true
 
-      - name: Upload versioned release (.hex)
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: ${{ steps.hexinfo.outputs.version_tag }}
-          files: ${{ steps.hexinfo.outputs.filepath }}
+            # Update latest tag
+            git tag -f $latest_tag $GITHUB_SHA
+            git push -f origin $latest_tag
 
-      - name: Upload latest release (.tar.gz)
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: ${{ steps.hexinfo.outputs.latest_tag }}
-          files: ${{ steps.hexinfo.outputs.type }}.tar.gz
+            # Create tar.gz for latest
+            mkdir -p tmp_release
+            cp $filepath tmp_release/
+            tar -czf ${type}.tar.gz -C tmp_release $filename
+
+            # Upload versioned release
+            gh release create $version_tag $filepath -t "$version_tag" -n "Auto release for $filename" || true
+
+            # Upload latest release
+            gh release delete $latest_tag -y || true
+            gh release create $latest_tag ${type}.tar.gz -t "$latest_tag" -n "Auto latest release for $filename"
+          done
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
