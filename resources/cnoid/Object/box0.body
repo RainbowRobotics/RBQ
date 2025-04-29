@@ -1,0 +1,27 @@
+format: ChoreonoidBody
+formatVersion: 1.0
+angleUnit: degree
+name: box0
+
+links:
+  -
+    name: WAIST
+    jointType: free
+    translation: [ 3, 0, 0.1 ]
+    rotation: [ 0, 1, 0, 45 ]
+    elements:
+      -
+        type: RigidBody
+        mass: 1.0
+        inertia: [
+          0.01, 0, 0,
+          0, 0.01, 0,
+          0, 0, 0.01 ]
+        elements:
+          Shape:
+            geometry:
+              type: Box
+              size: [ 0.30, 0.20, 0.04 ]
+            appearance:
+              material:
+                diffuseColor: [ 0.0, 1.0, 0.0 ]

@@ -1,0 +1,614 @@
+items: 
+  id: 0
+  name: "Root"
+  plugin: Base
+  class: RootItem
+  children: 
+    - 
+      id: 1
+      name: "World"
+      plugin: Body
+      class: WorldItem
+      data: 
+        collisionDetection: false
+        collisionDetector: AISTCollisionDetector
+        materialTableFile: "${SHARE}/default/materials.yaml"
+      children: 
+        - 
+          id: 2
+          name: "RBQ-10"
+          plugin: Body
+          class: BodyItem
+          data: 
+            modelFile: "${PROJECT_DIR}/RBQ-10.body"
+            currentBaseLink: "WAIST"
+            rootPosition: [ -0.0166711403, -0.00192789462, 0.383979679 ]
+            rootAttitude: [ 
+              0.999997846, 0.00146315116, -0.00147228085, 
+              -0.00146332957, 0.999998922, -0.000120109809, 
+              0.00147210352, 0.000122263982, 0.999998909 ]
+            jointPositions: [ 
+               0.000570,  0.605649, -1.258692, -0.000349,  0.606094, -1.258356, -0.000923,  0.608116, -1.252847,  0.000753, 
+               0.608429, -1.252688,  0.000000,  2.261800, -2.261800,  0.000000,  0.000000,  0.000000,  0.000000  ]
+            initialRootPosition: [ 0, 0, 0.65 ]
+            initialRootAttitude: [ 
+              1, 0, 0, 
+              0, 1, 0, 
+              0, 0, 1 ]
+            initialJointPositions: [ 
+               0.000000,  0.000000,  0.000000,  0.000000,  0.000000,  0.000000,  0.000000,  0.000000,  0.000000,  0.000000, 
+               0.000000,  0.000000,  0.000000,  0.000000, -0.000000,  0.000000,  0.000000,  0.000000,  0.000000 ]
+            zmp: [ 0, 0, 0 ]
+            collisionDetection: true
+            selfCollisionDetection: false
+            isEditable: true
+          children: 
+            - 
+              id: 3
+              name: "RBQController"
+              plugin: Body
+              class: SimpleControllerItem
+              data: 
+                isNoDelayMode: false
+                controllerOptions: ""
+                controller: "RBQController"
+                baseDirectory: "Controller directory"
+                reloading: true
+                isOldTargetVariableMode: false
+            - 
+              id: 4
+              name: "SensorVisualizer"
+              plugin: Body
+              class: SensorVisualizer
+              data: 
+                subItems: 
+                  - 
+                    class: ForceSensorVisualizer
+                    name: ForceSensor
+                    visualRatio: 0.005
+        - 
+          id: 5
+          name: "Floor"
+          plugin: Body
+          class: BodyItem
+          data: 
+            modelFile: "${SHARE}/model/misc/floor.body"
+            currentBaseLink: ""
+            rootPosition: [ 0, 0, -0.1 ]
+            rootAttitude: [ 
+              1, 0, 0, 
+              0, 1, 0, 
+              0, 0, 1 ]
+            jointPositions: [  ]
+            initialRootPosition: [ 0, 0, -0.1 ]
+            initialRootAttitude: [ 
+              1, 0, 0, 
+              0, 1, 0, 
+              0, 0, 1 ]
+            zmp: [ 0, 0, 0 ]
+            collisionDetection: true
+            selfCollisionDetection: false
+            isEditable: false
+        - 
+          id: 6
+          name: "Simulators"
+          plugin: Base
+          class: FolderItem
+          children: 
+            - 
+              id: 7
+              name: "AISTSimulator"
+              plugin: Body
+              class: AISTSimulatorItem
+              data: 
+                timeStep: 0.001
+                realtimeSync: true
+                recording: "full"
+                timeRangeMode: "Active control period"
+                timeLength: 60
+                allLinkPositionOutputMode: false
+                deviceStateOutput: true
+                controllerThreads: true
+                recordCollisionData: false
+                controllerOptions: ""
+                dynamicsMode: "Forward dynamics"
+                integrationMode: "Runge Kutta"
+                gravity: [ 0, 0, -9.80665 ]
+                staticFriction: 0.5
+                dynamicFriction: 0.5
+                cullingThresh: 0.01
+                contactCullingDepth: 0.05
+                errorCriterion: 0.001
+                maxNumIterations: 1000
+                contactCorrectionDepth: 0.0001
+                contactCorrectionVelocityRatio: 30
+                kinematicWalking: false
+                2Dmode: false
+                oldAccelSensorMode: false
+        - 
+          id: 8
+          name: "box0"
+          plugin: Body
+          class: BodyItem
+          data: 
+            modelFile: "${PROJECT_DIR}/box0.body"
+            currentBaseLink: "WAIST"
+            rootPosition: [ 2.9418227, -4.40646249e-06, 0.0199612314 ]
+            rootAttitude: [ 
+              0.999999917, -2.17309808e-05, -0.000408003453, 
+              2.17311102e-05, 1, 3.12819262e-07, 
+              0.000408003446, -3.21685604e-07, 0.999999917 ]
+            jointPositions: [  ]
+            initialRootPosition: [ 3, 0, 0.1 ]
+            initialRootAttitude: [ 
+              0.707106781, 0, 0.707106781, 
+              0, 1, 0, 
+              -0.707106781, 0, 0.707106781 ]
+            zmp: [ 0, 0, 0 ]
+            collisionDetection: true
+            selfCollisionDetection: false
+            isEditable: true
+        - 
+          id: 9
+          name: "box1"
+          plugin: Body
+          class: BodyItem
+          data: 
+            modelFile: "${PROJECT_DIR}/box1.body"
+            currentBaseLink: "WAIST"
+            rootPosition: [ 3, 0.4, 0.0199000043 ]
+            rootAttitude: [ 
+              0.70710678, -0.707106782, -2.2443942e-08, 
+              0.707106782, 0.70710678, -2.8475169e-10, 
+              1.60716134e-08, -1.56689138e-08, 1 ]
+            jointPositions: [  ]
+            initialRootPosition: [ 3, 0.4, 0.2 ]
+            initialRootAttitude: [ 
+              0.707106781, -0.707106781, 0, 
+              0.707106781, 0.707106781, 0, 
+              0, 0, 1 ]
+            zmp: [ 0, 0, 0 ]
+            collisionDetection: true
+            selfCollisionDetection: false
+            isEditable: true
+        - 
+          id: 10
+          name: "box2"
+          plugin: Body
+          class: BodyItem
+          data: 
+            modelFile: "${PROJECT_DIR}/box2.body"
+            currentBaseLink: "WAIST"
+            rootPosition: [ 3.5, 0.2, 0.0199000044 ]
+            rootAttitude: [ 
+              0.342020144, -0.939692621, -2.10941984e-08, 
+              0.939692621, 0.342020144, -9.39141227e-09, 
+              1.60396816e-08, -1.66100104e-08, 1 ]
+            jointPositions: [  ]
+            initialRootPosition: [ 3.5, 0.2, 0.2 ]
+            initialRootAttitude: [ 
+              0.342020143, -0.939692621, 0, 
+              0.939692621, 0.342020143, 0, 
+              0, 0, 1 ]
+            zmp: [ 0, 0, 0 ]
+            collisionDetection: true
+            selfCollisionDetection: false
+            isEditable: true
+        - 
+          id: 11
+          name: "level_plate"
+          plugin: Body
+          class: BodyItem
+          data: 
+            modelFile: "${PROJECT_DIR}/level_plate1.body"
+            currentBaseLink: "First_Stair"
+            rootPosition: [ 1.1, 2.5, 0.04 ]
+            rootAttitude: [ 
+              1, 0, 0, 
+              0, 1, 0, 
+              0, 0, 1 ]
+            jointPositions: [  ]
+            initialRootPosition: [ 1.1, 2.5, 0.04 ]
+            initialRootAttitude: [ 
+              1, 0, 0, 
+              0, 1, 0, 
+              0, 0, 1 ]
+            zmp: [ 0, 0, 0 ]
+            collisionDetection: true
+            selfCollisionDetection: false
+            isEditable: false
+        - 
+          id: 12
+          name: "level_plate"
+          plugin: Body
+          class: BodyItem
+          data: 
+            modelFile: "${PROJECT_DIR}/level_plate2.body"
+            currentBaseLink: "First_Stair"
+            rootPosition: [ -1.1, 2.5, 0.075 ]
+            rootAttitude: [ 
+              1, 0, 0, 
+              0, 1, 0, 
+              0, 0, 1 ]
+            jointPositions: [  ]
+            initialRootPosition: [ -1.1, 2.5, 0.075 ]
+            initialRootAttitude: [ 
+              1, 0, 0, 
+              0, 1, 0, 
+              0, 0, 1 ]
+            zmp: [ 0, 0, 0 ]
+            collisionDetection: true
+            selfCollisionDetection: false
+            isEditable: false
+        - 
+          id: 13
+          name: "tilt_plane"
+          plugin: Body
+          class: BodyItem
+          data: 
+            modelFile: "${PROJECT_DIR}/tilt_plane.body"
+            currentBaseLink: "WAIST"
+            rootPosition: [ 0, 0, 0 ]
+            rootAttitude: [ 
+              1, 0, 0, 
+              0, 1, 0, 
+              0, 0, 1 ]
+            jointPositions: [  ]
+            initialRootPosition: [ 0, 0, 0 ]
+            initialRootAttitude: [ 
+              1, 0, 0, 
+              0, 1, 0, 
+              0, 0, 1 ]
+            zmp: [ 0, 0, 0 ]
+            collisionDetection: true
+            selfCollisionDetection: false
+            isEditable: false
+        - 
+          id: 14
+          name: "stair_6cm"
+          plugin: Body
+          class: BodyItem
+          data: 
+            modelFile: "${PROJECT_DIR}/staircase_w15_h6.body"
+            currentBaseLink: "First_Stair"
+            rootPosition: [ -2, -3, 0.01 ]
+            rootAttitude: [ 
+              -1, -1.2246468e-16, 0, 
+              1.2246468e-16, -1, 0, 
+              0, 0, 1 ]
+            jointPositions: [  ]
+            initialRootPosition: [ -2, -3, 0.01 ]
+            initialRootAttitude: [ 
+              -1, -1.2246468e-16, 0, 
+              1.2246468e-16, -1, 0, 
+              0, 0, 1 ]
+            zmp: [ 0, 0, 0 ]
+            collisionDetection: true
+            selfCollisionDetection: false
+            isEditable: false
+        - 
+          id: 15
+          name: "block"
+          plugin: Body
+          class: BodyItem
+          data: 
+            modelFile: "${PROJECT_DIR}/block.body"
+            currentBaseLink: "WAIST"
+            rootPosition: [ 1.25000121, -1.23813586e-06, 0.0499182694 ]
+            rootAttitude: [ 
+              1, -3.06233031e-07, -7.10620977e-06, 
+              3.06037707e-07, 1, -2.74862402e-05, 
+              7.10621819e-06, 2.7486238e-05, 1 ]
+            jointPositions: [  ]
+            initialRootPosition: [ 1.25, 0, 0.05 ]
+            initialRootAttitude: [ 
+              1, 0, 0, 
+              0, 1, 0, 
+              0, 0, 1 ]
+            zmp: [ 0, 0, 0 ]
+            collisionDetection: true
+            selfCollisionDetection: false
+            isEditable: true
+views: 
+  - 
+    id: 0
+    plugin: Base
+    class: ItemPropertyView
+    mounted: true
+  - 
+    id: 1
+    plugin: Base
+    class: ItemTreeView
+    mounted: true
+    state: 
+      selected: [ 7 ]
+      checked: [ 1, 2, [ 4, "ForceSensor" ], 8, 9, 10, 11, 12, 13, 14, 15 ]
+      expanded: [ 1, 2, 3, 4, 6, 7, 8, 9, 10, 15 ]
+  - 
+    id: 2
+    plugin: Base
+    class: MessageView
+    mounted: true
+  - 
+    id: 3
+    plugin: Base
+    class: SceneView
+    mounted: true
+    state: 
+      editMode: true
+      viewpointControlMode: thirdPerson
+      collisionLines: false
+      polygonMode: fill
+      cullingMode: enabled
+      defaultHeadLight: true
+      defaultHeadLightIntensity: 0.75
+      headLightLightingFromBack: false
+      worldLight: true
+      worldLightIntensity: 0.5
+      worldLightAmbient: 0.3
+      additionalLights: true
+      fog: true
+      floorGrid: true
+      floorGridSpan: 10
+      floorGridInterval: 0.5
+      xzGridSpan: 10
+      xzGridInterval: 0.5
+      xzGrid: false
+      yzGridSpan: 10
+      yzGridInterval: 0.5
+      texture: true
+      lineWidth: 1
+      pointSize: 1
+      normalVisualization: false
+      normalLength: 0.01
+      coordinateAxes: true
+      fpsTestIteration: 1
+      showFPS: false
+      enableNewDisplayListDoubleRendering: false
+      useBufferForPicking: true
+      upsideDown: false
+      cameras: 
+        - 
+          camera: [ System, Perspective ]
+          isCurrent: true
+          fieldOfView: 0.6978
+          near: 0.01
+          far: 10000
+          eye: [ 3.77766321, 13.690392, 10.9342007 ]
+          direction: [ -0.293060256, -0.776747973, -0.557474908 ]
+          up: [ -0.196789884, -0.521586057, 0.830193789 ]
+        - 
+          camera: [ System, Orthographic ]
+          orthoHeight: 20
+          near: 0.01
+          far: 10000
+      backgroundColor: [ 0.100000001, 0.100000001, 0.300000012 ]
+      gridColor: [ 0.899999976, 0.899999976, 0.899999976, 1 ]
+      xzgridColor: [ 0.899999976, 0.899999976, 0.899999976, 1 ]
+      yzgridColor: [ 0.899999976, 0.899999976, 0.899999976, 1 ]
+      dedicatedItemTreeViewChecks: false
+  - 
+    id: 4
+    plugin: Body
+    class: BodyLinkView
+    mounted: true
+    state: 
+      showRotationMatrix: true
+  - 
+    id: 5
+    name: "Body State"
+    plugin: Body
+    class: BodyStateView
+    mounted: true
+  - 
+    id: 6
+    plugin: Body
+    class: JointSliderView
+    mounted: true
+    state: 
+      showAllJoints: true
+      jointId: false
+      name: true
+      numColumns: 1
+      spinBox: true
+      slider: true
+      dial: true
+      labelOnLeft: true
+      currentBodyItem: 2
+  - 
+    id: 7
+    name: "Joint State"
+    plugin: Body
+    class: JointStateView
+    mounted: true
+  - 
+    id: 8
+    plugin: Body
+    class: LinkSelectionView
+    mounted: true
+    state: 
+      listingMode: "Link List"
+      currentBodyItem: 2
+  - 
+    id: 9
+    plugin: Python
+    class: PythonConsoleView
+    mounted: true
+toolbars: 
+  "TimeBar": 
+    minTime: 0
+    maxTime: 2231.81
+    frameRate: 1000
+    playbackFrameRate: 60
+    idleLoopDrivenMode: false
+    currentTime: 3.991
+    speedScale: 1
+    syncToOngoingUpdates: true
+    autoExpansion: true
+  "KinematicsBar": 
+    mode: AUTO
+    enablePositionDragger: true
+    penetrationBlock: false
+    collisionLinkHighlight: false
+    snapDistance: 0.025
+    penetrationBlockDepth: 0.0005
+    lazyCollisionDetectionMode: true
+  "BodyBar": 
+    current: 2
+  "LeggedBodyBar": 
+    stanceWidth: 0.15
+  "BodyMotionGenerationBar": 
+    autoGenerationForNewBody: true
+    balancer: false
+    autoGeneration: false
+    timeScaleRatio: 1
+    preInitialDuration: 1
+    postFinalDuration: 1
+    onlyTimeBarRange: false
+    makeNewBodyItem: true
+    stealthyStepMode: true
+    stealthyHeightRatioThresh: 2
+    flatLiftingHeight: 0.005
+    flatLandingHeight: 0.005
+    impactReductionHeight: 0.005
+    impactReductionTime: 0.04
+    autoZmp: true
+    minZmpTransitionTime: 0.1
+    zmpCenteringTimeThresh: 0.03
+    zmpTimeMarginBeforeLiftingSpin: 0
+    zmpMaxDistanceFromCenter: 0.02
+    allLinkPositions: false
+    lipSyncMix: false
+    timeToStartBalancer: 0
+    balancerIterations: 2
+    plainBalancerMode: false
+    boundaryConditionType: position
+    boundarySmootherType: quintic
+    boundarySmootherTime: 0.5
+    boundaryCmAdjustment: false
+    boundaryCmAdjustmentTime: 1
+    waistHeightRelaxation: false
+    gravity: 9.8
+    dynamicsTimeRatio: 1
+Body: 
+  "BodyMotionEngine": 
+    updateJointVelocities: false
+  "EditableSceneBody": 
+    editableSceneBodies: 
+      - 
+        bodyItem: 2
+        showCenterOfMass: false
+        showPpcom: false
+        showZmp: false
+      - 
+        bodyItem: 8
+        showCenterOfMass: false
+        showPpcom: false
+        showZmp: false
+      - 
+        bodyItem: 9
+        showCenterOfMass: false
+        showPpcom: false
+        showZmp: false
+      - 
+        bodyItem: 10
+        showCenterOfMass: false
+        showPpcom: false
+        showZmp: false
+      - 
+        bodyItem: 11
+        showCenterOfMass: false
+        showPpcom: false
+        showZmp: false
+      - 
+        bodyItem: 12
+        showCenterOfMass: false
+        showPpcom: false
+        showZmp: false
+      - 
+        bodyItem: 13
+        showCenterOfMass: false
+        showPpcom: false
+        showZmp: false
+      - 
+        bodyItem: 14
+        showCenterOfMass: false
+        showPpcom: false
+        showZmp: false
+      - 
+        bodyItem: 15
+        showCenterOfMass: false
+        showPpcom: false
+        showZmp: false
+    staticModelEditing: true
+  "KinematicFaultChecker": 
+    checkJointPositions: true
+    angleMargin: 0
+    translationMargin: 0
+    checkJointVelocities: true
+    velocityLimitRatio: 100
+    targetJoints: all
+    checkSelfCollisions: true
+    onlyTimeBarRange: false
+  "SplineFilterDialog": 
+    isInputFrameRateSpecified: false
+    inputFrameRate: 200
+    isOutputFrameRateSpecified: false
+    outputFrameRate: 200
+viewAreas: 
+  - 
+    type: embedded
+    tabs: true
+    contents: 
+      type: splitter
+      orientation: horizontal
+      sizes: [ 323, 1521 ]
+      children: 
+        - 
+          type: splitter
+          orientation: vertical
+          sizes: [ 554, 348 ]
+          children: 
+            - 
+              type: pane
+              views: [ 1 ]
+              current: 1
+            - 
+              type: pane
+              views: [ 0, 8 ]
+              current: 0
+        - 
+          type: splitter
+          orientation: vertical
+          sizes: [ 758, 144 ]
+          children: 
+            - 
+              type: splitter
+              orientation: horizontal
+              sizes: [ 0, 1517 ]
+              children: 
+                - 
+                  type: pane
+                  views: [ 4, 6, 7 ]
+                  current: 4
+                - 
+                  type: pane
+                  views: [ 3 ]
+                  current: 3
+            - 
+              type: pane
+              views: [ 2, 9, 5 ]
+              current: 2
+layoutOfToolBars: 
+  rows: 
+    - 
+      - { name: "FileBar", x: 0, priority: 0 }
+      - { name: "ScriptBar", x: 49, priority: 0 }
+      - { name: "TimeBar", x: 98, priority: 0 }
+      - { name: "SceneBar", x: 1103, priority: 0 }
+      - { name: "GraphBar", x: 1378, priority: 0 }
+    - 
+      - { name: "SimulationBar", x: 0, priority: 0 }
+      - { name: "BodyBar", x: 209, priority: 0 }
+      - { name: "KinematicsBar", x: 485, priority: 0 }
+      - { name: "BodyMotionGenerationBar", x: 733, priority: 0 }

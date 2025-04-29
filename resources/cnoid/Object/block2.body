@@ -1,0 +1,40 @@
+format: ChoreonoidBody
+formatVersion: 1.0
+angleUnit: degree
+name: block
+
+links:
+  -
+    name: Block
+    jointType: free
+    translation: [ 1.25, 0, 0.05 ]
+    rotation: [ 0, 0, 1, 0 ]
+    elements: &StairShape
+      -
+        type: RigidBody
+        mass: 50.0
+        inertia: [
+          0.1, 0, 0,
+          0, 0.1, 0,
+          0, 0, 0.1 ]
+        elements:
+          Shape:
+            geometry:
+              type: Box
+              size: [ 0.5, 1.2, 0.10 ]
+            appearance:
+              material:
+                diffuseColor: [ 1.0, 1.0, 0.0 ]
+                
+  -
+    name: Block2
+    parent: Block
+    jointType: fixed
+    translation: [ 0.20, 0, 0.10]
+    centerOfMass: [ -0.00, 0, 0.0 ]
+    mass: 1.0
+    inertia: [
+      0.070908096, 0.001976068, 0.009267259,
+      0.001976068, 0.476924345, -0.000149917,
+      0.009267259, -0.000149917, 0.485757972 ]
+    elements: *StairShape

@@ -1,0 +1,197 @@
+format: ChoreonoidBody
+formatVersion: 1.0
+angleUnit: degree
+
+name: stair_10cm
+rootLink: First_Stair
+
+links:
+  -
+    name: First_Stair
+    jointType: fixed
+    translation: [ 0.40, 0, 0.05]
+    centerOfMass: [ 0.0, 0.0, 0.0 ]
+    mass: 1.0
+    inertia: [
+          1.0, 0.0, 0.0,
+          0.0, 1.0, 0.0,
+          0.0, 0.0, 1.0 ]
+    elements: &StairShape
+      -
+        type: Shape
+        appearance: &StairAppearance
+          material: {diffuseColor: [ 0.3, 0.3, 0.3 ] }
+        geometry: { type: Box, size: [ 0.2, 1.0, 0.1 ] }
+        
+      -
+        type: Transform
+        translation: [0.0, 0.5, 0.1]
+        elements: &StairGuardLeft
+          Shape:
+            appearance: &StairGuard
+              material: {diffuseColor: [ 0.3, 0.3, 0.3 ] }
+            geometry: { type: Box, size: [ 0.2, 0.05, 0.2 ] }
+      -
+        type: Transform
+        translation: [0.0, -0.5, 0.1]
+        elements: &StairGuardRight
+          Shape:
+            appearance: *StairGuard
+            geometry: { type: Box, size: [ 0.2, 0.05, 0.2 ] }
+  -
+    name: Stair_2
+    parent: First_Stair
+    jointType: fixed
+    translation: [ 0.2, 0, 0.1]
+    centerOfMass: [ -0.00, 0, 0.0 ]
+    mass: 1.0
+    inertia: [
+      0.070908096, 0.001976068, 0.009267259,
+      0.001976068, 0.476924345, -0.000149917,
+      0.009267259, -0.000149917, 0.485757972 ]
+    elements: *StairShape
+
+
+  -
+    name: Stair_3
+    parent: Stair_2
+    jointType: fixed
+    translation: [ 0.2, 0, 0.1]
+    centerOfMass: [ -0.00, 0, 0.0 ]
+    mass: 1.0
+    inertia: [
+      0.070908096, 0.001976068, 0.009267259,
+      0.001976068, 0.476924345, -0.000149917,
+      0.009267259, -0.000149917, 0.485757972 ]
+    elements: *StairShape
+   
+  -
+    name: Stair_4
+    parent: Stair_3
+    jointType: fixed
+    translation: [ 0.2, 0, 0.1]
+    centerOfMass: [ -0.00, 0, 0.0 ]
+    mass: 1.0
+    inertia: [
+      0.070908096, 0.001976068, 0.009267259,
+      0.001976068, 0.476924345, -0.000149917,
+      0.009267259, -0.000149917, 0.485757972 ]
+    elements: *StairShape
+   
+  -
+    name: Stair_5
+    parent: Stair_4
+    jointType: fixed
+    translation: [ 0.2, 0, 0.1]
+    centerOfMass: [ -0.00, 0, 0.0 ]
+    mass: 1.0
+    inertia: [
+      0.070908096, 0.001976068, 0.009267259,
+      0.001976068, 0.476924345, -0.000149917,
+      0.009267259, -0.000149917, 0.485757972 ]
+    elements: *StairShape
+    
+  -
+    name: Stair_6
+    parent: Stair_5
+    jointType: fixed
+    translation: [ 0.2, 0, 0.1]
+    centerOfMass: [ -0.00, 0, 0.0 ]
+    mass: 1.0
+    inertia: [
+      0.070908096, 0.001976068, 0.009267259,
+      0.001976068, 0.476924345, -0.000149917,
+      0.009267259, -0.000149917, 0.485757972 ]
+    elements: *StairShape
+    
+  -
+    name: Stair_7
+    parent: Stair_6
+    jointType: fixed
+    translation: [ 0.2, 0, 0.1]
+    centerOfMass: [ -0.00, 0, 0.0 ]
+    mass: 1.0
+    inertia: [
+      0.070908096, 0.001976068, 0.009267259,
+      0.001976068, 0.476924345, -0.000149917,
+      0.009267259, -0.000149917, 0.485757972 ]
+    elements: *StairShape
+    
+  -
+    name: Stair_8
+    parent: Stair_7
+    jointType: fixed
+    translation: [ 0.2, 0, 0.1]
+    centerOfMass: [ -0.00, 0, 0.0 ]
+    mass: 1.0
+    inertia: [
+      0.070908096, 0.001976068, 0.009267259,
+      0.001976068, 0.476924345, -0.000149917,
+      0.009267259, -0.000149917, 0.485757972 ]
+    elements: *StairShape
+    
+  -
+    name: Stair_9
+    parent: Stair_8
+    jointType: fixed
+    translation: [ 0.2, 0, 0.1]
+    centerOfMass: [ -0.00, 0, 0.0 ]
+    mass: 1.0
+    inertia: [
+      0.070908096, 0.001976068, 0.009267259,
+      0.001976068, 0.476924345, -0.000149917,
+      0.009267259, -0.000149917, 0.485757972 ]
+    elements: *StairShape
+    
+  -
+    name: Stair_10
+    parent: Stair_9
+    jointType: fixed
+    translation: [ 0.2, 0, 0.1]
+    centerOfMass: [ -0.00, 0, 0.0 ]
+    mass: 1.0
+    inertia: [
+      0.070908096, 0.001976068, 0.009267259,
+      0.001976068, 0.476924345, -0.000149917,
+      0.009267259, -0.000149917, 0.485757972 ]
+    elements: *StairShape
+    
+  -
+    name: Stair_11
+    parent: Stair_10
+    jointType: fixed
+    translation: [ 0.2, 0, 0.0]
+    centerOfMass: [ -0.00, 0, 0.0 ]
+    mass: 1.0
+    inertia: [
+      0.070908096, 0.001976068, 0.009267259,
+      0.001976068, 0.476924345, -0.000149917,
+      0.009267259, -0.000149917, 0.485757972 ]
+    elements: *StairShape
+    
+  -
+    name: Stair_12
+    parent: Stair_11
+    jointType: fixed
+    translation: [ 0.2, 0, 0.0]
+    centerOfMass: [ -0.00, 0, 0.0 ]
+    mass: 1.0
+    inertia: [
+      0.070908096, 0.001976068, 0.009267259,
+      0.001976068, 0.476924345, -0.000149917,
+      0.009267259, -0.000149917, 0.485757972 ]
+    elements: *StairShape
+    
+  -
+    name: Stair_13
+    parent: Stair_12
+    jointType: fixed
+    translation: [ 0.2, 0, 0.0]
+    centerOfMass: [ -0.00, 0, 0.0 ]
+    mass: 1.0
+    inertia: [
+      0.070908096, 0.001976068, 0.009267259,
+      0.001976068, 0.476924345, -0.000149917,
+      0.009267259, -0.000149917, 0.485757972 ]
+    elements: *StairShape
+

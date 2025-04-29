@@ -1,0 +1,27 @@
+format: ChoreonoidBody
+formatVersion: 1.0
+angleUnit: degree
+name: plate
+
+links:
+  -
+    name: WAIST
+    jointType: fixed
+    translation: [ -3.5, 0.2, 0.05 ]
+    rotation: [ 0, 0, 1, 0 ]
+    elements:
+      -
+        type: RigidBody
+        mass: 50.0
+        inertia: [
+          0.01, 0, 0,
+          0, 0.01, 0,
+          0, 0, 0.01 ]
+        elements:
+          Shape:
+            geometry:
+              type: Box
+              size: [ 3.30, 3.20, 0.1 ]
+            appearance:
+              material:
+                diffuseColor: [ 0.0, 1.0, 0.0 ]

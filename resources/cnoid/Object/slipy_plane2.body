@@ -1,0 +1,31 @@
+format: ChoreonoidBody
+formatVersion: 1.0
+name: slipy_plane2
+angleUnit: degree
+
+links:
+  -
+    name: WAIST
+    jointType: fixed
+    rotation: [0,1,0,0]
+    material: Ice
+    elements:
+      -
+        type: RigidBody
+        centerOfMass: [ 0.0, 0.0, 0.0 ]
+        rotation: [0, 1, 0, 0]
+        translation: [0, 0, 0]
+        mass: 1.0
+        inertia: [
+          1.0, 0.0, 0.0,
+          0.0, 1.0, 0.0,
+          0.0, 0.0, 1.0 ]
+        elements:
+          Shape:
+            geometry:
+              # type: Plane
+              type: Box
+              size: [ 3.0, 2.5, 0.05 ]
+            appearance:
+              material:
+                diffuseColor: [ 0.0, 1.0, 1.0 ]

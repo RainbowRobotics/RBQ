@@ -1,0 +1,158 @@
+format: ChoreonoidBody
+formatVersion: 1.0
+angleUnit: degree
+
+name: stair_15cm
+rootLink: First_Stair
+
+links:
+  -
+    name: First_Stair
+    jointType: fixed
+    translation: [ 0.5, 0, 0.13]
+    centerOfMass: [ 0.0, 0.0, 0.0 ]
+    material: Ground
+    mass: 1.0
+    inertia: [
+          1.0, 0.0, 0.0,
+          0.0, 1.0, 0.0,
+          0.0, 0.0, 1.0 ]
+    elements: &StairShape
+      -
+        type: Shape
+        appearance: &StairAppearance
+          material: {diffuseColor: [ 0.3, 0.3, 0.3 ] }
+        geometry: { type: Box, size: [ 0.40, 2.0, 0.15 ] }
+      -
+        type: Transform
+        translation: [ -0.20, 0, 0.045 ]
+        rotation: [0, 0, 1, 0]
+        elements:
+          Shape: 
+            geometry: { type: Cylinder, radius: 0.03, height: 2.0 }
+            appearance: &StairsEdge
+              material: 
+                diffuseColor: [ 0.578, 0.0, 0.824 ]
+      -
+        type: Transform
+        translation: [-0.215, 0.0, -0.03]
+        elements:
+          Shape:
+            appearance: &StairEdge2
+              material: {diffuseColor: [ 0.578, 0.0, 0.824 ] }
+            geometry: { type: Box, size: [ 0.03, 2.0, 0.15 ] }
+      -
+        type: Transform
+        translation: [0.0, 1.0, 0.1]
+        elements: &StairGuardLeft
+          Shape:
+            appearance: &StairGuard
+              material: {diffuseColor: [ 0.3, 0.3, 0.3 ] }
+            geometry: { type: Box, size: [ 0.5, 0.05, 0.2 ] }
+      -
+        type: Transform
+        translation: [0.0, -1.0, 0.1]
+        elements: &StairGuardRight
+          Shape:
+            appearance: *StairGuard
+            geometry: { type: Box, size: [ 0.5, 0.05, 0.2 ] }
+  -
+    name: Stair_2
+    parent: First_Stair
+    jointType: fixed
+    translation: [ 0.28, 0, 0.15]
+    centerOfMass: [ -0.00, 0, 0.0 ]
+    mass: 1.0
+    inertia: [
+      1.0, 0.0, 0.0,
+          0.0, 1.0, 0.0,
+          0.0, 0.0, 1.0 ]
+    elements: *StairShape
+
+
+  -
+    name: Stair_3
+    parent: Stair_2
+    jointType: fixed
+    translation: [ 0.28, 0, 0.15]
+    centerOfMass: [ -0.00, 0, 0.0 ]
+    mass: 1.0
+    inertia: [
+      1.0, 0.0, 0.0,
+          0.0, 1.0, 0.0,
+          0.0, 0.0, 1.0 ]
+    elements: *StairShape
+   
+  -
+    name: Stair_4
+    parent: Stair_3
+    jointType: fixed
+    translation: [ 0.28, 0, 0.15]
+    centerOfMass: [ -0.00, 0, 0.0 ]
+    mass: 1.0
+    inertia: [
+      1.0, 0.0, 0.0,
+          0.0, 1.0, 0.0,
+          0.0, 0.0, 1.0 ]
+    elements: *StairShape
+   
+  -
+    name: Stair_5
+    parent: Stair_4
+    jointType: fixed
+    translation: [ 0.28, 0, 0.15]
+    centerOfMass: [ -0.00, 0, 0.0 ]
+    mass: 1.0
+    inertia: [
+      1.0, 0.0, 0.0,
+          0.0, 1.0, 0.0,
+          0.0, 0.0, 1.0 ]
+    elements: *StairShape
+    
+  -
+    name: Stair_6
+    parent: Stair_5
+    jointType: fixed
+    translation: [ 0.28, 0, 0.15]
+    centerOfMass: [ -0.00, 0, 0.0 ]
+    mass: 1.0
+    inertia: [
+      1.0, 0.0, 0.0,
+          0.0, 1.0, 0.0,
+          0.0, 0.0, 1.0 ]
+    elements: *StairShape
+    
+  -
+    name: Stair_7
+    parent: Stair_6
+    jointType: fixed
+    translation: [ 0.28, 0, 0.15]
+    centerOfMass: [ -0.00, 0, 0.0 ]
+    mass: 1.0
+    inertia: [
+      1.0, 0.0, 0.0,
+          0.0, 1.0, 0.0,
+          0.0, 0.0, 1.0 ]
+    elements: *StairShape
+    
+  -
+    name: Stair_8
+    parent: Stair_7
+    jointType: fixed
+    translation: [ 1.0, 0, 0.15]
+    centerOfMass: [ -0.00, 0, 0.0 ]
+    mass: 1.0
+    inertia: [
+      1.0, 0.0, 0.0,
+          0.0, 1.0, 0.0,
+          0.0, 0.0, 1.0 ]
+    elements:
+      -
+        type: Shape
+        appearance: &StairAppearance1
+          material: {diffuseColor: [ 0.3, 0.3, 0.3 ] }
+        geometry: { type: Box, size: [ 1.80, 2.0, 0.15 ] }
+    
+
+    
+

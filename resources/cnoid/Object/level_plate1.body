@@ -1,0 +1,25 @@
+format: ChoreonoidBody
+formatVersion: 1.0
+angleUnit: degree
+
+name: level_plate
+rootLink: First_Stair
+
+links:
+  -
+    name: First_Stair
+    jointType: fixed
+    translation: [ 1.1, 2.5, 0.04]
+    centerOfMass: [ 0.0, 0.0, 0.0 ]
+    mass: 1.0
+    inertia: [
+          1.0, 0.0, 0.0,
+          0.0, 1.0, 0.0,
+          0.0, 0.0, 1.0 ]
+    elements: &StairShape
+      -
+        type: Shape
+        appearance: &StairAppearance
+          material: {diffuseColor: [ 0.3, 0.3, 0.3 ] }
+        geometry: { type: Box, size: [ 2, 2, 0.08 ] }
+
