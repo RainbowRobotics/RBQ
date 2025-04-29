@@ -24,6 +24,6 @@ bash scripts/sim.bash --choreonoid
 
 ### [OPTIONAL] Deploy applications (binaries) to the Robot PC
 ```sh
-bash scripts/deploy.bash --choreonoid
+bash scripts/deploy.bash
 ```
 
