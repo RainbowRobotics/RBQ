@@ -54,22 +54,17 @@ compile_commands.json
 *_qmlcache.qrc
 
 build/
-exe/
-bin/
 *.user
 *.user.*
 log/*.log
 log/BlackBox/*.log
 Save_Data/*.txt
-static_build/
-static_bin/
 keys/
 log/
 plot/*.log
-static_build*
+*build*
 static_bin*
 *.log
-Tools/
 *.hex
 hex
 choreonoid
@@ -82,4 +77,6 @@ dist/
 queuelogs/
 3rdparty
 mujoco
-public
+MUJOCO_LOG.TXT
+examples
+rbq_sdk
