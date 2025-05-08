@@ -78,5 +78,4 @@ queuelogs/
 3rdparty
 mujoco
 MUJOCO_LOG.TXT
-examples
-rbq_sdk
+

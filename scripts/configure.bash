@@ -27,3 +27,6 @@ export QT_TAR="qt-everywhere-opensource-src-$QT_VERSION.tar.xz"
 # choreonoid
 export CHOREONOID_DIR=$LIBS_DIR/choreonoid
 export CHOREONOID_VERSION="v2.2.0"
+
+# RBQ
+export RBQ_DIR="$PWD/rbq"

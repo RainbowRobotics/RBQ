@@ -1,6 +1,0 @@
-PROJECT_NAME = RBQ_SDK
-INPUT = /workspace/src/RBQ_SDK/rbq_api.h
-OUTPUT_DIRECTORY = /workspace/docs/RBQ_SDK
-GENERATE_HTML = YES
-GENERATE_LATEX = NO
-
