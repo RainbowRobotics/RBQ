@@ -1,219 +1,200 @@
 #ifndef JOINT_CONTROL_H
 #define JOINT_CONTROL_H
 
+#include <array>
+#include <cmath>
 #include <iostream>
-#include <math.h>
+#include <memory>
+#include <stdexcept>
+#include <vector>
 
 #include "rbq/Api.h"
 
-// enum variables
-enum ErrCode{
-    ERR_OK = 0,
-    ERR_GOAL_TIME,
-    ERR_ALREADY_MOVING,
-    ERR_WRONG_MODE,
-    ERR_WRONG_SELECTION
-};
-enum MovingStatus{
-    MOVE_DONE = 0,
-    STILL_MOVING
-};
-enum MoveCommandMode{
-    MOVE_ABSOLUTE = 0,
-    MOVE_RELATIVE,
+// Constants
+constexpr int kMaxJoint = 12;
+constexpr int kMaxLeg = 4;
+constexpr int kControlPeriodMs = 2;
+
+// Enumerations
+enum class ErrorCode {
+    Ok = 0,
+    GoalTimeInvalid,
+    AlreadyMoving,
+    ModeInvalid,
+    SelectionInvalid
 };
 
-#define MAX_JOINT   12
-#define MAX_LEG     4
+enum class MovingStatus {
+    Done = 0,
+    InProgress
+};
 
-#define RT_MS       2
+enum class MoveCommandMode {
+    Absolute = 0,
+    Relative
+};
 
-struct JOINT_TABLE
-{
-    //--- Home joint set
-    float   JointReady[MAX_JOINT];
-    float   JointGround[MAX_JOINT];
-    float   JointFolding[MAX_JOINT];
+// Joint position presets
+struct JointTable {
+    float ready[kMaxJoint] = {};
+    float ground[kMaxJoint] = {};
+    float folding[kMaxJoint] = {};
 
-    JOINT_TABLE() {
-        for(int lnum=0; lnum<MAX_LEG; lnum++){
+    JointTable() {
+        for (int leg = 0; leg < kMaxLeg; ++leg) {
+            int offset = leg * 3;
+            ready[offset] = 0.0f;
+            ready[offset + 1] = 43.0f;
+            ready[offset + 2] = -80.0f;
 
-            //ready
-            JointReady[lnum*3] = 0;
-            JointReady[lnum*3+1] = 43.0;
-            JointReady[lnum*3+2] = -(80.0);
-            //ground
-            if(lnum%2 == 0)
-                JointGround[lnum*3] = -34.0;
-            else
-                JointGround[lnum*3] = 34.0;
-            JointGround[lnum*3+1] = 65.0;
-            JointGround[lnum*3+2] = -160.0;
-            //falling
-            JointFolding[lnum*3] = 0;
-            JointFolding[lnum*3+1] = 78.0;
-            JointFolding[lnum*3+2] = -160.0;
+            ground[offset] = (leg % 2 == 0) ? -34.0f : 34.0f;
+            ground[offset + 1] = 65.0f;
+            ground[offset + 2] = -160.0f;
+
+            folding[offset] = 0.0f;
+            folding[offset + 1] = 78.0f;
+            folding[offset + 2] = -160.0f;
         }
     }
 };
 
-class Joint
-{
+class Joint {
 public:
-    int         JNum;
-    double      RefAngleCurrent;
+    explicit Joint(int id = 0)
+        : m_id(id), m_currentAngle(0.0), m_initialAngle(0.0), m_targetAngle(0.0),
+          m_deltaAngle(0.0), m_goalTimeCount(0), m_currentTimeCount(0), m_isMoving(false) {}
 
-public:
-    Joint(){
-        RefAngleCurrent = 0.f; MoveFlag = false;
-        RefAngleInitial = 0; RefAngleToGo = 0;
-    }
-    Joint(const int jnum){
-        JNum = jnum; RefAngleCurrent = 0.f; MoveFlag = false;
-        RefAngleInitial = 0; RefAngleToGo = 0;
-    }
+    void setCurrentAngle(double angle) { m_currentAngle = angle; }
+    double getCurrentAngle() const { return m_currentAngle; }
+    void setMoving(bool flag) { m_isMoving = flag; }
 
-    void    SetRefAngleCurrent(const double ref)	{RefAngleCurrent = ref;}
-    double  GetRefAngleCurrent()					{return RefAngleCurrent;}
-    void    SetMoveFlag(unsigned char flag)         {MoveFlag = flag;}
-
-    char    SetMoveJoint(const double _angle, const double _msTime, const unsigned int _mode){
-        if(_msTime <= 0){
-            std::cout << "Goal time must be greater than zero(SetMoveJoint)[JNum: " << JNum << "]"; return ERR_GOAL_TIME;
+    ErrorCode setTarget(double angle, double duration_ms, MoveCommandMode mode) {
+        if (duration_ms <= 0.0) {
+            std::cerr << "[Joint " << m_id << "] Invalid goal time.\n";
+            return ErrorCode::GoalTimeInvalid;
         }
 
-        MoveFlag = false;
-        switch(_mode)
-        {
-        case MOVE_ABSOLUTE:	// absolute mode
-            RefAngleToGo = _angle;
-            break;
-        case MOVE_RELATIVE:	// relative mode
-            RefAngleToGo = RefAngleCurrent + _angle;
-            break;
-        default:
-            std::cout << "Wrong reference mode(SetMoveJoint)[JNum: " << JNum << "]";
-            return ERR_WRONG_MODE;
-            break;
+        m_isMoving = false;
+        switch (mode) {
+            case MoveCommandMode::Absolute:
+                m_targetAngle = angle;
+                break;
+            case MoveCommandMode::Relative:
+                m_targetAngle = m_currentAngle + angle;
+                break;
+            default:
+                std::cerr << "[Joint " << m_id << "] Invalid move mode.\n";
+                return ErrorCode::ModeInvalid;
         }
-        RefAngleInitial = RefAngleCurrent;
-        RefAngleDelta = RefAngleToGo - RefAngleCurrent;
-        CurrentTimeCount = 0;
 
-        GoalTimeCount = (unsigned long)(_msTime/RT_MS);
-        MoveFlag = true;
-        return ERR_OK;
+        m_initialAngle = m_currentAngle;
+        m_deltaAngle = m_targetAngle - m_currentAngle;
+        m_currentTimeCount = 0;
+        m_goalTimeCount = static_cast<unsigned long>(duration_ms / kControlPeriodMs);
+        m_isMoving = true;
+
+        return ErrorCode::Ok;
     }
-    char    MoveJoint(){
-        if(MoveFlag == true){
-            CurrentTimeCount++;
-            if(GoalTimeCount <= CurrentTimeCount){
-                GoalTimeCount = CurrentTimeCount = 0;
-                RefAngleCurrent = RefAngleToGo;
-                MoveFlag = false;
-                return MOVE_DONE;
-            }else{
-                RefAngleCurrent = RefAngleInitial+RefAngleDelta*0.5f*(1.0f-cos(M_PI/(double)GoalTimeCount*(double)CurrentTimeCount));
-            }
+
+    MovingStatus update() {
+        if (!m_isMoving) return MovingStatus::InProgress;
+
+        ++m_currentTimeCount;
+        if (m_currentTimeCount >= m_goalTimeCount) {
+            m_currentAngle = m_targetAngle;
+            m_isMoving = false;
+            return MovingStatus::Done;
         }
-        return STILL_MOVING;
+
+        double progress = static_cast<double>(m_currentTimeCount) / m_goalTimeCount;
+        m_currentAngle = m_initialAngle + m_deltaAngle * 0.5 * (1.0 - std::cos(M_PI * progress));
+        return MovingStatus::InProgress;
     }
 
 private:
-    double			RefAngleDelta;
-    double			RefAngleToGo;
-    double			RefAngleInitial;
-    unsigned long	GoalTimeCount;
-    unsigned long	CurrentTimeCount;
-    unsigned char	MoveFlag;
+    int m_id;
+    double m_currentAngle, m_initialAngle, m_targetAngle, m_deltaAngle;
+    unsigned long m_goalTimeCount, m_currentTimeCount;
+    bool m_isMoving;
 };
 
-class JointControl
-{
+class JointController {
 public:
-    explicit JointControl(RBQ_API *_rbqApi, int _joint_num)
-        : m_api{_rbqApi}
-        , NO_OF_JOINT{_joint_num}
-    {
-        for(int i=0; i<NO_OF_JOINT; i++)
-            m_joints.push_back(new Joint(i));
+    JointController(RBQ_API* api, int joint_count)
+        : m_api(api), m_jointCount(joint_count) {
+
+        if (!m_api) throw std::invalid_argument("RBQ_API pointer is null.");
+        if (joint_count <= 0 || joint_count > kMaxJoint)
+            throw std::out_of_range("Invalid joint count.");
+
+        for (int i = 0; i < m_jointCount; ++i)
+            m_joints[i] = std::make_unique<Joint>(i);
     }
 
-    double GetJointRefAngle(const int n) {return m_joints[n]->GetRefAngleCurrent();}
-    void SetJointRefAngle(const int n, const double _ref) {m_joints[n]->SetRefAngleCurrent(_ref);}
+    ~JointController() = default;
 
-    void SetMotionOwner(const int &_jnum){
-        m_api->Joint.setMotionOwner(_jnum);
-    }
-    void SetAllMotionOwner(){
-        for(int i=0; i<NO_OF_JOINT; i++){
-            SetMotionOwner(i);
-        }
-    }
+    JointController(const JointController&) = delete;
+    JointController& operator=(const JointController&) = delete;
+    JointController(JointController&&) = default;
+    JointController& operator=(JointController&&) = default;
 
-    char SetMoveJoint(const int _jnum, const double _angle, const double _msTime, const unsigned int _mode){
-        return m_joints[_jnum]->SetMoveJoint(_angle, _msTime, _mode);
-    }
-    char MoveJoint(const int _jnum){
-        return m_joints[_jnum]->MoveJoint();
-    }
-    void MoveAllJoint(){
-        for(int i=0; i<NO_OF_JOINT; i++){
-            MoveJoint(i);
-        }
+    double getAngle(int idx) const { return m_joints[idx]->getCurrentAngle(); }
+    void setAngle(int idx, double angle) { m_joints[idx]->setCurrentAngle(angle); }
+
+    void setOwner(int idx) { m_api->Joint.setMotionOwner(idx); }
+    void setAllOwners() {
+        for (int i = 0; i < m_jointCount; ++i)
+            setOwner(i);
     }
 
-    void JointUpdate(){
-        for(int i=0; i<NO_OF_JOINT; i++){
-            m_api->Joint.setPosRef(i, m_joints[i]->GetRefAngleCurrent());
-        }
+    ErrorCode moveJoint(int idx, double angle, double duration, MoveCommandMode mode) {
+        return m_joints[idx]->setTarget(angle, duration, mode);
     }
 
-    void RefreshToCurrentReference_id(int &_jointId){
-        // Refresh internal joint reference variable to current robot joint reference
-
-        m_joints[_jointId]->SetMoveFlag(false);
-
-        float current_joint_pos_reference_of_robot;
-        m_api->Joint.getPosRef(_jointId, current_joint_pos_reference_of_robot);
-        m_api->Joint.setPosRef(_jointId, current_joint_pos_reference_of_robot);
-
-        m_joints[_jointId]->SetRefAngleCurrent(current_joint_pos_reference_of_robot);
+    MovingStatus updateJoint(int idx) {
+        return m_joints.at(idx)->update();
     }
 
-    void RefreshToCurrentPosition_id(int &_jointId){
-        // Refresh internal joint reference variable to current robot joint measured
-
-        m_joints[_jointId]->SetMoveFlag(false);
-
-        float current_joint_pos_measured_of_robot;
-        m_api->Joint.getPos(_jointId, current_joint_pos_measured_of_robot);
-        m_api->Joint.setPosRef(_jointId, current_joint_pos_measured_of_robot);
-
-        m_joints[_jointId]->SetRefAngleCurrent(current_joint_pos_measured_of_robot);
+    void updateAllJoints() {
+        for (int i = 0; i < m_jointCount; ++i)
+            updateJoint(i);
     }
 
-    void RefreshToCurrentReference()
-    {
-        // Refresh internal joint reference variable to current robot joint reference
-        for(int i=0; i<NO_OF_JOINT; i++){
-            RefreshToCurrentReference_id(i);
-        }
+    void syncReferenceToRobot() {
+        for (int i = 0; i < m_jointCount; ++i)
+            syncReferenceToRobot(i);
     }
 
-    void RefreshToCurrentPosition()
-    {
-        // Refresh internal joint reference variable to current robot joint measured
+    void syncPositionToRobot() {
+        for (int i = 0; i < m_jointCount; ++i)
+            syncPositionToRobot(i);
+    }
 
-        for(int i=0; i<NO_OF_JOINT; i++){
-            RefreshToCurrentPosition_id(i);
-        }
+    void syncReferenceToRobot(int idx) {
+        float ref;
+        m_api->Joint.getPosRef(idx, ref);
+        m_api->Joint.setPosRef(idx, ref);
+        m_joints[idx]->setMoving(false);
+        m_joints[idx]->setCurrentAngle(ref);
+    }
+
+    void syncPositionToRobot(int idx) {
+        float pos;
+        m_api->Joint.getPos(idx, pos);
+        m_api->Joint.setPosRef(idx, pos);
+        m_joints[idx]->setMoving(false);
+        m_joints[idx]->setCurrentAngle(pos);
+    }
+
+    void sendReferencesToRobot() {
+        for (int i = 0; i < m_jointCount; ++i)
+            m_api->Joint.setPosRef(i, m_joints[i]->getCurrentAngle());
     }
 
 private:
-    int                     NO_OF_JOINT;
-    RBQ_API                 *m_api;
-    std::vector<Joint*>     m_joints;
+    const int m_jointCount;
+    RBQ_API* m_api;
+    std::array<std::unique_ptr<Joint>, kMaxJoint> m_joints;
 };
 
-#endif // JOINT_CONTROL_H
+#endif  // JOINT_CONTROL_H

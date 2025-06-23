@@ -20,4 +20,7 @@ gnome-terminal --tab --title="mediamtx" -- bash -i -c "cd $path && bash scripts/
 sleep 5
 gnome-terminal --tab --title="Vision" -- bash -i -c "cd $path && bash scripts/start_vision.bash"
 
+sleep 5
+gnome-terminal --tab --title="ROS driver" -- bash -i -c "cd $path && bash scripts/start_ros_driver.bash"
+
 exit

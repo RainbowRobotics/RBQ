@@ -1,44 +1,63 @@
 #!/bin/bash
 
 APP_NAME="GUI"
-APP_PATH="$PWD/bin"
-LIB_PATH="$PWD/lib"
-APP_ARGS=""
+APP_PATH="bin"
+CMD_ARGS=()
 
 print_help() {
     echo "Usage: bash scripts/start_gui.bash [OPTIONS]"
     echo "Options:"
     echo "  --help      Display this help message and exit."
     echo "  --sim       Run in simulator mode."
+    echo "  --rb1       Run in simulator (RB1 Arm attached) mode."
+    echo "  --lims_ex   Run in simulator (LIMS_EX Arm attached) mode."
+    echo "  --wheel     RBQ WHEEL enabled. DEFAULT false"
 }
 
 while [[ $# -gt 0 ]]; do
     case $1 in
         --help) print_help; exit 0 ;;
-        --sim) APP_ARGS="-s"; shift ;;
-        *) echo "[ERROR] Unknown argument: $1"; print_help; exit 1 ;;
+        --sim) CMD_ARGS+=("--sim"); shift ;;
+        --rb1) CMD_ARGS+=("--arm"); shift ;;
+        --lims_ex) CMD_ARGS+=("--arm"); shift ;;
+        --wheel) CMD_ARGS+=("--wheel"); shift ;;
+        *) echo "Unknown argument: $1"; print_help; exit 1 ;;
     esac
 done
 
-echo -ne "\033]0;$APP_NAME\007"
+# Exit if executed with sudo
 if [ "$EUID" -eq 0 ]; then
-    echo "[ERROR] Do not run this script with sudo. Exiting..."
+    echo "Do not run this script with sudo. Exiting..."
     exit 1
 fi
+
+# Check if already running
 if pgrep -x "$APP_NAME" > /dev/null; then
-    echo "[ERROR] $APP_NAME is already running. Please close it before starting a new instance."
-    sleep 10
+    echo "$APP_NAME is already running. Please close it before starting a new instance."
+    sleep 3
     exit 1
 fi
+
+# Check if binary exists
 if [ ! -f "$APP_PATH/$APP_NAME" ]; then
-    echo "[ERROR] $APP_NAME application not found."
+    echo "$APP_PATH/$APP_NAME application not found."
+    echo "Compile it first with: bash scripts/docker/run.bash"
+    sleep 3
     exit 1
 fi
+
+function set_terminal_title {
+    echo -ne "\033]0;$1\007"
+}
+set_terminal_title "$APP_NAME"
+
+cd "$APP_PATH"
+
+# Run loop
 while true; do
     pid=$(pgrep -x "$APP_NAME")
     if [ -z "$pid" ]; then
-        cd "$APP_PATH"
-        ./$APP_NAME $APP_ARGS
+        ./"$APP_NAME" "${CMD_ARGS[@]}"
     fi
     sleep 2
 done

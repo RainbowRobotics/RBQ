@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<robot name="rbq" xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:macro name="load_rbq" params="
+    arm:=false
+    tf_prefix">
+
+        <!-- Optional custom includes. -->
+            <xacro:include filename="$(find rbq_description)/urdf/rbq.urdf" />
+
+        <!-- Include Arm if necessary-->
+        <xacro:if value="${arm}">
+            <xacro:include filename="$(find rbq_description)/urdf/rbq_arm_macro.urdf" />
+            <xacro:load_arm tf_prefix="${tf_prefix}" />
+        </xacro:if>
+    </xacro:macro>
+</robot>

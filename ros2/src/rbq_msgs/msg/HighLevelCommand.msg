@@ -1,0 +1,10 @@
+std_msgs/Header header
+string identifier
+float64 roll
+float64 pitch
+float64 yaw
+float64 vel_x
+float64 vel_y
+float64 omega_z
+float64 delta_body_h
+float64 delta_foot_h

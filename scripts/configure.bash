@@ -19,14 +19,9 @@ export EIGEN_DIR="$LIBS_DIR/eigen"
 export JSON_VERSION="3.12.0"
 export JSON_DIR="$LIBS_DIR/json"
 
-# Qt
-export QT_VERSION="5.15.16"
-export QT_DIR="$LIBS_DIR/qt"
-export QT_TAR="qt-everywhere-opensource-src-$QT_VERSION.tar.xz"
-
-# choreonoid
-export CHOREONOID_DIR=$LIBS_DIR/choreonoid
-export CHOREONOID_VERSION="v2.2.0"
+# ONNX
+export ONNX_VERSION="v1.17.1"
+export ONNX_DIR="$LIBS_DIR/onnx"
 
 # RBQ
-export RBQ_DIR="$PWD/rbq"
+export RBQ_DIR="$PWD/bin/rbq"

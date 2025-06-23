@@ -4,6 +4,7 @@
 REMOTE_DEVICE="rbq@192.168.0.10"
 REMOTE_DIR="~/rbq_ws/bin"
 BINARY_DIR="bin"
+LIB_DIR="$BINARY_DIR/libs"
 ID_RSA_KEY=$(ls keys/*_shared_key* 2>/dev/null | head -n 1)
 LOGFILE="deploy.log"
 
@@ -16,6 +17,7 @@ print_help() {
     echo "Usage: ./deploy.bash [OPTIONS]"
     echo "  --help             Display this help message and exit."
     echo "  -pro [FILES...]    Specify binary names for selective deployment."
+    echo "  --copy-dep         Copy dependencies (libs) inside $LIB_DIR before deployment."
     echo "  --device [USER@IP] Set the remote device (default: $REMOTE_DEVICE)."
 }
 
@@ -35,7 +37,7 @@ done
 
 # Identify binaries to deploy
 echo "Identifying binaries..."
-IFS=$'\n' BINARIES=($(find "$BINARY_DIR" -maxdepth 1 -type f))
+IFS=$'\n' BINARIES=($(find "$BINARY_DIR" -maxdepth 1 \( -type f -o -type l \)))
 FILES_TO_DEPLOY=()
 
 # Handle selected binaries
@@ -49,6 +51,20 @@ else
             echo -e "\e[33mWarning: $FILE not found, skipping.\e[0m"
         fi
     done
+fi
+
+# Include dependencies if required
+if $COPY_DEP; then
+    if [ -d "$LIB_DIR" ]; then
+        echo "Including dependencies from $LIB_DIR..."
+        FILES_TO_DEPLOY+=("$LIB_DIR"/*)
+    else
+        echo -e "\e[33mWarning: No dependencies found in $LIB_DIR. Continue? (y/n)\e[0m"
+        read -r response
+        if [[ "$response" != "y" ]]; then
+            exit 1
+        fi
+    fi
 fi
 
 # Validate deployment list
@@ -69,6 +85,10 @@ else
 fi
 
 # Ensure remote host is known to avoid SSH confirmation issues
+if [ ! -f "$HOME/.ssh/known_hosts" ]; then
+    echo -e "\e[33mNo ~/.ssh/known_hosts yet. Now will ssh to the robot. Type the password then type exit to return\e[0m"
+    ssh $REMOTE_DEVICE
+fi
 ssh-keyscan -H $(echo "$REMOTE_DEVICE" | cut -d'@' -f2) >> ~/.ssh/known_hosts 2>/dev/null
 
 # Check SSH connection
