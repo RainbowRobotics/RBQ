@@ -7,7 +7,7 @@ if [ "$EUID" -eq 0 ]; then
     exit 1
 fi
 
-sudo scripts/apt.bash
+sudo bash scripts/apt.bash
 
 source scripts/configure.bash
 
