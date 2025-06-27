@@ -23,4 +23,7 @@ gnome-terminal --tab --title="Vision" -- bash -i -c "cd $path && bash scripts/st
 sleep 5
 gnome-terminal --tab --title="ROS driver" -- bash -i -c "cd $path && bash scripts/start_ros_driver.bash"
 
+sleep 5
+gnome-terminal --tab --title="VPN" -- bash -i -c "cd $path && bash scripts/start_vpn.bash"
+
 exit
