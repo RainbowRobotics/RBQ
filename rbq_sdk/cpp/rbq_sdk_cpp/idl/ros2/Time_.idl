@@ -1,0 +1,13 @@
+#pragma once
+
+module builtin_interfaces {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct Time_ {
+        int32 sec;
+        uint32 nanosec;
+      };
+    };
+  };
+};

@@ -1,0 +1,34 @@
+{
+  "base_robot": {
+    "name": "RBQ",
+    "description": "Base quadruped robot - always included",
+    "joints": {
+      "count": 12,
+      "names": ["HRR", "HRP", "HRK", "HLR", "HLP", "HLK", "FRR", "FRP", "FRK", "FLR", "FLP", "FLK"],
+      "limits": {
+        "torque": [100.0, 100.0, 140.0, 100.0, 100.0, 140.0, 100.0, 100.0, 140.0, 100.0, 100.0, 140.0],
+        "position_lower": [-42.0, -360.0, -165.0, -31.0, -360.0, -165.0, -42.0, -360.0, -165.0, -31.0, -360.0, -165.0],
+        "position_upper": [31.0, 360.0, -24.0, 42.0, 360.0, -24.0, 31.0, 360.0, -24.0, 42.0, 360.0, -24.0]
+      }
+    },
+    "initial_pose": {
+      "qpos": [0, 0, 0.8, 1, 0, 0, 0, -0.59341195, 1.13446401, -2.79252680, 0.59341195, 1.13446401, -2.79252680, -0.59341195, 1.13446401, -2.79252680, 0.59341195, 1.13446401, -2.79252680],
+      "qvel": [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    },
+    "offsets": {
+      "joint_qpos": 7,
+      "joint_qvel": 6
+    },
+    "shared_memory": {
+      "ref_array": "REF_LEG"
+    }
+  },
+
+  "robots": {
+    "RBQ": {
+      "description": "Pure RBQ quadruped robot",
+      "extensions": [],
+      "model_path": "../resources/model/rbq/configs/rbq_environment.xml"
+    }
+  }
+} 

@@ -1,0 +1,13 @@
+#include "Twist_.idl"
+
+module geometry_msgs {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct TwistWithCovariance_ {
+        geometry_msgs::msg::dds_::Twist_ twist;
+        double covariance[36];
+      };
+    };
+  };
+};
