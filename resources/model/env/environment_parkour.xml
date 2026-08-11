@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mujoco model="rbq environment">
+
+    <!-- 통계 정보 -->
+    <statistic center="0 0 0.1" extent="0.8"/>
+
+    <!-- 시각화 설정 -->
+    <visual>
+        <headlight diffuse="0.6 0.6 0.6" ambient="0.3 0.3 0.3" specular="0 0 0"/>
+        <rgba haze="0.15 0.25 0.35 1"/>
+        <global azimuth="-130" elevation="-20"/>
+    </visual>
+
+    <!-- 에셋 정의 -->
+    <asset>
+        <texture type="skybox" builtin="gradient" rgb1="0.3 0.5 0.7" rgb2="0 0 0" width="512" height="3072"/>
+        <texture type="2d" name="groundplane" builtin="checker" mark="edge" rgb1="0.2 0.3 0.4" rgb2="0.1 0.2 0.3"
+            markrgb="0.8 0.8 0.8" width="300" height="300"/>
+        <material name="groundplane" texture="groundplane" texuniform="true" texrepeat="5 5" reflectance="0.2"/>
+
+        <texture name="grid" type="2d" builtin="checker" rgb1="0.4 0.5 0.6" rgb2="0.9 0.9 0.9" width="512" height="512" />
+        <material name="ground" texture="grid" texrepeat="1 1" reflectance="0" shininess="0.2" specular="0.2" />
+
+        <!-- 계단용 텍스처 및 재질 -->
+        <texture type="2d" name="stair_checker" builtin="checker" mark="edge" rgb1="0.4 0.4 0.4" rgb2="0.6 0.6 0.6"
+            markrgb="0.2 0.2 0.2" width="256" height="256"/>
+        <material name="stair_material" texture="stair_checker" texuniform="true" texrepeat="3 3" reflectance="0.1"/>
+        
+        <!-- 도킹 스테이션 메시 -->
+        <mesh name="docking_station" file="../meshes/env/Docking_station.obj"/>
+        <texture type="2d" name="bottom_aruco" file="env/bottom_id.png"/>
+        <texture type="2d" name="rear_aruco" file="env/rear_id.png"/>
+        <material name="bottom_aruco_material" texture="bottom_aruco" texuniform="false" texrepeat="1 1" reflectance="0.1"/>
+        <material name="rear_aruco_material" texture="rear_aruco" texuniform="false" texrepeat="1 1" reflectance="0.1"/>
+    </asset>
+
+    <!-- Default class definitions -->
+    <default>
+        <default class="obstacle">
+            <geom type="box" friction="0.8 0.8 0.8" priority="2"/>
+        </default>
+        <default class="slippery">
+            <geom type="box" priority="2"/>
+        </default>
+    </default>
+
+    <!-- 월드 바디 정의 -->
+    <worldbody>
+        <!-- 조명 설정 -->
+        <light pos="0 0 1.5" dir="0 0 -1" directional="true"/>
+        <light name="robot_light" pos="0 0 2" dir="0 0 -1" diffuse="0.7 0.7 0.7" specular="0.2 0.2 0.2"/>
+
+        <!-- 지면 설정 -->
+        <geom name="floor" size="0 0 0.1" type="plane" material="groundplane" />
+
+        <geom name="huddle1" class="obstacle" pos="2.15 0 0.5"  size="0.75 0.65 0.5"  quat="1.0 0 0 0" rgba="0.4 0.4 0.4 1"/>
+
+        <geom name="step1" class="obstacle" pos="6.75 0 0.25"  size="0.75 0.65 0.25"  quat="1.0 0 0 0" rgba="0.4 0.4 0.4 1"/>
+        <geom name="stpe2" class="obstacle" pos="8.25 0 0.5"  size="1.0 0.65 0.5"  quat="1.0 0 0 0" rgba="0.4 0.4 0.4 1"/>
+
+        <geom name="gap1" class="obstacle" pos="10.95 0 0.5"  size="1.0 0.65 0.5"  quat="1.0 0 0 0" rgba="0.4 0.4 0.4 1"/>
+        <geom name="stpe3" class="obstacle" pos="12.95 0 0.25"  size="1.0 0.65 0.25"  quat="1.0 0 0 0" rgba="0.4 0.4 0.4 1"/>
+<!-- 
+        <geom name="parkour1" class="obstacle" pos="15.00 0.3 -0.35" size="0.75 5 1" euler="0.0873 0 0" rgba="0.4 0.4 0.4 1"/>
+        <geom name="parkour2" class="obstacle" pos="16.60 0.3 -0.35" size="0.75 5 1" euler="-0.1745 0 0" rgba="0.4 0.4 0.4 1"/>
+        <geom name="parkour3" class="obstacle" pos="18.20 0.3 -0.35" size="0.75 5 1" euler="0.2618 0 0" rgba="0.4 0.4 0.4 1"/>
+        <geom name="parkour4" class="obstacle" pos="19.60 0.3 -0.35" size="0.75 5 1" euler="-0.0873 0 0" rgba="0.4 0.4 0.4 1"/> -->
+
+        <!-- <geom name="step4" class="obstacle" pos="21.10 0 0.35"  size="0.75 5 0.35"  quat="1.0 0 0 0" rgba="0.4 0.4 0.4 1"/> -->
+
+
+        <geom name="huddle2" class="obstacle" pos="17.7 0 0.25"  size="0.2 0.65 0.25"  quat="1.0 0 0 0" rgba="0.4 0.4 0.4 1"/>
+
+
+
+        <!-- <geom name="step1" class="obstacle" pos="5 5 0"  size="0.1 1.5 0.4"  quat="1.0 0 0 0" material="stair_material" rgba="0.5 0.5 0.5 1"/>
+        <geom name="step2" class="obstacle" pos="7 5 0"  size="0.1 1.5 0.4"  quat="1.0 0 0 0" material="stair_material" rgba="0.4 0.4 0.4 1"/>
+
+        <geom name="gap1" class="obstacle" pos="0 0 0"  size="2.0 2.0 1.0"  quat="1.0 0 0 0" material="stair_material" rgba="0.5 0.5 0.5 1"/>
+        <geom name="gap2" class="obstacle" pos="5.3 0 0"  size="2.0 2.0 1.0"  quat="1.0 0 0 0" material="stair_material" rgba="0.4 0.4 0.4 1"/> -->
+
+    </worldbody>
+
+    <contact>
+        <!-- Floor contact -->
+        <pair geom1="RR" geom2="floor"/>
+        <pair geom1="RL" geom2="floor"/>
+        <pair geom1="FR" geom2="floor"/>
+        <pair geom1="FL" geom2="floor"/>
+
+        <pair geom1="RR" geom2="step1"/>
+        <pair geom1="RL" geom2="step1"/>
+        <pair geom1="FR" geom2="step1"/>
+        <pair geom1="FL" geom2="step1"/>
+
+        <pair geom1="RR" geom2="stpe2"/>
+        <pair geom1="RL" geom2="stpe2"/>
+        <pair geom1="FR" geom2="stpe2"/>
+        <pair geom1="FL" geom2="stpe2"/>
+
+        <pair geom1="RR" geom2="gap1"/>
+        <pair geom1="RL" geom2="gap1"/>
+        <pair geom1="FR" geom2="gap1"/>
+        <pair geom1="FL" geom2="gap1"/>
+
+        <pair geom1="RR" geom2="stpe3"/>
+        <pair geom1="RL" geom2="stpe3"/>
+        <pair geom1="FR" geom2="stpe3"/>
+        <pair geom1="FL" geom2="stpe3"/>
+
+        <pair geom1="RR" geom2="huddle1"/>
+        <pair geom1="RL" geom2="huddle1"/>
+        <pair geom1="FR" geom2="huddle1"/>
+        <pair geom1="FL" geom2="huddle1"/>
+
+        <pair geom1="RR" geom2="huddle2"/>
+        <pair geom1="RL" geom2="huddle2"/>
+        <pair geom1="FR" geom2="huddle2"/>
+        <pair geom1="FL" geom2="huddle2"/>
+
+<!-- 
+        <pair geom1="RR" geom2="parkour1"/>
+        <pair geom1="RL" geom2="parkour1"/>
+        <pair geom1="FR" geom2="parkour1"/>
+        <pair geom1="FL" geom2="parkour1"/>
+
+        <pair geom1="RR" geom2="parkour2"/>
+        <pair geom1="RL" geom2="parkour2"/>
+        <pair geom1="FR" geom2="parkour2"/>
+        <pair geom1="FL" geom2="parkour2"/>
+
+        <pair geom1="RR" geom2="parkour3"/>
+        <pair geom1="RL" geom2="parkour3"/>
+        <pair geom1="FR" geom2="parkour3"/>
+        <pair geom1="FL" geom2="parkour3"/>
+
+        <pair geom1="RR" geom2="parkour4"/>
+        <pair geom1="RL" geom2="parkour4"/>
+        <pair geom1="FR" geom2="parkour4"/>
+        <pair geom1="FL" geom2="parkour4"/>
+
+        <pair geom1="RR" geom2="step4"/>
+        <pair geom1="RL" geom2="step4"/>
+        <pair geom1="FR" geom2="step4"/>
+        <pair geom1="FL" geom2="step4"/> -->
+
+
+        <!-- <pair geom1="RR" geom2="step1"/>
+        <pair geom1="RL" geom2="step1"/>
+        <pair geom1="FR" geom2="step1"/>
+        <pair geom1="FL" geom2="step1"/>
+        <pair geom1="RR" geom2="step2"/>
+        <pair geom1="RL" geom2="step2"/>
+        <pair geom1="FR" geom2="step2"/>
+        <pair geom1="FL" geom2="step2"/>
+
+        <pair geom1="RR" geom2="gap1"/>
+        <pair geom1="RL" geom2="gap1"/>
+        <pair geom1="FR" geom2="gap1"/>
+        <pair geom1="FL" geom2="gap1"/>
+        <pair geom1="RR" geom2="gap2"/>
+        <pair geom1="RL" geom2="gap2"/>
+        <pair geom1="FR" geom2="gap2"/>
+        <pair geom1="FL" geom2="gap2"/> -->
+    </contact>
+
+</mujoco>

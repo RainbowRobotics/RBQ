@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mujoco model="rbq10">
+    <!-- 컴파일러 설정 -->
+    <compiler 
+        angle="radian" 
+        coordinate="local"
+        autolimits="true"
+    />
+
+    <!-- 옵션 설정 -->
+    <option 
+        timestep="0.001" 
+        gravity="0 0 -9.81"
+        integrator="RK4"
+        cone="elliptic"
+        impratio="100"
+        tolerance="1e-10"
+    >
+        <flag warmstart="enable" energy="enable" contact="enable" frictionloss="enable"/>
+    </option>
+
+    <!-- 기본 클래스 정의 -->
+    <default>
+        <default class="rbq10">
+            <geom friction="0.4" margin="0.001" condim="1"/>
+            
+            <default class="abduction">
+                <joint axis="1 0 0" range="-0.5411 0.7330" damping="0.1" armature="0.014058265" frictionloss="1.2"/>
+                <motor ctrlrange="-100 100"/>
+            </default>
+            <default class="hip">
+                <default class="front_hip">
+                    <joint axis="0 1 0" range="-6.2832 6.2832" damping="0.1" armature="0.014058265" frictionloss="1.2"/>
+                    <motor ctrlrange="-100. 100"/>
+                </default>
+                <default class="back_hip">
+                    <joint axis="0 1 0" range="-6.2832 6.2832" damping="0.1" armature="0.014058265" frictionloss="1.2"/>
+                    <motor ctrlrange="-100. 100"/>
+                </default>
+            </default> 
+            <default class="knee">
+                <joint axis="0 1 0" range="-2.8274 -0.4189" damping="0.1" armature="0.0214816" frictionloss="1.2"/>
+                <motor ctrlrange="-150. 150"/>
+            </default>
+            <default class="visual">
+                <geom type="mesh" contype="0" conaffinity="0" group="2"/>
+            </default>
+            <default class="collision">
+                <geom contype="1" conaffinity="1" group="3"/>
+                <default class="foot">
+                    <geom type="sphere" size="0.03" priority="1" condim="6"
+                        friction="0.4 0.02 0.01" solref="0.02 1" solimp="0.9 0.95 0.001"/>
+                 </default>
+            </default>
+        </default>
+    </default>
+    
+    <equality> <!--define rolling contact joint-->
+    <joint joint2="LIMS_EX_Elbow_Joint_2" joint1="LIMS_EX_Elbow_Joint_1" polycoef="0 1 0 0 0" active="true"/>
+    <joint joint2="LIMS_EX_Gripper_Joint_2" joint1="LIMS_EX_Gripper_Joint_1" polycoef="0 1 0 0 0" active="true"/>
+    </equality>
+
+    <!-- 에셋 정의 -->
+    <asset>
+        <!-- 재질 정의 -->
+        <material name="metal" rgba=".9 .95 .95 1"/>
+        <material name="black" rgba="0 0 0 1"/>
+        <material name="white" rgba="1 1 1 1"/>
+        <material name="gray" rgba="0.671705 0.692426 0.774270 1"/>
+        <material name="tan" rgba="0.823 0.706 0.549 1"/>
+        <material name="palegoldenrod" rgba="0.9334 0.91 0.667 1.0"/>
+        <material name="charcoal" rgba="0.3 0.3 0.3 1.0"/>
+        <material name="darker_gray" rgba="0.2 0.2 0.2 1.0"/>
+
+        <mesh name="trunk" file="../meshes/rbq/trunk.obj" scale="1 1 1"/>
+        <mesh name="hip2" file="../meshes/rbq/hip2.obj" scale="1 1 1"/>
+        <mesh name="hip3" file="../meshes/rbq/hip3.obj" scale="1 1 1"/>
+        <mesh name="thigh" file="../meshes/rbq/thigh.obj" scale="1 1 1"/>
+        <mesh name="calf" file="../meshes/rbq/calf.obj" scale="1 1 1"/>
+
+        <!-- LIMS_EX 메시 파일들 -->
+        <mesh name="LIMS_EX_Base"           file="../meshes/lims/Base.stl" scale="0.001 0.001 0.001"/>
+        <mesh name="LIMS_EX_Link_1"         file="../meshes/lims/Link_1.stl" scale="0.001 0.001 0.001"/>
+        <mesh name="LIMS_EX_Upperarm"       file="../meshes/lims/Upperarm.stl" scale="0.001 0.001 0.001"/>
+        <mesh name="LIMS_EX_Elbow"          file="../meshes/lims/Elbow.stl" scale="0.001 0.001 0.001"/>
+        <mesh name="LIMS_EX_Forearm"        file="../meshes/lims/Forearm.stl" scale="0.001 0.001 0.001"/>
+        <mesh name="LIMS_EX_Wrist_1"        file="../meshes/lims/Wrist_1.stl" scale="0.001 0.001 0.001"/>
+        <mesh name="LIMS_EX_Wrist_2"        file="../meshes/lims/Wrist_2.stl" scale="0.001 0.001 0.001"/>
+        <mesh name="LIMS_EX_Wrist_3"        file="../meshes/lims/Wrist_3.stl" scale="0.001 0.001 0.001"/>
+        <mesh name="LIMS_EX_Gripper_Base"   file="../meshes/lims/Gripper_Base.stl" scale="0.001 0.001 0.001"/>
+        <mesh name="LIMS_EX_Gripper_L"      file="../meshes/lims/Gripper_L.stl" scale="0.001 0.001 0.001"/>
+        <mesh name="LIMS_EX_Gripper_R"      file="../meshes/lims/Gripper_R.stl" scale="0.001 0.001 0.001"/>
+    </asset>
+
+    <!-- 월드 바디 정의 -->
+    <worldbody>
+        <!-- 로봇 본체 시작 -->
+        <body name="base_link" pos="0 0 0.8" quat="1 0 0 0" childclass="rbq10">
+            <inertial 
+                pos="-0.013265 0.0 0.011765" 
+                mass="16.758" 
+                fullinertia="0.163831629266 0.590891341306 0.678714788268 -0.000271071491 0.040352639311 0.000216428332"/>
+            <freejoint/>
+            <site name="imu" pos="-0.02557 0 0.04232"/>
+            <geom type="mesh" mesh="trunk" material="trunk_material" class="visual"/>
+            <geom type="box" size="0.4 0.1 0.06" class="collision"/>
+
+            <!-- RR 다리 -->
+            <body name="RR_hip" pos="-0.31883 -0.09 0." euler="0 0 0">
+                <inertial pos="0.027522 -0.01681 -0.00187" mass="3.669344" 
+                    fullinertia="0.006957590282 0.00993982268 0.012145140245 -0.0017011378 -0.000029676183 0.000087952172"/>
+                <joint name="joint0_HRR" class="abduction"/>
+                <geom type="mesh" mesh="FLR_link" material="gray" euler="0 0 3.141592" class="visual"/>
+                
+                <body name="RR_thigh" pos="0 -0.10285 0" euler="0 0 0">
+                    <inertial pos="-0.004765 -0.00441 -0.06311" mass="1.80014" 
+                        fullinertia="0.018990787558 0.019770882672 0.001828257915 0.000045769435 -0.001024809563 0.000510504233"/>
+                    <joint name="joint1_HRP" class="back_hip"/>
+                    <geom type="mesh" mesh="R_thigh_link" material="darker_gray" class="visual"/>
+                    <geom type="cylinder" size="0.06 0.035" euler="1.57 0 0" class="collision"/>
+                    <geom type="box" size="0.025 0.02 0.125" pos="-0.035 0 -0.125" class="collision"/>
+                    
+                    <body name="RR_calf" pos="0 0 -0.33" euler="0 0 0">
+                        <inertial pos="0.008988 0.000072 -0.14911" mass="0.4520"
+                            fullinertia="0.00214256 0.00216568 0.0000616440919 0.000000075939 0.0000230368745 0.000009344688"/>
+                        <joint name="joint2_HRK" class="knee"/>
+                        <geom type="mesh" mesh="calf" material="charcoal" class="visual"/>
+                        <geom type="box" size="0.01 0.015 0.105" pos="0.01 0 -0.065" euler="0 -0.226893 0" class="collision"/>
+                        <geom type="box" size="0.01 0.015 0.04" pos="0.03 0 -0.23" euler="0 0.11 0" class="collision"/>
+
+                        <body name="RR_foot" pos="0 0 -0.33">
+                            <inertial pos="0 0 0" mass="0.06"
+                                fullinertia="9.6e-06 9.6e-06 9.6e-06 0 0 0"/>
+                            <geom name="RR" type="sphere" pos="-0.01 0 -0.005" size="0.03" class="foot"/>
+                        </body>
+                    </body>
+                </body>
+            </body>
+
+            <!-- RL 다리 -->
+            <body name="RL_hip" pos="-0.31883 0.09 0"> 
+                <inertial pos="0.027522 0.01681 -0.00187" mass="3.669344" 
+                    fullinertia="0.006957590282 0.00993982268 0.012145140245 0.0017011378 -0.000029676183 -0.000087952172"/>
+                <joint name="joint3_HLR" class="abduction"/>
+                <geom type="mesh" mesh="FRR_link" material="gray" euler="0 0 -3.141592" class="visual"/>
+                
+                <body name="RL_thigh" pos="0 0.10285 0">
+                    <inertial pos="-0.004765 0.00441 -0.06311" mass="1.80014" 
+                        fullinertia="0.018990787558 0.019770882672 0.001828257915 -0.000045769435 -0.001024809563 -0.000510504233"/>
+                    <joint name="joint4_HLP" class="back_hip"/>
+                    <geom type="mesh" mesh="L_thigh_link" material="darker_gray" class="visual"/>
+                    <geom type="cylinder" size="0.06 0.035" euler="1.57 0 0" class="collision"/>
+                    <geom type="box" size="0.025 0.02 0.125" pos="-0.035 0 -0.125" class="collision"/>
+
+                    <body name="RL_calf" pos="0 0 -0.33">
+                        <inertial pos="0.008988 -0.000072 -0.14911" mass="0.4520"
+                            fullinertia="0.00214256 0.00216568 0.0000616440919 -0.000000075939 0.0000230368745 -0.000009344688"/>
+                        <joint name="joint5_HLK" class="knee"/>
+                        <geom type="mesh" mesh="calf" material="charcoal" class="visual"/>
+                        <geom type="box" size="0.01 0.015 0.105" pos="0.01 0 -0.065" euler="0 -0.226893 0" class="collision"/>
+                        <geom type="box" size="0.01 0.015 0.04" pos="0.03 0 -0.23" euler="0 0.11 0" class="collision"/>
+
+                        <body name="RL_foot" pos="0 0 -0.33">
+                            <inertial pos="0 0 0" mass="0.06"
+                                fullinertia="9.6e-06 9.6e-06 9.6e-06 0 0 0"/>
+                            <geom name="RL" pos="-0.01 0 -0.005" type="sphere" size="0.03" class="foot"/>
+                        </body>
+                    </body>
+                </body>
+            </body>
+
+            <!-- FR 다리 -->
+            <body name="FR_hip" pos="0.30553 -0.09 0" euler="0 0 0">
+                <inertial pos="-0.027522 -0.01681 -0.00187" mass="3.669344" 
+                    fullinertia="0.006957590282 0.00993982268 0.012145140245 0.0017011378 0.000029676183 0.000087952172"/>
+                <joint name="joint6_FRR" class="abduction"/>
+                <geom type="mesh" mesh="FRR_link" material="gray" euler="0 0 0" class="visual"/>
+                
+                <body name="FR_thigh" pos="0 -0.10285 0" euler="0 0 0">
+                    <inertial pos="-0.004765 -0.00441 -0.06311" mass="1.80014" 
+                        fullinertia="0.018990787558 0.019770882672 0.001828257915 0.000045769435 -0.001024809563 0.000510504233"/>
+                    <joint name="joint7_FRP" class="front_hip"/>
+                    <geom type="mesh" mesh="R_thigh_link" material="darker_gray" class="visual"/>
+                    <geom type="cylinder" size="0.06 0.035" euler="1.57 0 0" class="collision"/>
+                    <geom type="box" size="0.025 0.02 0.125" pos="-0.035 0 -0.125" class="collision"/>
+
+                    <body name="FR_calf" pos="0 0 -0.33" euler="0 0 0">
+                        <inertial pos="0.008988 0.000072 -0.14911" mass="0.4520"
+                            fullinertia="0.00214256 0.00216568 0.0000616440919 0.000000075939 0.0000230368745 0.000009344688"/>
+                        <joint name="joint8_FRK" class="knee"/>
+                        <geom type="mesh" mesh="calf" material="charcoal" class="visual"/>
+                        <geom type="box" size="0.01 0.015 0.105" pos="0.01 0 -0.065" euler="0 -0.226893 0" class="collision"/>
+                        <geom type="box" size="0.01 0.015 0.04" pos="0.03 0 -0.23" euler="0 0.11 0" class="collision"/>
+
+                        <body name="FR_foot" pos="0 0 -0.33">
+                            <inertial pos="0 0 0" mass="0.06"
+                                fullinertia="9.6e-06 9.6e-06 9.6e-06 0 0 0"/>
+                            <geom name="FR" pos="-0.01 0 -0.005" type="sphere" size="0.03" class="foot"/>
+                        </body>
+                    </body>
+                </body>
+            </body>
+
+            <!-- FL 다리 -->
+            <body name="FL_hip" pos="0.30553 0.09 0">
+                <inertial pos="-0.027522 0.01681 -0.00187" mass="3.669344" 
+                    fullinertia="0.006957590282 0.00993982268 0.012145140245 -0.0017011378 0.000029676183 -0.000087952172"/>
+                <joint name="joint9_FLR" class="abduction"/>
+                <geom type="mesh" mesh="FLR_link" material="gray" euler="0 0 0" class="visual"/>
+                
+                <body name="FL_thigh" pos="0 0.10285 0">
+                    <inertial pos="-0.004765 0.00441 -0.06311" mass="1.80014" 
+                        fullinertia="0.018990787558 0.019770882672 0.001828257915 -0.000045769435 -0.001024809563 -0.000510504233"/>
+                    <joint name="joint10_FLP" class="front_hip"/>
+                    <geom type="mesh" mesh="L_thigh_link" material="darker_gray" class="visual"/>
+                    <geom type="cylinder" size="0.06 0.035" euler="1.57 0 0" class="collision"/>
+                    <geom type="box" size="0.025 0.02 0.125" pos="-0.035 0 -0.125" class="collision"/>
+
+                    <body name="FL_calf" pos="0 0 -0.33">
+                        <inertial pos="0.008988 -0.000072 -0.14911" mass="0.4520"
+                            fullinertia="0.00214256 0.00216568 0.0000616440919 -0.000000075939 0.0000230368745 -0.000009344688"/>
+                        <joint name="joint11_FLK" class="knee"/>
+                        <geom type="mesh" mesh="calf" material="charcoal" class="visual"/>
+                        <geom type="box" size="0.01 0.015 0.105" pos="0.01 0 -0.065" euler="0 -0.226893 0" class="collision"/>
+                        <geom type="box" size="0.01 0.015 0.04" pos="0.03 0 -0.23" euler="0 0.11 0" class="collision"/>
+
+                        <body name="FL_foot" pos="0 0 -0.33">
+                            <inertial pos="0 0 0" mass="0.06"
+                                fullinertia="9.6e-06 9.6e-06 9.6e-06 0 0 0"/>
+                            <geom name="FL" pos="-0.01 0 -0.005" type="sphere" size="0.03" class="foot"/>
+                        </body>
+                    </body>
+                </body>
+            </body>
+        
+        
+        <!-- LIMS_EX 로봇 팔 추가 -->
+            <body name="LIMS_EX_Base" pos="0.238 0 0.0605" euler="0 0 0">
+                <inertial pos="0.0 0.0 0.02946" mass="1.44" diaginertia="0.002754964 0.00324 0.002927738"/>
+                <geom mesh="LIMS_EX_Base" class="visual"/>
+                
+                <body name="LIMS_EX_Link_1" pos="0.0 0.0 0.054" euler="0.0 0.0 0.0">
+                    <inertial pos="0.0 0.0 0.06222982" mass="1.8395" fullinertia="0.01178834 0.01012 0.004237556 0.0 0.0 0.000096185"/>
+                    <geom mesh="LIMS_EX_Link_1" class="visual"/>
+                    <joint name="LIMS_EX_Shoulder_Yaw_Joint" pos="0.0 0.0 0.0" axis="0 0 1" range="-3.05432619099008 3.05432619099008" stiffness="0.0" damping="2.0" frictionloss="4.37"/>
+
+                    <body name="LIMS_EX_Upperarm" pos="0.0 0.0 0.069" euler="-1.57079632679 -3.1415926535 -1.57079632679">
+                        <inertial pos="0.17 0.006 -0.00038724" mass="3.435475" fullinertia="0.006244009 0.12596 0.12421617 0.005012657 0.000013 0.0"/>
+                        <geom mesh="LIMS_EX_Upperarm" class="visual"/>
+                        <joint name="LIMS_EX_Shoulder_Pitch_Joint" pos="0.0 0.0 0.0" axis="0 0 -1" range="-1.57079632679 1.57079632679" stiffness="0.0" damping="2.0" frictionloss="6.175"/>
+
+                        <body name="LIMS_EX_Elbow" pos="0.345 0.0 0.0" euler="0.0 0.0 0.0">
+                            <inertial pos="0.04 0.001 0.0" mass="0.681745" fullinertia="0.000564047 0.002854213 0.00284738 0.0000172223 0.0 0.0"/>
+                            <geom mesh="LIMS_EX_Elbow" class="visual"/>
+                            <joint name="LIMS_EX_Elbow_Joint_1" pos="0.0 0.0 0.0" axis="0 0 -1" range="0.0 1.55334303427495" stiffness="0.0" damping="2.0" frictionloss="0.7135"/>
+
+                            <body name="LIMS_EX_Forearm" pos="0.085 0.0 0.0" euler="0.0 0.0 0.0">
+                                <inertial pos="0.15 0.0 0.000598062" mass="0.897797" fullinertia="0.00061102 0.02983 0.030012996 -0.0003386354 0.00017 0.0"/>
+                                <geom mesh="LIMS_EX_Forearm" class="visual"/>
+                                <joint name="LIMS_EX_Elbow_Joint_2" pos="0.0 0.0 0.0" axis="0 0 -1" range="0.0 1.55334303427495" stiffness="0.0" damping="2.0" frictionloss="0.7135"/>
+
+                                <body name="LIMS_EX_Wrist_1" pos="0.32 0.0 0.0" euler="0.0 0.0 0.0">
+                                    <inertial pos="0.02 0.0 -0.00220948" mass="0.602003" fullinertia="0.000694438 0.00141 0.001488057 -0.000013875 0.0 0.0"/>
+                                    <geom mesh="LIMS_EX_Wrist_1" class="visual"/>
+                                    <joint name="LIMS_EX_Wrist_Pitch_Joint" pos="0.0 0.0 0.0" axis="0 0 -1" range="-1.57079632679 1.57079632679" stiffness="0.0" damping="2.0" frictionloss="2.234"/>
+
+                                    <body name="LIMS_EX_Wrist_2" pos="0.08 0 0.0" euler="1.57079632679 0.0 0.0">
+                                        <inertial pos="0.01 0.0 -0.0037148" mass="0.236545" fullinertia="0.000216426 0.00022254 0.000158394 0.0 0.0 0.0"/>
+                                        <geom mesh="LIMS_EX_Wrist_2" class="visual"/>
+                                        <joint name="LIMS_EX_Wrist_Roll_Joint" pos="0.0 0.0 0.0" axis="0 0 1" range="-1.57079632679 1.57079632679" stiffness="0.0" damping="2.0" frictionloss="0.598"/>
+
+                                        <body name="LIMS_EX_Wrist_3" pos="0.038 0 0.0" euler="0.0 1.57079632679 -3.14159265359">
+                                            <inertial pos="0.03 0.0 0.008451999" mass="0.032021" fullinertia="0.0000133117 0.0000305151 0.0000282632 0.0 0.0 0.0"/>
+                                            <geom mesh="LIMS_EX_Wrist_3" class="visual"/>
+                                            <joint name="LIMS_EX_Wrist_Yaw_Joint" pos="0.0 0.0 0.0" axis="0 0 1" range="-1.57079632679 1.57079632679" stiffness="0.0" damping="2.0" frictionloss="2.395"/>
+
+                                            <body name="LIMS_EX_Gripper_Base" pos="0.007 0 0.0" euler="0.0 -1.57079632679 0.0">
+                                                <inertial pos="0.212504 0.03 0.0003" mass="0.212504" fullinertia="0.000149463 0.000258202 0.000344705 0.0 0.000012 0.0"/>
+                                                <geom mesh="LIMS_EX_Gripper_Base" class="visual"/>
+                                                
+                                                <site name="ee_site" pos="0.065 0 0" size="0.01" rgba="1 0 0 1"/>
+
+                                                <body name="LIMS_EX_Gripper_L" pos="0.042 0.036 0.0" euler="0.0 0.0 0.0">
+                                                    <inertial pos="0.03 0.013 0.0" mass="0.068321" fullinertia="0.0000241042 0.000189706 0.000211554 0.0000552129 0.0 0.0"/>
+                                                    <geom mesh="LIMS_EX_Gripper_L" class="visual"/>
+                                                    <joint name="LIMS_EX_Gripper_Joint_1" pos="0.0 0.0 0.0" axis="0 0 1" range="-0.436332313 0.34906585" stiffness="0.0" damping="2.0" frictionloss="0.1"/>
+                                                </body>
+
+                                                <body name="LIMS_EX_Gripper_R" pos="0.042 -0.036 0.0" euler="0.0 0.0 0.0">
+                                                    <inertial pos="0.03 -0.013 0.0" mass="0.068321" fullinertia="0.0000241042 0.000189706 0.000211554 -0.0000552129 0.0 0.0"/>
+                                                    <geom mesh="LIMS_EX_Gripper_R" class="visual"/>
+                                                    <joint name="LIMS_EX_Gripper_Joint_2" pos="0.0 0.0 0.0" axis="0 0 -1" range="-0.436332313 0.34906585" stiffness="0.0" damping="2.0" frictionloss="0.1"/>
+                                                </body>
+                                            </body>
+                                        </body>
+                                    </body>
+                                </body>
+                            </body>
+                        </body>
+                    </body>
+                </body>
+            </body>
+        </body>
+    </worldbody>
+
+    <!-- 액추에이터 정의 -->
+    <actuator>
+        <!-- RR 다리 모터 -->
+        <motor class="abduction" name="motor0_HRR" joint="joint0_HRR"/>
+        <motor class="hip" name="motor1_HRP" joint="joint1_HRP"/>
+        <motor class="knee" name="motor2_HRK" joint="joint2_HRK"/>
+        
+        <!-- RL 다리 모터 -->
+        <motor class="abduction" name="motor3_HLR" joint="joint3_HLR"/>
+        <motor class="hip" name="motor4_HLP" joint="joint4_HLP"/>
+        <motor class="knee" name="motor5_HLK" joint="joint5_HLK"/>
+        
+        <!-- FR 다리 모터 -->
+        <motor class="abduction" name="motor6_FRR" joint="joint6_FRR"/>
+        <motor class="hip" name="motor7_FRP" joint="joint7_FRP"/>
+        <motor class="knee" name="motor8_FRK" joint="joint8_FRK"/>
+        
+        <!-- FL 다리 모터 -->
+        <motor class="abduction" name="motor9_FLR" joint="joint9_FLR"/>
+        <motor class="hip" name="motor10_FLP" joint="joint10_FLP"/>
+        <motor class="knee" name="motor11_FLK" joint="joint11_FLK"/>
+
+        <!-- LIMS_EX 모터들 -->
+        <motor name="LIMS_EX_Shoulder_Yaw" gear="92.5" ctrllimited="true" ctrlrange="-1 1" joint="LIMS_EX_Shoulder_Yaw_Joint"/>
+        <motor name="LIMS_EX_Shoulder_Pitch" gear="85" ctrllimited="true" ctrlrange="-1 1" joint="LIMS_EX_Shoulder_Pitch_Joint"/>
+        <motor name="LIMS_EX_Elbow_1" gear="42.5" ctrllimited="true" ctrlrange="-1 1" joint="LIMS_EX_Elbow_Joint_1"/>
+        <motor name="LIMS_EX_Wrist_Pitch" gear="15.2" ctrllimited="true" ctrlrange="-1 1" joint="LIMS_EX_Wrist_Pitch_Joint"/>
+        <motor name="LIMS_EX_Wrist_Roll" gear="7.6" ctrllimited="true" ctrlrange="-1 1" joint="LIMS_EX_Wrist_Roll_Joint"/>
+        <motor name="LIMS_EX_Wrist_Yaw" gear="15.2" ctrllimited="true" ctrlrange="-1 1" joint="LIMS_EX_Wrist_Yaw_Joint"/>
+        <motor name="LIMS_EX_Gripper" gear="18.8" ctrllimited="true" ctrlrange="-1 1" joint="LIMS_EX_Gripper_Joint_1"/>
+    </actuator>
+
+    <!-- 센서 정의 -->
+    <sensor>
+        <!-- 관절 위치 센서 -->
+        <jointpos name="joint0_HRR_pos" joint="joint0_HRR"/>
+        <jointpos name="joint1_HRP_pos" joint="joint1_HRP"/>
+        <jointpos name="joint2_HRK_pos" joint="joint2_HRK"/>
+        <jointpos name="joint3_HLR_pos" joint="joint3_HLR"/>
+        <jointpos name="joint4_HLP_pos" joint="joint4_HLP"/>
+        <jointpos name="joint5_HLK_pos" joint="joint5_HLK"/>
+        <jointpos name="joint6_FRR_pos" joint="joint6_FRR"/>
+        <jointpos name="joint7_FRP_pos" joint="joint7_FRP"/>
+        <jointpos name="joint8_FRK_pos" joint="joint8_FRK"/>
+        <jointpos name="joint9_FLR_pos" joint="joint9_FLR"/>
+        <jointpos name="joint10_FLP_pos" joint="joint10_FLP"/>
+        <jointpos name="joint11_FLK_pos" joint="joint11_FLK"/>
+
+        <!-- 관절 속도 센서 -->
+        <jointvel name="joint0_HRR_vel" joint="joint0_HRR"/>
+        <jointvel name="joint1_HRP_vel" joint="joint1_HRP"/>
+        <jointvel name="joint2_HRK_vel" joint="joint2_HRK"/>
+        <jointvel name="joint3_HLR_vel" joint="joint3_HLR"/>
+        <jointvel name="joint4_HLP_vel" joint="joint4_HLP"/>
+        <jointvel name="joint5_HLK_vel" joint="joint5_HLK"/>
+        <jointvel name="joint6_FRR_vel" joint="joint6_FRR"/>
+        <jointvel name="joint7_FRP_vel" joint="joint7_FRP"/>
+        <jointvel name="joint8_FRK_vel" joint="joint8_FRK"/>
+        <jointvel name="joint9_FLR_vel" joint="joint9_FLR"/>
+        <jointvel name="joint10_FLP_vel" joint="joint10_FLP"/>
+        <jointvel name="joint11_FLK_vel" joint="joint11_FLK"/>
+
+        <!-- 관절 토크 센서 -->
+        <jointactuatorfrc name="joint0_HRR_torque" joint="joint0_HRR" noise="0.0"/>
+        <jointactuatorfrc name="joint1_HRP_torque" joint="joint1_HRP" noise="0.0"/>
+        <jointactuatorfrc name="joint2_HRK_torque" joint="joint2_HRK" noise="0.0"/>
+        <jointactuatorfrc name="joint3_HLR_torque" joint="joint3_HLR" noise="0.0"/>
+        <jointactuatorfrc name="joint4_HLP_torque" joint="joint4_HLP" noise="0.0"/>
+        <jointactuatorfrc name="joint5_HLK_torque" joint="joint5_HLK" noise="0.0"/>
+        <jointactuatorfrc name="joint6_FRR_torque" joint="joint6_FRR" noise="0.0"/>
+        <jointactuatorfrc name="joint7_FRP_torque" joint="joint7_FRP" noise="0.0"/>
+        <jointactuatorfrc name="joint8_FRK_torque" joint="joint8_FRK" noise="0.0"/>
+        <jointactuatorfrc name="joint9_FLR_torque" joint="joint9_FLR" noise="0.0"/>
+        <jointactuatorfrc name="joint10_FLP_torque" joint="joint10_FLP" noise="0.0"/>
+        <jointactuatorfrc name="joint11_FLK_torque" joint="joint11_FLK" noise="0.0"/>
+
+        <!-- IMU 센서 -->
+        <framequat name="imu_quat" objtype="site" objname="imu"/>
+        <gyro name="imu_gyro" site="imu"/>
+        <accelerometer name="imu_acc" site="imu"/>
+        
+        <!-- 프레임 센서 -->
+        <framepos name="frame_pos" objtype="site" objname="imu"/>
+        <framelinvel name="frame_vel" objtype="site" objname="imu"/>
+
+        <!-- LIMS_EX 센서들 -->
+        <jointpos name="LIMS_EX_Shoulder_Yaw_pos" joint="LIMS_EX_Shoulder_Yaw_Joint"/>
+        <jointpos name="LIMS_EX_Shoulder_Pitch_pos" joint="LIMS_EX_Shoulder_Pitch_Joint"/>
+        <jointpos name="LIMS_EX_Elbow_1_pos" joint="LIMS_EX_Elbow_Joint_1"/>
+        <jointpos name="LIMS_EX_Wrist_Pitch_pos" joint="LIMS_EX_Wrist_Pitch_Joint"/>
+        <jointpos name="LIMS_EX_Wrist_Roll_pos" joint="LIMS_EX_Wrist_Roll_Joint"/>
+        <jointpos name="LIMS_EX_Wrist_Yaw_pos" joint="LIMS_EX_Wrist_Yaw_Joint"/>
+        <jointpos name="LIMS_EX_Gripper_pos" joint="LIMS_EX_Gripper_Joint_1"/>
+
+        <jointvel name="LIMS_EX_Shoulder_Yaw_vel" joint="LIMS_EX_Shoulder_Yaw_Joint"/>
+        <jointvel name="LIMS_EX_Shoulder_Pitch_vel" joint="LIMS_EX_Shoulder_Pitch_Joint"/>
+        <jointvel name="LIMS_EX_Elbow_1_vel" joint="LIMS_EX_Elbow_Joint_1"/>
+        <jointvel name="LIMS_EX_Wrist_Pitch_vel" joint="LIMS_EX_Wrist_Pitch_Joint"/>
+        <jointvel name="LIMS_EX_Wrist_Roll_vel" joint="LIMS_EX_Wrist_Roll_Joint"/>
+        <jointvel name="LIMS_EX_Wrist_Yaw_vel" joint="LIMS_EX_Wrist_Yaw_Joint"/>
+        <jointvel name="LIMS_EX_Gripper_vel" joint="LIMS_EX_Gripper_Joint_1"/>
+
+        <jointactuatorfrc name="LIMS_EX_Shoulder_Yaw_torque" joint="LIMS_EX_Shoulder_Yaw_Joint" noise="0.0"/>
+        <jointactuatorfrc name="LIMS_EX_Shoulder_Pitch_torque" joint="LIMS_EX_Shoulder_Pitch_Joint" noise="0.0"/>
+        <jointactuatorfrc name="LIMS_EX_Elbow_1_torque" joint="LIMS_EX_Elbow_Joint_1" noise="0.0"/>
+        <jointactuatorfrc name="LIMS_EX_Wrist_Pitch_torque" joint="LIMS_EX_Wrist_Pitch_Joint" noise="0.0"/>
+        <jointactuatorfrc name="LIMS_EX_Wrist_Roll_torque" joint="LIMS_EX_Wrist_Roll_Joint" noise="0.0"/>
+        <jointactuatorfrc name="LIMS_EX_Wrist_Yaw_torque" joint="LIMS_EX_Wrist_Yaw_Joint" noise="0.0"/>
+        <jointactuatorfrc name="LIMS_EX_Gripper_torque" joint="LIMS_EX_Gripper_Joint_1" noise="0.0"/>
+    </sensor>
+
+    <!-- 접촉 설정 -->
+    <contact>
+        <pair geom1="RR" geom2="floor"/>
+        <pair geom1="RL" geom2="floor"/>
+        <pair geom1="FR" geom2="floor"/>
+        <pair geom1="FL" geom2="floor"/>
+    </contact>
+
+    <!-- 키프레임 정의 -->
+    <!-- <keyframe>
+        <key name="home" qpos="0 0 0.445 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"
+            ctrl="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"/>
+    </keyframe> -->
+</mujoco>

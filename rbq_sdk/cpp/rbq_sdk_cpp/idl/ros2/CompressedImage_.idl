@@ -1,0 +1,14 @@
+#include "Header_.idl"
+
+module sensor_msgs {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct CompressedImage_ {
+        std_msgs::msg::dds_::Header_ header;
+        string format;
+        sequence<uint8> data;
+      };
+    };
+  };
+};

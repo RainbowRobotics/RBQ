@@ -1,0 +1,11 @@
+module unitree_go {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct ConfigChangeStatus_ {
+        string name;
+        string content;
+      };
+    };
+  };
+};
