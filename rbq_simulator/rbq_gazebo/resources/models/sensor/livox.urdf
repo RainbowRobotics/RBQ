@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<!-- Livox MID-360 x2 (front/rear). Optional. Spliced into the rbq10 robot at spawn. -->
+<!-- Each sensor is its own link on a fixed joint, and the housing is split into body + optical
+     dome so each part carries its real colour (palette shared with the MuJoCo models).
+     ⚠No <inertial> on purpose: sdformat lumps inertia-less fixed-joint children back into the
+     trunk, so Gazebo sees exactly the geometry it saw when these were trunk visuals (hence the
+     trunk_fixed_joint_lump__* names it generates). urdfdom does not lump, so RViz keeps the
+     links separate — which is the only way it will colour the sensors at all, since it paints a
+     link with its first visual's material and the trunk's first visual has none.
+     The links also give robot_state_publisher the lidar_front/lidar_rear TF, so the bridge
+     launch no longer publishes those frames itself. -->
+<!-- @VISUAL@ -->
+<!-- @SENSOR@ -->
+<link name="lidar_front">
+  <visual name="lidar_front_body">
+    <origin xyz="0 0 0" rpy="1.5708 0 -3.141592307179586"/>
+    <geometry>
+      <mesh filename="model://sensor/mid360_body.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="mid360_body_mat"><color rgba="0.765 0.788 0.800 1"/></material>
+  </visual>
+  <visual name="lidar_front_dome">
+    <origin xyz="0 0 0" rpy="1.5708 0 -3.141592307179586"/>
+    <geometry>
+      <mesh filename="model://sensor/mid360_dome.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="mid360_dome_mat"><color rgba="0.043 0.451 0.537 1"/></material>
+  </visual>
+</link>
+<joint name="lidar_front_joint" type="fixed">
+  <parent link="trunk"/>
+  <child link="lidar_front"/>
+  <origin xyz="0.372824 0 0.127636" rpy="0 0.610865 0"/>
+</joint>
+<link name="lidar_rear">
+  <visual name="lidar_rear_body">
+    <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+    <geometry>
+      <mesh filename="model://sensor/mid360_body.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="mid360_body_mat"><color rgba="0.765 0.788 0.800 1"/></material>
+  </visual>
+  <visual name="lidar_rear_dome">
+    <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+    <geometry>
+      <mesh filename="model://sensor/mid360_dome.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="mid360_dome_mat"><color rgba="0.043 0.451 0.537 1"/></material>
+  </visual>
+</link>
+<joint name="lidar_rear_joint" type="fixed">
+  <parent link="trunk"/>
+  <child link="lidar_rear"/>
+  <origin xyz="-0.333 0 0.20763" rpy="0 -0.610865 0"/>
+</joint>
+<gazebo reference="trunk">
+  <sensor name="lidar_front" type="gpu_lidar">
+          <always_on>true</always_on>
+          <update_rate>10</update_rate>
+          <topic>/rbq/lidar/lidar_front</topic>
+          <gz_frame_id>lidar_front</gz_frame_id>
+          <lidar>
+            <scan>
+              <horizontal>
+                <samples>360</samples>
+                <resolution>1</resolution>
+                <min_angle>-3.1415929999999999</min_angle>
+                <max_angle>3.1415929999999999</max_angle>
+              </horizontal>
+              <vertical>
+                <samples>40</samples>
+                <resolution>1</resolution>
+                <min_angle>-0.122173</min_angle>
+                <max_angle>0.90757100000000002</max_angle>
+              </vertical>
+            </scan>
+            <range>
+              <min>0.10000000000000001</min>
+              <max>70</max>
+              <resolution>0.01</resolution>
+            </range>
+          </lidar>
+          <pose>0.372824 0 0.127636 0 0.610865 0</pose>
+        </sensor>
+  <sensor name="lidar_rear" type="gpu_lidar">
+          <always_on>true</always_on>
+          <update_rate>10</update_rate>
+          <topic>/rbq/lidar/lidar_rear</topic>
+          <gz_frame_id>lidar_rear</gz_frame_id>
+          <lidar>
+            <scan>
+              <horizontal>
+                <samples>360</samples>
+                <resolution>1</resolution>
+                <min_angle>-3.1415929999999999</min_angle>
+                <max_angle>3.1415929999999999</max_angle>
+              </horizontal>
+              <vertical>
+                <samples>40</samples>
+                <resolution>1</resolution>
+                <min_angle>-0.122173</min_angle>
+                <max_angle>0.90757100000000002</max_angle>
+              </vertical>
+            </scan>
+            <range>
+              <min>0.10000000000000001</min>
+              <max>70</max>
+              <resolution>0.01</resolution>
+            </range>
+          </lidar>
+          <pose>-0.333 0 0.20763 0 -0.610865 0</pose>
+        </sensor>
+</gazebo>

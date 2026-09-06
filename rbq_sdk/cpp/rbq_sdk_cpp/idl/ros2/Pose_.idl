@@ -1,0 +1,14 @@
+#include "Point_.idl"
+#include "Quaternion_.idl"
+
+module geometry_msgs {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct Pose_ {
+        geometry_msgs::msg::dds_::Point_ position;
+        geometry_msgs::msg::dds_::Quaternion_ orientation;
+      };
+    };
+  };
+};

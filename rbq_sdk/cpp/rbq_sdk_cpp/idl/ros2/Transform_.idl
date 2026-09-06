@@ -1,0 +1,14 @@
+#include "Vector3_.idl"
+#include "Quaternion_.idl"
+
+module geometry_msgs {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct Transform_ {
+        geometry_msgs::msg::dds_::Vector3_ translation;
+        geometry_msgs::msg::dds_::Quaternion_ rotation;
+      };
+    };
+  };
+};

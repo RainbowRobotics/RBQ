@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!-- Ouster OS x1. Optional. Spliced into the rbq10 robot at spawn. -->
+<!-- Own link on a fixed joint, housing split into body + optical window so each part carries its
+     real colour (palette shared with the MuJoCo models). See livox.urdf for why the link
+     carries no <inertial> and what that means for Gazebo vs RViz. The mesh is already in sensor
+     frame (+Z up, origin on the mount plane), so the visual needs no extra rotation. -->
+<!-- @VISUAL@ -->
+<!-- @SENSOR@ -->
+<link name="lidar_ouster">
+  <visual name="lidar_ouster_body">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="model://sensor/ouster_body.stl" scale="1 1 1"/>
+    </geometry>
+    <material name="ouster_body_mat"><color rgba="0.682 0.690 0.722 1"/></material>
+  </visual>
+  <visual name="lidar_ouster_window">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="model://sensor/ouster_window.stl" scale="1 1 1"/>
+    </geometry>
+    <material name="ouster_window_mat"><color rgba="0.039 0.039 0.047 1"/></material>
+  </visual>
+</link>
+<joint name="lidar_ouster_joint" type="fixed">
+  <parent link="trunk"/>
+  <child link="lidar_ouster"/>
+  <origin xyz="-0.3125 0 0.105" rpy="0 0 3.141592307179587"/>
+</joint>
+<gazebo reference="trunk">
+  <sensor name="lidar_ouster" type="gpu_lidar">
+          <always_on>true</always_on>
+          <update_rate>10</update_rate>
+          <topic>/rbq/lidar/lidar_ouster</topic>
+          <gz_frame_id>lidar_ouster</gz_frame_id>
+          <lidar>
+            <scan>
+              <horizontal>
+                <samples>360</samples>
+                <resolution>1</resolution>
+                <min_angle>-3.1415929999999999</min_angle>
+                <max_angle>3.1415929999999999</max_angle>
+              </horizontal>
+              <vertical>
+                <samples>64</samples>
+                <resolution>1</resolution>
+                <min_angle>-0.39269900000000002</min_angle>
+                <max_angle>0.39269900000000002</max_angle>
+              </vertical>
+            </scan>
+            <range>
+              <min>0.10000000000000001</min>
+              <max>100</max>
+              <resolution>0.01</resolution>
+            </range>
+          </lidar>
+          <pose>-0.3125 0 0.105 0 0 3.14159</pose>
+        </sensor>
+</gazebo>

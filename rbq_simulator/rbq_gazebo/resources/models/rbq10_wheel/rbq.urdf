@@ -1,0 +1,512 @@
+<?xml version="1.0"?>
+<!-- Auto-migrated from the matching .sdf (one-shot). Robots/sensors are URDF; worlds stay SDF.
+     model:// mesh URIs are Gazebo-native; the gz_sensor_bridge build rewrites them to package:// for RViz. -->
+<robot name="rbq10_wheel">
+  <material name="mat_0.792_0.792_0.792_1"><color rgba="0.792 0.792 0.792 1"/></material>
+  <material name="mat_charcoal"><color rgba="0.3 0.3 0.3 1"/></material>
+  <material name="mat_black"><color rgba="0.08 0.08 0.08 1"/></material>
+
+  <link name="trunk">
+    <inertial>
+      <origin xyz="-0.013265 0 0.011765" rpy="0 0 0"/>
+      <mass value="16.757999999999999"/>
+      <inertia ixx="0.16383162926600001" ixy="-0.000271071491" ixz="0.040352639310999999" iyy="0.59089134130599996" iyz="0.00021642833200000001" izz="0.67871478826800002"/>
+    </inertial>
+    <visual name="trunk_visual">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="model://rbq/trunk.obj" scale="1 1 1"/>
+      </geometry>
+    </visual>
+    <collision name="trunk_collision">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.8 0.2 0.12"/>
+      </geometry>
+    </collision>
+    <!-- @SENSOR_VISUAL@ : lidar mesh <visual> blocks spliced here at spawn -->
+  </link>
+  <link name="HR_hip">
+    <inertial>
+      <origin xyz="0.027522 -0.01681 -0.00187" rpy="0 0 0"/>
+      <mass value="3.6693440000000002"/>
+      <inertia ixx="0.0069575902820000002" ixy="-0.0017011378" ixz="-2.9676182999999999e-05" iyy="0.00993982268" iyz="8.7952172000000005e-05" izz="0.012145140245"/>
+    </inertial>
+    <visual name="HR_hip_visual">
+      <origin xyz="0 0 0" rpy="0 0 -3.141585307179587"/>
+      <geometry>
+        <mesh filename="model://rbq/hip3.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="mat_0.792_0.792_0.792_1"/>
+    </visual>
+  </link>
+  <link name="HR_thigh">
+    <inertial>
+      <origin xyz="-0.004765 -0.00441 -0.06311" rpy="0 0 0"/>
+      <mass value="1.8001400000000001"/>
+      <inertia ixx="0.018990787557999999" ixy="4.5769434999999998e-05" ixz="-0.0010248095629999999" iyy="0.019770882672000001" iyz="0.00051050423299999999" izz="0.001828257915"/>
+    </inertial>
+    <visual name="HR_thigh_visual">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="model://rbq/thigh_right.obj" scale="1 1 1"/>
+      </geometry>
+    </visual>
+    <collision name="HR_thigh_collision">
+      <origin xyz="0 0 0" rpy="1.57 0 0"/>
+      <geometry>
+        <cylinder radius="0.059999999999999998" length="0.070000000000000007"/>
+      </geometry>
+    </collision>
+    <collision name="HR_thigh_collision_1">
+      <origin xyz="-0.035 0 -0.125" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.05 0.04 0.25"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="HR_calf">
+    <inertial>
+      <origin xyz="0.00256 -0.041344 -0.243213" rpy="0 0 0"/>
+      <mass value="1.685861"/>
+      <inertia ixx="0.016929557" ixy="-0.000165690" ixz="-0.000463245" iyy="0.016652313" iyz="-0.003206946" izz="0.002424563"/>
+    </inertial>
+    <visual name="HR_calf_visual">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="model://rbq/calf_wheel_right.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="mat_charcoal"/>
+    </visual>
+    <collision name="HR_calf_collision">
+      <origin xyz="0 0 -0.065" rpy="0 -0.226893 0"/>
+      <geometry>
+        <box size="0.02 0.03 0.21"/>
+      </geometry>
+    </collision>
+    <collision name="HR_calf_collision_1">
+      <origin xyz="0 -0.02 -0.29" rpy="1.5707 0 0"/>
+      <geometry>
+        <cylinder radius="0.0625" length="0.03"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="HL_hip">
+    <inertial>
+      <origin xyz="0.027522 0.01681 -0.00187" rpy="0 0 0"/>
+      <mass value="3.6693440000000002"/>
+      <inertia ixx="0.0069575902820000002" ixy="0.0017011378" ixz="-2.9676182999999999e-05" iyy="0.00993982268" iyz="-8.7952172000000005e-05" izz="0.012145140245"/>
+    </inertial>
+    <visual name="HL_hip_visual">
+      <origin xyz="0 0 0" rpy="0 0 3.141592"/>
+      <geometry>
+        <mesh filename="model://rbq/hip2.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="mat_0.792_0.792_0.792_1"/>
+    </visual>
+  </link>
+  <link name="HL_thigh">
+    <inertial>
+      <origin xyz="-0.004765 0.00441 -0.06311" rpy="0 0 0"/>
+      <mass value="1.8001400000000001"/>
+      <inertia ixx="0.018990787557999999" ixy="-4.5769434999999998e-05" ixz="-0.0010248095629999999" iyy="0.019770882672000001" iyz="-0.00051050423299999999" izz="0.001828257915"/>
+    </inertial>
+    <visual name="HL_thigh_visual">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="model://rbq/thigh.obj" scale="1 1 1"/>
+      </geometry>
+    </visual>
+    <collision name="HL_thigh_collision">
+      <origin xyz="0 0 0" rpy="1.57 0 0"/>
+      <geometry>
+        <cylinder radius="0.059999999999999998" length="0.070000000000000007"/>
+      </geometry>
+    </collision>
+    <collision name="HL_thigh_collision_1">
+      <origin xyz="-0.035 0 -0.125" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.05 0.04 0.25"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="HL_calf">
+    <inertial>
+      <origin xyz="0.00256 0.041344 -0.243213" rpy="0 0 0"/>
+      <mass value="1.685861"/>
+      <inertia ixx="0.016929557" ixy="0.000165690" ixz="-0.000463245" iyy="0.016652313" iyz="0.003206946" izz="0.002424563"/>
+    </inertial>
+    <visual name="HL_calf_visual">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="model://rbq/calf_wheel_left.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="mat_charcoal"/>
+    </visual>
+    <collision name="HL_calf_collision">
+      <origin xyz="0 0 -0.065" rpy="0 -0.226893 0"/>
+      <geometry>
+        <box size="0.02 0.03 0.21"/>
+      </geometry>
+    </collision>
+    <collision name="HL_calf_collision_1">
+      <origin xyz="0 0.02 -0.29" rpy="1.5707 0 0"/>
+      <geometry>
+        <cylinder radius="0.0625" length="0.03"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="FR_hip">
+    <inertial>
+      <origin xyz="-0.027522 -0.01681 -0.00187" rpy="0 0 0"/>
+      <mass value="3.6693440000000002"/>
+      <inertia ixx="0.0069575902820000002" ixy="0.0017011378" ixz="2.9676182999999999e-05" iyy="0.00993982268" iyz="8.7952172000000005e-05" izz="0.012145140245"/>
+    </inertial>
+    <visual name="FR_hip_visual">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="model://rbq/hip2.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="mat_0.792_0.792_0.792_1"/>
+    </visual>
+  </link>
+  <link name="FR_thigh">
+    <inertial>
+      <origin xyz="-0.004765 -0.00441 -0.06311" rpy="0 0 0"/>
+      <mass value="1.8001400000000001"/>
+      <inertia ixx="0.018990787557999999" ixy="4.5769434999999998e-05" ixz="-0.0010248095629999999" iyy="0.019770882672000001" iyz="0.00051050423299999999" izz="0.001828257915"/>
+    </inertial>
+    <visual name="FR_thigh_visual">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="model://rbq/thigh_right.obj" scale="1 1 1"/>
+      </geometry>
+    </visual>
+    <collision name="FR_thigh_collision">
+      <origin xyz="0 0 0" rpy="1.57 0 0"/>
+      <geometry>
+        <cylinder radius="0.059999999999999998" length="0.070000000000000007"/>
+      </geometry>
+    </collision>
+    <collision name="FR_thigh_collision_1">
+      <origin xyz="-0.035 0 -0.125" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.05 0.04 0.25"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="FR_calf">
+    <inertial>
+      <origin xyz="0.00256 -0.041344 -0.243213" rpy="0 0 0"/>
+      <mass value="1.685861"/>
+      <inertia ixx="0.016929557" ixy="-0.000165690" ixz="-0.000463245" iyy="0.016652313" iyz="-0.003206946" izz="0.002424563"/>
+    </inertial>
+    <visual name="FR_calf_visual">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="model://rbq/calf_wheel_right.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="mat_charcoal"/>
+    </visual>
+    <collision name="FR_calf_collision">
+      <origin xyz="0 0 -0.065" rpy="0 -0.226893 0"/>
+      <geometry>
+        <box size="0.02 0.03 0.21"/>
+      </geometry>
+    </collision>
+    <collision name="FR_calf_collision_1">
+      <origin xyz="0 -0.02 -0.29" rpy="1.5707 0 0"/>
+      <geometry>
+        <cylinder radius="0.0625" length="0.03"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="FL_hip">
+    <inertial>
+      <origin xyz="-0.027522 0.01681 -0.00187" rpy="0 0 0"/>
+      <mass value="3.6693440000000002"/>
+      <inertia ixx="0.0069575902820000002" ixy="-0.0017011378" ixz="2.9676182999999999e-05" iyy="0.00993982268" iyz="-8.7952172000000005e-05" izz="0.012145140245"/>
+    </inertial>
+    <visual name="FL_hip_visual">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="model://rbq/hip3.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="mat_0.792_0.792_0.792_1"/>
+    </visual>
+  </link>
+  <link name="FL_thigh">
+    <inertial>
+      <origin xyz="-0.004765 0.00441 -0.06311" rpy="0 0 0"/>
+      <mass value="1.8001400000000001"/>
+      <inertia ixx="0.018990787557999999" ixy="-4.5769434999999998e-05" ixz="-0.0010248095629999999" iyy="0.019770882672000001" iyz="-0.00051050423299999999" izz="0.001828257915"/>
+    </inertial>
+    <visual name="FL_thigh_visual">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="model://rbq/thigh.obj" scale="1 1 1"/>
+      </geometry>
+    </visual>
+    <collision name="FL_thigh_collision">
+      <origin xyz="0 0 0" rpy="1.57 0 0"/>
+      <geometry>
+        <cylinder radius="0.059999999999999998" length="0.070000000000000007"/>
+      </geometry>
+    </collision>
+    <collision name="FL_thigh_collision_1">
+      <origin xyz="-0.035 0 -0.125" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.05 0.04 0.25"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="FL_calf">
+    <inertial>
+      <origin xyz="0.00256 0.041344 -0.243213" rpy="0 0 0"/>
+      <mass value="1.685861"/>
+      <inertia ixx="0.016929557" ixy="0.000165690" ixz="-0.000463245" iyy="0.016652313" iyz="0.003206946" izz="0.002424563"/>
+    </inertial>
+    <visual name="FL_calf_visual">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="model://rbq/calf_wheel_left.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="mat_charcoal"/>
+    </visual>
+    <collision name="FL_calf_collision">
+      <origin xyz="0 0 -0.065" rpy="0 -0.226893 0"/>
+      <geometry>
+        <box size="0.02 0.03 0.21"/>
+      </geometry>
+    </collision>
+    <collision name="FL_calf_collision_1">
+      <origin xyz="0 0.02 -0.29" rpy="1.5707 0 0"/>
+      <geometry>
+        <cylinder radius="0.0625" length="0.03"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="HR_wheel">
+    <inertial>
+      <origin xyz="-0.000001 -0.002744 0" rpy="0 0 0"/>
+      <mass value="1.209504"/>
+      <inertia ixx="0.003963784" ixy="0.000000006" ixz="0.000000025" iyy="0.007324659" iyz="-0.000000001" izz="0.003963522"/>
+    </inertial>
+    <visual name="HR_wheel_visual">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="model://rbq/wheel_right.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="mat_black"/>
+    </visual>
+    <collision name="HR_wheel_collision">
+      <origin xyz="0 0 0" rpy="1.5707 0 0"/>
+      <geometry>
+        <cylinder radius="0.1025" length="0.03"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="HL_wheel">
+    <inertial>
+      <origin xyz="-0.000001 0.002744 0" rpy="0 0 0"/>
+      <mass value="1.209504"/>
+      <inertia ixx="0.003963784" ixy="-0.000000006" ixz="0.000000025" iyy="0.007324659" iyz="0.000000001" izz="0.003963522"/>
+    </inertial>
+    <visual name="HL_wheel_visual">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="model://rbq/wheel_left.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="mat_black"/>
+    </visual>
+    <collision name="HL_wheel_collision">
+      <origin xyz="0 0 0" rpy="1.5707 0 0"/>
+      <geometry>
+        <cylinder radius="0.1025" length="0.03"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="FR_wheel">
+    <inertial>
+      <origin xyz="-0.000001 -0.002744 0" rpy="0 0 0"/>
+      <mass value="1.209504"/>
+      <inertia ixx="0.003963784" ixy="0.000000006" ixz="0.000000025" iyy="0.007324659" iyz="-0.000000001" izz="0.003963522"/>
+    </inertial>
+    <visual name="FR_wheel_visual">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="model://rbq/wheel_right.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="mat_black"/>
+    </visual>
+    <collision name="FR_wheel_collision">
+      <origin xyz="0 0 0" rpy="1.5707 0 0"/>
+      <geometry>
+        <cylinder radius="0.1025" length="0.03"/>
+      </geometry>
+    </collision>
+  </link>
+  <link name="FL_wheel">
+    <inertial>
+      <origin xyz="-0.000001 0.002744 0" rpy="0 0 0"/>
+      <mass value="1.209504"/>
+      <inertia ixx="0.003963784" ixy="-0.000000006" ixz="0.000000025" iyy="0.007324659" iyz="0.000000001" izz="0.003963522"/>
+    </inertial>
+    <visual name="FL_wheel_visual">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="model://rbq/wheel_left.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="mat_black"/>
+    </visual>
+    <collision name="FL_wheel_collision">
+      <origin xyz="0 0 0" rpy="1.5707 0 0"/>
+      <geometry>
+        <cylinder radius="0.1025" length="0.03"/>
+      </geometry>
+    </collision>
+  </link>
+  <joint name="joint0_HRR" type="revolute">
+    <origin xyz="-0.31218 -0.09 0" rpy="0 0 0"/>
+    <parent link="trunk"/>
+    <child link="HR_hip"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="-0.73299999999999998" upper="0.54110000000000003" effort="100" velocity="50"/>
+    <dynamics damping="0" friction="0"/>
+  </joint>
+  <joint name="joint1_HRP" type="revolute">
+    <origin xyz="0 -0.10285 0" rpy="0 0 0"/>
+    <parent link="HR_hip"/>
+    <child link="HR_thigh"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-1.57" upper="3.14" effort="100" velocity="50"/>
+    <dynamics damping="0" friction="0"/>
+  </joint>
+  <joint name="joint2_HRK" type="revolute">
+    <origin xyz="0 0 -0.33" rpy="0 0 0"/>
+    <parent link="HR_thigh"/>
+    <child link="HR_calf"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-2.8274" upper="-0.41889999999999999" effort="150" velocity="50"/>
+    <dynamics damping="0" friction="0"/>
+  </joint>
+  <joint name="joint3_HLR" type="revolute">
+    <origin xyz="-0.31218 0.09 0" rpy="0 0 0"/>
+    <parent link="trunk"/>
+    <child link="HL_hip"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="-0.54110000000000003" upper="0.73299999999999998" effort="100" velocity="50"/>
+    <dynamics damping="0" friction="0"/>
+  </joint>
+  <joint name="joint4_HLP" type="revolute">
+    <origin xyz="0 0.10285 0" rpy="0 0 0"/>
+    <parent link="HL_hip"/>
+    <child link="HL_thigh"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-1.57" upper="3.14" effort="100" velocity="50"/>
+    <dynamics damping="0" friction="0"/>
+  </joint>
+  <joint name="joint5_HLK" type="revolute">
+    <origin xyz="0 0 -0.33" rpy="0 0 0"/>
+    <parent link="HL_thigh"/>
+    <child link="HL_calf"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-2.8274" upper="-0.41889999999999999" effort="150" velocity="50"/>
+    <dynamics damping="0" friction="0"/>
+  </joint>
+  <joint name="joint6_FRR" type="revolute">
+    <origin xyz="0.31218 -0.09 0" rpy="0 0 0"/>
+    <parent link="trunk"/>
+    <child link="FR_hip"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="-0.73299999999999998" upper="0.54110000000000003" effort="100" velocity="50"/>
+    <dynamics damping="0" friction="0"/>
+  </joint>
+  <joint name="joint7_FRP" type="revolute">
+    <origin xyz="0 -0.10285 0" rpy="0 0 0"/>
+    <parent link="FR_hip"/>
+    <child link="FR_thigh"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-1.57" upper="3.14" effort="100" velocity="50"/>
+    <dynamics damping="0" friction="0"/>
+  </joint>
+  <joint name="joint8_FRK" type="revolute">
+    <origin xyz="0 0 -0.33" rpy="0 0 0"/>
+    <parent link="FR_thigh"/>
+    <child link="FR_calf"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-2.8274" upper="-0.41889999999999999" effort="150" velocity="50"/>
+    <dynamics damping="0" friction="0"/>
+  </joint>
+  <joint name="joint9_FLR" type="revolute">
+    <origin xyz="0.31218 0.09 0" rpy="0 0 0"/>
+    <parent link="trunk"/>
+    <child link="FL_hip"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="-0.54110000000000003" upper="0.73299999999999998" effort="100" velocity="50"/>
+    <dynamics damping="0" friction="0"/>
+  </joint>
+  <joint name="joint10_FLP" type="revolute">
+    <origin xyz="0 0.10285 0" rpy="0 0 0"/>
+    <parent link="FL_hip"/>
+    <child link="FL_thigh"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-1.57" upper="3.14" effort="100" velocity="50"/>
+    <dynamics damping="0" friction="0"/>
+  </joint>
+  <joint name="joint11_FLK" type="revolute">
+    <origin xyz="0 0 -0.33" rpy="0 0 0"/>
+    <parent link="FL_thigh"/>
+    <child link="FL_calf"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-2.8274" upper="-0.41889999999999999" effort="150" velocity="50"/>
+    <dynamics damping="0" friction="0"/>
+  </joint>
+  <joint name="joint_HRW" type="continuous">
+    <origin xyz="0.0246 -0.0745 -0.2897" rpy="0 0 0"/>
+    <parent link="HR_calf"/>
+    <child link="HR_wheel"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="40" velocity="300"/>
+    <dynamics damping="0" friction="0.02"/>
+  </joint>
+  <joint name="joint_HLW" type="continuous">
+    <origin xyz="0.0246 0.0745 -0.2897" rpy="0 0 0"/>
+    <parent link="HL_calf"/>
+    <child link="HL_wheel"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="40" velocity="300"/>
+    <dynamics damping="0" friction="0.02"/>
+  </joint>
+  <joint name="joint_FRW" type="continuous">
+    <origin xyz="0.0246 -0.0745 -0.2897" rpy="0 0 0"/>
+    <parent link="FR_calf"/>
+    <child link="FR_wheel"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="40" velocity="300"/>
+    <dynamics damping="0" friction="0.02"/>
+  </joint>
+  <joint name="joint_FLW" type="continuous">
+    <origin xyz="0.0246 0.0745 -0.2897" rpy="0 0 0"/>
+    <parent link="FL_calf"/>
+    <child link="FL_wheel"/>
+    <axis xyz="0 1 0"/>
+    <limit effort="40" velocity="300"/>
+    <dynamics damping="0" friction="0.02"/>
+  </joint>
+  <gazebo reference="trunk">
+    <sensor name="imu_sensor" type="imu">
+            <always_on>true</always_on>
+            <update_rate>500</update_rate>
+            <topic>/rbq/imu</topic>
+            <pose>0.00665 0 -0.0404 0 -0 0</pose>
+          </sensor>
+  </gazebo>
+
+  <gazebo reference="HR_wheel"><mu1>0.8</mu1><mu2>0.8</mu2></gazebo>
+  <gazebo reference="HL_wheel"><mu1>0.8</mu1><mu2>0.8</mu2></gazebo>
+  <gazebo reference="FR_wheel"><mu1>0.8</mu1><mu2>0.8</mu2></gazebo>
+  <gazebo reference="FL_wheel"><mu1>0.8</mu1><mu2>0.8</mu2></gazebo>
+
+  <!-- @SENSORS@ : camera.urdf (required) + {livox|ouster}.urdf + user_sensor.urdf <gazebo><sensor> blocks spliced here at spawn. -->
+</robot>

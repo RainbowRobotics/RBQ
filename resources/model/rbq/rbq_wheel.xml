@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mujoco model="rbq">
+    <compiler
+        angle="radian"
+        coordinate="local"
+        autolimits="true"
+    />
+
+    <option
+        timestep="0.001"
+        gravity="0 0 -9.81"
+        integrator="RK4"
+        cone="elliptic"
+        impratio="100"
+        tolerance="1e-10" >
+        <flag warmstart="enable" energy="enable" contact="enable" frictionloss="enable"/>
+    </option>
+
+    <default>
+        <default class="rbq">
+            <geom friction="0.0" margin="0.001" condim="1"/>
+
+            <default class="abduction">
+                <default class="left_abduction">
+                    <joint axis="1 0 0" range="-0.5411 0.7330" damping="0." armature="0.014058265" frictionloss="0.5"/>
+                    <motor ctrlrange="-100 100" ctrllimited="true"/>
+                </default>
+                <default class="right_abduction">
+                    <joint axis="1 0 0" range="-0.7330 0.5411" damping="0." armature="0.014058265" frictionloss="0.5"/>
+                    <motor ctrlrange="-100 100" ctrllimited="true"/>
+                </default>
+            </default>
+            <default class="hip">
+                <joint axis="0 1 0" range="-1.57 3.14" damping="0." armature="0.014058265" frictionloss="0.5"/>
+                <motor ctrlrange="-100. 100" ctrllimited="true"/>
+            </default>
+            <default class="knee">
+                <joint axis="0 1 0" range="-2.8274 -0.4189" damping="0." armature="0.0214816" frictionloss="0.5"/>
+                <motor ctrlrange="-150. 150" ctrllimited="true"/>
+            </default>
+            <default class="wheel">
+                <joint axis="0 1 0" damping="0." armature="0.001238336" frictionloss="0.02"/>
+                <motor ctrlrange="-40 40" ctrllimited="true"/>
+            </default>
+            <default class="visual">
+                <geom type="mesh" contype="0" conaffinity="0" group="2"/>
+            </default>
+            <default class="collision">
+                <geom contype="1" conaffinity="1" group="3"/>
+                <default class="wheel_collision">
+                    <geom type="cylinder" size="0.1025 0.015" priority="1" condim="6"
+                        friction="0.8 0.8 0.8"/>
+                </default>
+            </default>
+        </default>
+    </default>
+
+    <asset>
+        <material name="metal" rgba=".9 .95 .95 1"/>
+        <material name="black" rgba="0.08 0.08 0.08 1"/>
+        <material name="white" rgba="1 1 1 1"/>
+        <material name="gray" rgba="0.671705 0.692426 0.774270 1"/>
+        <material name="graygray" rgba="0.4 0.4 0.4 1"/>
+        <material name="tan" rgba="0.823 0.706 0.549 1"/>
+        <material name="palegoldenrod" rgba="0.9334 0.91 0.667 1.0"/>
+        <material name="charcoal" rgba="0.3 0.3 0.3 1.0"/>
+        <material name="darker_gray" rgba="0.2 0.2 0.2 1.0"/>
+
+        <material name="trunk_material" texture="trunk_texture"/>
+        <texture name="trunk_texture" type="2d" file="../meshes/rbq/trunk_skin.png" />
+        <material name="hip_material" texture="hip_texture"/>
+        <texture name="hip_texture" type="2d" file="../meshes/rbq/hip_skin.png" />
+        <material name="thigh_left_material" texture="thigh_left_texture"/>
+        <texture name="thigh_left_texture" type="2d" file="../meshes/rbq/thigh_left_skin.png" />
+        <material name="thigh_right_material" texture="thigh_right_texture"/>
+        <texture name="thigh_right_texture" type="2d" file="../meshes/rbq/thigh_right_skin.png" />
+
+        <mesh name="trunk" file="../meshes/rbq/trunk.obj" scale="1 1 1"/>
+        <mesh name="hip2" file="../meshes/rbq/hip2.obj" scale="1 1 1"/>
+        <mesh name="hip3" file="../meshes/rbq/hip3.obj" scale="1 1 1"/>
+        <mesh name="thigh" file="../meshes/rbq/thigh.obj" scale="1 1 1"/>
+        <mesh name="calf" file="../meshes/rbq/calf.obj" scale="1 1 1"/>
+        <mesh name="calf_wheel_left" file="../meshes/rbq/calf_wheel_left.obj" scale="1 1 1"/>
+        <mesh name="calf_wheel_right" file="../meshes/rbq/calf_wheel_right.obj" scale="1 1 1"/>
+        <mesh name="wheel_left" file="../meshes/rbq/wheel_left.obj" scale="1 1 1"/>
+        <mesh name="wheel_right" file="../meshes/rbq/wheel_right.obj" scale="1 1 1"/>
+
+        <!-- LiDAR housings, split into body + optical window so each carries its own colour.
+             The palette below is shared with the rbq_gazebo URDFs; keep the two in step. -->
+        <material name="mid360_body_mat"   rgba="0.765 0.788 0.800 1"/>   <!-- anodised aluminium -->
+        <material name="mid360_dome_mat"   rgba="0.043 0.451 0.537 1"/>   <!-- optical dome, teal -->
+        <material name="ouster_body_mat"   rgba="0.682 0.690 0.722 1"/>   <!-- anodised aluminium -->
+        <material name="ouster_window_mat" rgba="0.039 0.039 0.047 1"/>   <!-- optical band, gloss black -->
+        <mesh name="mid360_body"   file="../meshes/sensor/mid360_body.stl" scale="0.001 0.001 0.001"/>
+        <mesh name="mid360_dome"   file="../meshes/sensor/mid360_dome.stl" scale="0.001 0.001 0.001"/>
+        <mesh name="ouster_body"   file="../meshes/sensor/ouster_body.stl"/>
+        <mesh name="ouster_window" file="../meshes/sensor/ouster_window.stl"/>
+    </asset>
+
+    <worldbody>
+        <body name="base_link" pos="0 0 0.7" quat="1 0 0 0" childclass="rbq">
+            <inertial
+                pos="-0.013265 0.0 0.011765"
+                mass="16.758"
+                fullinertia="0.163831629266 0.590891341306 0.678714788268 -0.000271071491 0.040352639311 0.000216428332"/>
+            <freejoint/>
+            <site name="imu" pos="0.00665 0 -0.0404"/>
+            <geom type="mesh" mesh="trunk" material="trunk_material" class="visual"/>
+            <geom type="box" size="0.4 0.1 0.06" class="collision"/>
+            <camera name="track_cam" mode="track" target="base_link" pos="0 -2 1" euler="20 0 0"/>
+
+            <!-- LiDAR. Same extrinsics as the quadruped model: base_link and the trunk mesh are
+                 identical between the two variants, so the mounts do not move.
+                 site = sensor frame (raytrace origin); geom = housing mesh (visual only).
+                 Group 4 = Livox, 5 = Ouster — hidden unless the matching flag is passed. -->
+            <site name="lidar_front" pos="0.372824 0 0.127636" quat="0.953716987 0 0.300705686 0"/>
+            <geom type="mesh" mesh="mid360_body" material="mid360_body_mat" class="visual" group="4"
+                  pos="0.372824 0 0.127636" quat="0.212631537 -0.212630522 -0.67438095 -0.674378547"/>
+            <geom type="mesh" mesh="mid360_dome" material="mid360_dome_mat" class="visual" group="4"
+                  pos="0.372824 0 0.127636" quat="0.212631537 -0.212630522 -0.67438095 -0.674378547"/>
+            <site name="lidar_rear" pos="-0.333 0 0.20763" quat="0.953716987 0 -0.300705686 0"/>
+            <geom type="mesh" mesh="mid360_body" material="mid360_body_mat" class="visual" group="4"
+                  pos="-0.333 0 0.20763" quat="0.67437851 0.674380987 -0.212630639 0.21263142"/>
+            <geom type="mesh" mesh="mid360_dome" material="mid360_dome_mat" class="visual" group="4"
+                  pos="-0.333 0 0.20763" quat="0.67437851 0.674380987 -0.212630639 0.21263142"/>
+            <site name="lidar_ouster" pos="-0.3125 0 0.105" quat="0 0 0 1"/>
+            <geom type="mesh" mesh="ouster_body" material="ouster_body_mat" class="visual" group="5"
+                  pos="-0.3125 0 0.105" quat="0 0 0 1"/>
+            <geom type="mesh" mesh="ouster_window" material="ouster_window_mat" class="visual" group="5"
+                  pos="-0.3125 0 0.105" quat="0 0 0 1"/>
+
+            <body name="BT0_body" pos="0.364 0 -0.024919" quat="0 -0.1736482 0 0.9848078">
+                <camera name="BT0"
+                    mode="fixed"
+                    pos="0 0 0"
+                    quat="1 0 0 0"
+                    focal="1.93e-3 1.93e-3"
+                    resolution="640 360"
+                    sensorsize="3896e-6 2140e-6"/>
+            </body>
+            <body name="BT1_body" pos="0.26097 0 -0.04582" quat="0 0.1218693 0 0.9925462">
+                <camera name="BT1"
+                    mode="fixed"
+                    pos="0 0 0"
+                    quat="1 0 0 0"
+                    focal="1.93e-3 1.93e-3"
+                    resolution="640 360"
+                    sensorsize="3896e-6 2140e-6"/>
+            </body>
+            <body name="BT2_body" pos="-0.19515 0.0065 -0.0465" quat="0 0 0 1">
+                <camera name="BT2"
+                    mode="fixed"
+                    pos="0 0 0"
+                    quat="1 0 0 0"
+                    focal="1.93e-3 1.93e-3"
+                    resolution="640 360"
+                    sensorsize="3896e-6 2140e-6"/>
+            </body>
+            <body name="BT3_body" pos="-0.352082 -0.000011 -0.018938" quat="0.9848078 0 0.1736482 0">
+                <camera name="BT3"
+                    mode="fixed"
+                    pos="0 0 0"
+                    quat="1 0 0 0"
+                    focal="1.93e-3 1.93e-3"
+                    resolution="640 360"
+                    sensorsize="3896e-6 2140e-6"/>
+            </body>
+            <body name="FT0_body" pos="0.388031 -0.037500 0.037764" quat="0.5 0.5 -0.5 -0.5">
+                <camera name="FT0"
+                    mode="fixed"
+                    pos="0 0 0"
+                    quat="1 0 0 0"
+                    focal="1.93e-3 1.93e-3"
+                    resolution="640 360"
+                    sensorsize="384e-5 240e-5"/>
+            </body>
+            <body name="RR0_body" pos="-0.388031 0.037500 0.037764" quat="-0.5 -0.5 -0.5 -0.5">
+                <camera name="RR0"
+                    mode="fixed"
+                    pos="0 0 0"
+                    quat="1 0 0 0"
+                    focal="1.93e-3 1.93e-3"
+                    resolution="640 360"
+                    sensorsize="384e-5 240e-5"/>
+            </body>
+
+            <!-- RR leg -->
+            <body name="RR_hip" pos="-0.31218 -0.09 0." euler="0 0 0">
+                <inertial pos="0.027522 -0.01681 -0.00187" mass="3.669344"
+                    fullinertia="0.006957590282 0.00993982268 0.012145140245 -0.0017011378 -0.000029676183 0.000087952172"/>
+                <joint name="joint_HRR" class="right_abduction"/>
+                <geom type="mesh" mesh="hip3" material="hip_material" euler="0 0 3.141592" class="visual"/>
+
+                <body name="RR_thigh" pos="0 -0.10285 0" euler="0 0 0">
+                    <inertial pos="-0.004765 -0.00441 -0.06311" mass="1.80014"
+                        fullinertia="0.018990787558 0.019770882672 0.001828257915 0.000045769435 -0.001024809563 0.000510504233"/>
+                    <joint name="joint_HRP" class="hip"/>
+                    <geom type="mesh" mesh="thigh" material="thigh_right_material" class="visual"/>
+                    <geom type="cylinder" size="0.06 0.035" euler="1.57 0 0" class="collision"/>
+                    <geom type="box" size="0.025 0.02 0.125" pos="-0.035 0 -0.125" class="collision"/>
+
+                    <body name="RR_calf" pos="0 0 -0.33" euler="0 0 0">
+                        <inertial pos="0.00256 -0.041344 -0.243213" mass="1.685861"
+                            fullinertia="0.016929557 0.016652313 0.002424563 -0.000165690 -0.000463245 -0.003206946"/>
+                        <joint name="joint_HRK" class="knee"/>
+                        <geom type="mesh" mesh="calf_wheel_right" material="charcoal" class="visual"/>
+                        <geom type="box" size="0.01 0.015 0.105" pos="0 0 -0.065" euler="0 -0.226893 0" class="collision"/>
+                        <geom type="cylinder" size="0.0625 0.015 " pos="0 -0.02 -0.29" euler="1.5707 0 0" class="collision"/>
+
+                        <body name="RR_wheel" pos="0.0246 -0.0745 -0.2897">
+                            <inertial pos="-0.000001 -0.002744 0" mass="1.209504"
+                                fullinertia="0.003963784 0.007324659 0.003963522 0.000000006 0.000000025 -0.000000001"/>
+                            <joint name="joint_HRW" class="wheel"/>
+                            <geom type="mesh" mesh="wheel_right" material="black" class="visual"/>
+                            <geom name="RR" class="wheel_collision" euler="1.5707 0 0"/>
+                        </body>
+                    </body>
+                </body>
+            </body>
+
+            <!-- RL leg -->
+            <body name="RL_hip" pos="-0.31218 0.09 0">
+                <inertial pos="0.027522 0.01681 -0.00187" mass="3.669344"
+                    fullinertia="0.006957590282 0.00993982268 0.012145140245 0.0017011378 -0.000029676183 -0.000087952172"/>
+                <joint name="joint_HLR" class="left_abduction"/>
+                <geom type="mesh" mesh="hip2" material="hip_material" euler="0 0 -3.141592" class="visual"/>
+
+                <body name="RL_thigh" pos="0 0.10285 0">
+                    <inertial pos="-0.004765 0.00441 -0.06311" mass="1.80014"
+                        fullinertia="0.018990787558 0.019770882672 0.001828257915 -0.000045769435 -0.001024809563 -0.000510504233"/>
+                    <joint name="joint_HLP" class="hip"/>
+                    <geom type="mesh" mesh="thigh" material="thigh_left_material" class="visual"/>
+                    <geom type="cylinder" size="0.06 0.035" euler="1.57 0 0" class="collision"/>
+                    <geom type="box" size="0.025 0.02 0.125" pos="-0.035 0 -0.125" class="collision"/>
+
+                    <body name="RL_calf" pos="0 0 -0.33">
+                        <inertial pos="0.00256 0.041344 -0.243213" mass="1.685861"
+                            fullinertia="0.016929557 0.016652313 0.002424563 0.000165690 -0.000463245 0.003206946"/>
+                        <joint name="joint_HLK" class="knee"/>
+                        <geom type="mesh" mesh="calf_wheel_left" material="charcoal" class="visual"/>
+                        <geom type="box" size="0.01 0.015 0.105" pos="0 0 -0.065" euler="0 -0.226893 0" class="collision"/>
+                        <geom type="cylinder" size="0.0625 0.015 " pos="0 0.02 -0.29" euler="1.5707 0 0" class="collision"/>
+
+                        <body name="RL_wheel" pos="0.0246 0.0745 -0.2897">
+                            <inertial pos="-0.000001 0.002744 0" mass="1.209504"
+                                fullinertia="0.003963784 0.007324659 0.003963522 -0.000000006 0.000000025 0.000000001"/>
+                            <joint name="joint_HLW" class="wheel"/>
+                            <geom type="mesh" mesh="wheel_left" material="black" class="visual"/>
+                            <geom name="RL" class="wheel_collision" euler="1.5707 0 0"/>
+                        </body>
+                    </body>
+                </body>
+            </body>
+
+            <!-- FR leg -->
+            <body name="FR_hip" pos="0.31218 -0.09 0" euler="0 0 0">
+                <inertial pos="-0.027522 -0.01681 -0.00187" mass="3.669344"
+                    fullinertia="0.006957590282 0.00993982268 0.012145140245 0.0017011378 0.000029676183 0.000087952172"/>
+                <joint name="joint_FRR" class="right_abduction"/>
+                <geom type="mesh" mesh="hip2" material="hip_material" euler="0 0 0" class="visual"/>
+
+                <body name="FR_thigh" pos="0 -0.10285 0" euler="0 0 0">
+                    <inertial pos="-0.004765 -0.00441 -0.06311" mass="1.80014"
+                        fullinertia="0.018990787558 0.019770882672 0.001828257915 0.000045769435 -0.001024809563 0.000510504233"/>
+                    <joint name="joint_FRP" class="hip"/>
+                    <geom type="mesh" mesh="thigh" material="thigh_right_material" class="visual"/>
+                    <geom type="cylinder" size="0.06 0.035" euler="1.57 0 0" class="collision"/>
+                    <geom type="box" size="0.025 0.02 0.125" pos="-0.035 0 -0.125" class="collision"/>
+
+                    <body name="FR_calf" pos="0 0 -0.33" euler="0 0 0">
+                        <inertial pos="0.00256 -0.041344 -0.243213" mass="1.685861"
+                            fullinertia="0.016929557 0.016652313 0.002424563 -0.000165690 -0.000463245 -0.003206946"/>
+                        <joint name="joint_FRK" class="knee"/>
+                        <geom type="mesh" mesh="calf_wheel_right" material="charcoal" class="visual"/>
+                        <geom type="box" size="0.01 0.015 0.105" pos="0 0 -0.065" euler="0 -0.226893 0" class="collision"/>
+                        <geom type="cylinder" size="0.0625 0.015 " pos="0 -0.02 -0.29" euler="1.5707 0 0" class="collision"/>
+
+                        <body name="FR_wheel" pos="0.0246 -0.0745 -0.2897">
+                            <inertial pos="-0.000001 -0.002744 0" mass="1.209504"
+                                fullinertia="0.003963784 0.007324659 0.003963522 0.000000006 0.000000025 -0.000000001"/>
+                            <joint name="joint_FRW" class="wheel"/>
+                            <geom type="mesh" mesh="wheel_right" material="black" class="visual"/>
+                            <geom name="FR" class="wheel_collision" euler="1.5707 0 0"/>
+                        </body>
+                    </body>
+                </body>
+            </body>
+
+            <!-- FL leg -->
+            <body name="FL_hip" pos="0.31218 0.09 0">
+                <inertial pos="-0.027522 0.01681 -0.00187" mass="3.669344"
+                    fullinertia="0.006957590282 0.00993982268 0.012145140245 -0.0017011378 0.000029676183 -0.000087952172"/>
+                <joint name="joint_FLR" class="left_abduction"/>
+                <geom type="mesh" mesh="hip3" material="hip_material" euler="0 0 0" class="visual"/>
+
+                <body name="FL_thigh" pos="0 0.10285 0">
+                    <inertial pos="-0.004765 0.00441 -0.06311" mass="1.80014"
+                        fullinertia="0.018990787558 0.019770882672 0.001828257915 -0.000045769435 -0.001024809563 -0.000510504233"/>
+                    <joint name="joint_FLP" class="hip"/>
+                    <geom type="mesh" mesh="thigh" material="thigh_left_material" class="visual"/>
+                    <geom type="cylinder" size="0.06 0.035" euler="1.57 0 0" class="collision"/>
+                    <geom type="box" size="0.025 0.02 0.125" pos="-0.035 0 -0.125" class="collision"/>
+
+                    <body name="FL_calf" pos="0 0 -0.33">
+                        <inertial pos="0.00256 0.041344 -0.243213" mass="1.685861"
+                            fullinertia="0.016929557 0.016652313 0.002424563 0.000165690 -0.000463245 0.003206946"/>
+                        <joint name="joint_FLK" class="knee"/>
+                        <geom type="mesh" mesh="calf_wheel_left" material="charcoal" class="visual"/>
+                        <geom type="box" size="0.01 0.015 0.105" pos="0 0 -0.065" euler="0 -0.226893 0" class="collision"/>
+                        <geom type="cylinder" size="0.0625 0.015 " pos="0 0.02 -0.29" euler="1.5707 0 0" class="collision"/>
+
+                        <body name="FL_wheel" pos="0.0246 0.0745 -0.2897">
+                            <inertial pos="-0.000001 0.002744 0" mass="1.209504"
+                                fullinertia="0.003963784 0.007324659 0.003963522 -0.000000006 0.000000025 0.000000001"/>
+                            <joint name="joint_FLW" class="wheel"/>
+                            <geom type="mesh" mesh="wheel_left" material="black" class="visual"/>
+                            <geom name="FL" class="wheel_collision" euler="1.5707 0 0"/>
+                        </body>
+                    </body>
+                </body>
+            </body>
+
+        </body>
+    </worldbody>
+
+    <actuator>
+        <!-- RR leg motors -->
+        <motor class="right_abduction" name="motor0_HRR" joint="joint_HRR"/>
+        <motor class="hip" name="motor1_HRP" joint="joint_HRP"/>
+        <motor class="knee" name="motor2_HRK" joint="joint_HRK"/>
+        <motor class="wheel" name="motor_HRW" joint="joint_HRW"/>
+
+        <!-- RL leg motors -->
+        <motor class="left_abduction" name="motor3_HLR" joint="joint_HLR"/>
+        <motor class="hip" name="motor4_HLP" joint="joint_HLP"/>
+        <motor class="knee" name="motor5_HLK" joint="joint_HLK"/>
+        <motor class="wheel" name="motor_HLW" joint="joint_HLW"/>
+
+        <!-- FR leg motors -->
+        <motor class="right_abduction" name="motor6_FRR" joint="joint_FRR"/>
+        <motor class="hip" name="motor7_FRP" joint="joint_FRP"/>
+        <motor class="knee" name="motor8_FRK" joint="joint_FRK"/>
+        <motor class="wheel" name="motor_FRW" joint="joint_FRW"/>
+
+        <!-- FL leg motors -->
+        <motor class="left_abduction" name="motor9_FLR" joint="joint_FLR"/>
+        <motor class="hip" name="motor10_FLP" joint="joint_FLP"/>
+        <motor class="knee" name="motor11_FLK" joint="joint_FLK"/>
+        <motor class="wheel" name="motor_FLW" joint="joint_FLW"/>
+
+    </actuator>
+
+    <sensor>
+        <jointpos name="jointpos_HRR" joint="joint_HRR"/>
+        <jointpos name="jointpos_HRP" joint="joint_HRP"/>
+        <jointpos name="jointpos_HRK" joint="joint_HRK"/>
+        <jointpos name="jointpos_HRW" joint="joint_HRW"/>
+        <jointpos name="jointpos_HLR" joint="joint_HLR"/>
+        <jointpos name="jointpos_HLP" joint="joint_HLP"/>
+        <jointpos name="jointpos_HLK" joint="joint_HLK"/>
+        <jointpos name="jointpos_HLW" joint="joint_HLW"/>
+        <jointpos name="jointpos_FRR" joint="joint_FRR"/>
+        <jointpos name="jointpos_FRP" joint="joint_FRP"/>
+        <jointpos name="jointpos_FRK" joint="joint_FRK"/>
+        <jointpos name="jointpos_FRW" joint="joint_FRW"/>
+        <jointpos name="jointpos_FLR" joint="joint_FLR"/>
+        <jointpos name="jointpos_FLP" joint="joint_FLP"/>
+        <jointpos name="jointpos_FLK" joint="joint_FLK"/>
+        <jointpos name="jointpos_FLW" joint="joint_FLW"/>
+
+        <jointvel name="jointvel_HRR" joint="joint_HRR"/>
+        <jointvel name="jointvel_HRP" joint="joint_HRP"/>
+        <jointvel name="jointvel_HRK" joint="joint_HRK"/>
+        <jointvel name="jointvel_HRW" joint="joint_HRW"/>
+        <jointvel name="jointvel_HLR" joint="joint_HLR"/>
+        <jointvel name="jointvel_HLP" joint="joint_HLP"/>
+        <jointvel name="jointvel_HLK" joint="joint_HLK"/>
+        <jointvel name="jointvel_HLW" joint="joint_HLW"/>
+        <jointvel name="jointvel_FRR" joint="joint_FRR"/>
+        <jointvel name="jointvel_FRP" joint="joint_FRP"/>
+        <jointvel name="jointvel_FRK" joint="joint_FRK"/>
+        <jointvel name="jointvel_FRW" joint="joint_FRW"/>
+        <jointvel name="jointvel_FLR" joint="joint_FLR"/>
+        <jointvel name="jointvel_FLP" joint="joint_FLP"/>
+        <jointvel name="jointvel_FLK" joint="joint_FLK"/>
+        <jointvel name="jointvel_FLW" joint="joint_FLW"/>
+
+        <jointactuatorfrc name="jointactuatorfrc_HRR" joint="joint_HRR" noise="0.0"/>
+        <jointactuatorfrc name="jointactuatorfrc_HRP" joint="joint_HRP" noise="0.0"/>
+        <jointactuatorfrc name="jointactuatorfrc_HRK" joint="joint_HRK" noise="0.0"/>
+        <jointactuatorfrc name="jointactuatorfrc_HRW" joint="joint_HRW" noise="0.0"/>
+        <jointactuatorfrc name="jointactuatorfrc_HLR" joint="joint_HLR" noise="0.0"/>
+        <jointactuatorfrc name="jointactuatorfrc_HLP" joint="joint_HLP" noise="0.0"/>
+        <jointactuatorfrc name="jointactuatorfrc_HLK" joint="joint_HLK" noise="0.0"/>
+        <jointactuatorfrc name="jointactuatorfrc_HLW" joint="joint_HLW" noise="0.0"/>
+        <jointactuatorfrc name="jointactuatorfrc_FRR" joint="joint_FRR" noise="0.0"/>
+        <jointactuatorfrc name="jointactuatorfrc_FRP" joint="joint_FRP" noise="0.0"/>
+        <jointactuatorfrc name="jointactuatorfrc_FRK" joint="joint_FRK" noise="0.0"/>
+        <jointactuatorfrc name="jointactuatorfrc_FRW" joint="joint_FRW" noise="0.0"/>
+        <jointactuatorfrc name="jointactuatorfrc_FLR" joint="joint_FLR" noise="0.0"/>
+        <jointactuatorfrc name="jointactuatorfrc_FLP" joint="joint_FLP" noise="0.0"/>
+        <jointactuatorfrc name="jointactuatorfrc_FLK" joint="joint_FLK" noise="0.0"/>
+        <jointactuatorfrc name="jointactuatorfrc_FLW" joint="joint_FLW" noise="0.0"/>
+
+        <framequat name="imu_quat" objtype="site" objname="imu"/>
+        <gyro name="imu_gyro" site="imu"/>
+        <accelerometer name="imu_acc" site="imu"/>
+
+        <framepos name="frame_pos" objtype="site" objname="imu"/>
+        <framelinvel name="frame_vel" objtype="site" objname="imu"/>
+
+        <!-- LiDAR built-in IMUs (for LiDAR-inertial SLAM). -->
+        <gyro name="lidar_front_gyro" site="lidar_front"/>
+        <accelerometer name="lidar_front_acc" site="lidar_front"/>
+        <gyro name="lidar_rear_gyro" site="lidar_rear"/>
+        <accelerometer name="lidar_rear_acc" site="lidar_rear"/>
+        <gyro name="lidar_ouster_gyro" site="lidar_ouster"/>
+        <accelerometer name="lidar_ouster_acc" site="lidar_ouster"/>
+    </sensor>
+
+</mujoco>

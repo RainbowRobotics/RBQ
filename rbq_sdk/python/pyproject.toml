@@ -1,0 +1,67 @@
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[project]
+name = "rbq_sdk"
+dynamic = ["version"]
+description = "RBQ robot SDK for Python (CycloneDDS-based pub/sub & RPC client for Rainbow Robotics quadruped)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "BSD-3-Clause"
+license-files = ["LICENSE"]
+authors = [{ name = "RBQ", email = "rbq.support@rainbow-robotics.com" }]
+keywords = ["rbq", "robotics", "quadruped", "dds", "cyclonedds", "sdk", "rainbow-robotics"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+# cyclonedds 0.10.2 only publishes wheels through CPython 3.10; newer interpreters
+# would build it from the sdist (needs the CycloneDDS C toolchain). Bump this pin
+# to support 3.11/3.12. scripts/release.bash (Step 9) builds/publishes on Python 3.10.
+dependencies = [
+    "cyclonedds==0.10.2",
+    "numpy",
+    "opencv-python",
+]
+
+[project.urls]
+Homepage = "https://github.com/RainbowRobotics/RBQ"
+Repository = "https://github.com/RainbowRobotics/RBQ"
+youtube = "https://www.youtube.com/@RainbowRobotics-official"
+
+# --- Version ------------------------------------------------------------------
+# CI pins the wheel version by exporting SETUPTOOLS_SCM_PRETEND_VERSION, which
+# short-circuits the git lookup below. This VCS config is only a local-build fallback.
+[tool.hatch.version]
+source = "vcs"
+# Local-build fallback: with no PRETEND var, derive from the framework's `v*`
+# tags (the SDK version tracks the framework version); if none is reachable,
+# use fallback-version.
+fallback-version = "0.0.0"
+
+[tool.hatch.version.raw-options]
+# Never emit PEP 440 local versions (+g<sha>) — PyPI rejects them.
+local_scheme = "no-local-version"
+# pyproject.toml lives in rbq_sdk/python/ but .git is at the repo root two levels
+# up; without this, setuptools-scm can't find the worktree and falls back to 0.0.0.
+search_parent_directories = true
+
+# --- Build target: package only `rbq_sdk_py/` (exclude example/, scripts/) ----
+[tool.hatch.build.targets.wheel]
+packages = ["rbq_sdk_py"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/rbq_sdk_py",
+    "/README.md",
+    "/CHANGELOG.md",
+    "/LICENSE",
+    "/pyproject.toml",
+]

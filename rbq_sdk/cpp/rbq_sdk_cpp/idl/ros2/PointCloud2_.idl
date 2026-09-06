@@ -1,0 +1,21 @@
+#include "PointField_.idl"
+#include "Header_.idl"
+
+module sensor_msgs {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct PointCloud2_ {
+        std_msgs::msg::dds_::Header_ header;
+        uint32 height;
+        uint32 width;
+        sequence<sensor_msgs::msg::dds_::PointField_> fields;
+        boolean is_bigendian;
+        uint32 point_step;
+        uint32 row_step;
+        sequence<uint8> data;
+        boolean is_dense;
+      };
+    };
+  };
+};
