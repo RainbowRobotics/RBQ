@@ -1,0 +1,14 @@
+#include "ResponseHeader_.idl"
+
+module api {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct Response_ {
+        api::msg::dds_::ResponseHeader_ header;
+        string data;
+        sequence<int8> binary;
+      };
+    };
+  };
+};

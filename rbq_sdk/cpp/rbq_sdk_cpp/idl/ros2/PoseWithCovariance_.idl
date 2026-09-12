@@ -1,0 +1,13 @@
+#include "Pose_.idl"
+
+module geometry_msgs {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct PoseWithCovariance_ {
+        geometry_msgs::msg::dds_::Pose_ pose;
+        double covariance[36];
+      };
+    };
+  };
+};

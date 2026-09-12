@@ -1,0 +1,14 @@
+#include "PoseWithCovariance_.idl"
+#include "Header_.idl"
+
+module geometry_msgs {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct PoseWithCovarianceStamped_ {
+        std_msgs::msg::dds_::Header_ header;
+        geometry_msgs::msg::dds_::PoseWithCovariance_ pose;
+      };
+    };
+  };
+};

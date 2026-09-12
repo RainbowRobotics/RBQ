@@ -1,0 +1,11 @@
+module api {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct RequestPolicy_ {
+        long priority;
+        boolean noreply;
+      };
+    };
+  };
+};

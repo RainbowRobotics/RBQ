@@ -1,0 +1,9 @@
+<library path="rbq_rviz_plugins">
+
+  <class name="rbq_rviz_plugins/RBQ"
+         type="rbq_rviz_plugins::RbqPanel"
+         base_class_type="rviz_common::Panel">
+    <description>The RBQ rviz panel.</description>
+  </class>
+
+</library>

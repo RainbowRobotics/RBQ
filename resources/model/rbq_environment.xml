@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mujoco model="rbq environment">
+    <include file="rbq/rbq.xml"/>
+    <include file="env/environment.xml"/>
+    <!-- <include file="env/environment_parkour.xml"/> -->
+</mujoco> 

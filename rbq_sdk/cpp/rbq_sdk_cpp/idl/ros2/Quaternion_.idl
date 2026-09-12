@@ -1,0 +1,17 @@
+module geometry_msgs {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct Quaternion_ {
+        @default (value=0.0)
+        double x;
+        @default (value=0.0)
+        double y;
+        @default (value=0.0)
+        double z;
+        @default (value=1.0)
+        double w;
+      };
+    };
+  };
+};

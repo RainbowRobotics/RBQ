@@ -1,0 +1,14 @@
+#include "RequestIdentity_.idl"
+#include "ResponseStatus_.idl"
+
+module api {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct ResponseHeader_ {
+        api::msg::dds_::RequestIdentity_ identity;
+        api::msg::dds_::ResponseStatus_ status;
+      };
+    };
+  };
+};

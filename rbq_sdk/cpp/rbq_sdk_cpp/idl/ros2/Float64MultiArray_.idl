@@ -1,0 +1,13 @@
+#include "MultiArrayLayout_.idl"
+
+module std_msgs {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct Float64MultiArray_ {
+        std_msgs::msg::dds_::MultiArrayLayout_ layout;
+        sequence<double> data;
+      };
+    };
+  };
+};

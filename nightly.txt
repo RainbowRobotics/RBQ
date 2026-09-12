@@ -1,0 +1,5 @@
+version:  v1.20.0-nightly.79329d13
+commit:   79329d1313647331473af24ce443e3742691baa6
+branch:   develop
+arch:     bin-x86_64 + bin-aarch64
+built_at: 2026-09-12T19:00:46Z

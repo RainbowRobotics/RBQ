@@ -1,0 +1,86 @@
+{
+    "export_info": {
+        "onnx_path": "/home/dev/RBQ/rbq_gym/logs/rbq10/exported/policies/policy.onnx",
+        "obs_shape": 45
+    },
+    "config_info": {
+        "run_name": "rbq10",
+        "control": {
+            "policy_dt": 0.01,
+            "action_scale": 0.1,
+            "stiffness": {
+                "R": 123.39138,
+                "P": 123.39138,
+                "K": 127.77215
+            },
+            "damping": {
+                "R": 2.5,
+                "P": 2.5,
+                "K": 2.5
+            }
+        },
+        "env": {
+            "num_observations": 45,
+            "num_actions": 12
+        },
+        "terrain": {
+            "measured_obs_points_num": 17,
+            "measured_obs_points_xy": [
+                -0.5,
+                -0.4,
+                -0.3,
+                -0.2,
+                -0.1,
+                0.0,
+                0.1,
+                0.2,
+                0.3,
+                0.4,
+                0.5
+            ]
+        },
+        "commands": {
+            "ranges": {
+                "lin_vel_x": [
+                    -1.0,
+                    1.0
+                ],
+                "lin_vel_y": [
+                    -1.0,
+                    1.0
+                ],
+                "ang_vel_yaw": [
+                    -1.3,
+                    1.3
+                ]
+            }
+        },
+        "init_state": {
+            "default_joint_angles": {
+                "joint0_HRR": -0.0,
+                "joint1_HRP": 0.8115779385,
+                "joint2_HRK": -1.39626312,
+                "joint3_HLR": 0.0,
+                "joint4_HLP": 0.8115779385,
+                "joint5_HLK": -1.39626312,
+                "joint6_FRR": -0.0,
+                "joint7_FRP": 0.7941246495000001,
+                "joint8_FRK": -1.431169698,
+                "joint9_FLR": 0.0,
+                "joint10_FLP": 0.7941246495000001,
+                "joint11_FLK": -1.431169698
+            }
+        },
+        "normalization": {
+            "obs_scales": {
+                "lin_vel": 2.0,
+                "ang_vel": 0.25,
+                "dof_pos": 1.0,
+                "dof_vel": 0.05,
+                "height_measurements": 5.0
+            },
+            "clip_observations": 100.0,
+            "clip_actions": 100.0
+        }
+    }
+}

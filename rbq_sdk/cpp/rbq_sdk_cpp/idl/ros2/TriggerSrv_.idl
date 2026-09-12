@@ -1,0 +1,22 @@
+// std_srvs/srv/Trigger as ROS2 service over bare DDS (rmw_cyclonedds wire format).
+// Leading rmw_client_guid/rmw_sequence_id model the 16-byte rmw request header;
+// the server must echo both into the reply for client-side correlation.
+module std_srvs {
+  module srv {
+    module dds_ {
+      @extensibility(FINAL)
+      struct Trigger_Request_ {
+        uint64 rmw_client_guid;
+        int64 rmw_sequence_id;
+        uint8 structure_needs_at_least_one_member;
+      };
+      @extensibility(FINAL)
+      struct Trigger_Response_ {
+        uint64 rmw_client_guid;
+        int64 rmw_sequence_id;
+        boolean success;
+        string message;
+      };
+    };
+  };
+};

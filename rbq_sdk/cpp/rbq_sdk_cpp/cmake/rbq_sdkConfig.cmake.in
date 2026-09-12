@@ -1,0 +1,88 @@
+set(RBQ_SDK_VERSION @PROJECT_VERSION@)
+
+include(CMakeFindDependencyMacro)
+
+IF(CUSTOM_RBQ_SDK_PATH)
+    FIND_PATH (RBQ_SDK_INCLUDE_DIR rbq_sdk/rbq_sdk.hpp
+        PATHS
+        ${CUSTOM_RBQ_SDK_PATH}/include
+        NO_DEFAULT_PATH
+    )
+    file(GLOB RBQ_SDK_LIBRARY
+        "${CUSTOM_RBQ_SDK_PATH}/lib/*.so"
+        "${CUSTOM_RBQ_SDK_PATH}/lib/*.so.*"
+        "${CUSTOM_RBQ_SDK_PATH}/lib/*.a"
+    )
+ELSE(CUSTOM_RBQ_SDK_PATH)
+    FIND_PATH (RBQ_SDK_INCLUDE_DIR rbq_sdk/rbq_sdk.hpp
+        HINTS
+        $ENV{HOME}/local/include
+        $ENV{RBQ_SDK_PATH}/src
+        $ENV{RBQ_SDK_PATH}/include
+        $ENV{RBQ_SDK_INCLUDE_PATH}
+        ${CMAKE_INSTALL_PREFIX}/include
+        ${CMAKE_INSTALL_PREFIX}/Library/include
+        /usr/local/include
+        /usr/include
+    )
+    FIND_LIBRARY (RBQ_SDK_LIBRARY rbq_sdk
+        PATHS
+        $ENV{HOME}/local/lib
+        $ENV{HOME}/local/lib/x86_64-linux-gnu
+        $ENV{RBQ_SDK_PATH}/lib
+        $ENV{RBQ_SDK_LIBRARY_PATH}
+        ${CMAKE_INSTALL_PREFIX}/lib
+        ${CMAKE_INSTALL_PREFIX}/Library/lib
+        /usr/local/lib
+        /usr/local/lib/x86_64-linux-gnu
+        /usr/lib
+        /usr/lib/x86_64-linux-gnu
+    )
+ENDIF(CUSTOM_RBQ_SDK_PATH)
+
+IF (RBQ_SDK_INCLUDE_DIR AND RBQ_SDK_LIBRARY)
+    SET (RBQ_SDK_FOUND TRUE)
+ELSE(RBQ_SDK_INCLUDE_DIR AND RBQ_SDK_LIBRARY)
+    IF(RBQ_SDK_FIND_REQUIRED)
+        MESSAGE (SEND_ERROR " Could not find RBQ_SDK.")
+        MESSAGE (SEND_ERROR " Try setting CUSTOM_RBQ_SDK_PATH in FindRBQ_SDK.cmake force CMake to use the desired directory.")
+    ELSE(RBQ_SDK_FIND_REQUIRED)
+        MESSAGE (STATUS " Could not find RBQ_SDK.")
+        MESSAGE (STATUS " Try setting CUSTOM_RBQ_SDK_PATH in FindRBQ_SDK.cmake force CMake to use the desired directory.")
+    ENDIF(RBQ_SDK_FIND_REQUIRED)
+ENDIF (RBQ_SDK_INCLUDE_DIR AND RBQ_SDK_LIBRARY)
+
+IF (RBQ_SDK_FOUND)
+    IF (NOT RBQ_SDK_FIND_QUIETLY)
+        MESSAGE(STATUS "Found RBQ_SDK: ${RBQ_SDK_LIBRARY}")
+    ENDIF (NOT RBQ_SDK_FIND_QUIETLY)
+    foreach ( COMPONENT ${RBQ_SDK_FIND_COMPONENTS} )
+        IF (RBQ_SDK_${COMPONENT}_FOUND)
+            IF (NOT RBQ_SDK_FIND_QUIETLY)
+                MESSAGE(STATUS "Found RBQ_SDK ${COMPONENT}: ${RBQ_SDK_${COMPONENT}_LIBRARY}")
+            ENDIF (NOT RBQ_SDK_FIND_QUIETLY)
+        ELSE (RBQ_SDK_${COMPONENT}_FOUND)
+            MESSAGE(ERROR " Could not find RBQ_SDK ${COMPONENT}")
+        ENDIF (RBQ_SDK_${COMPONENT}_FOUND)
+    endforeach ( COMPONENT )
+    IF (NOT TARGET rbq_sdk::rbq_sdk)
+        find_package(CycloneDDS-CXX QUIET)
+        if(NOT CycloneDDS-CXX_FOUND)
+            message(FATAL_ERROR "CycloneDDS-CXX not found. Set -DCMAKE_PREFIX_PATH=cycloneDDS_DIR or run command: sudo bash ${CMAKE_CURRENT_LIST_DIR}/build_dds.bash")
+        endif()
+        find_dependency(CycloneDDS REQUIRED)
+        find_dependency(CycloneDDS-CXX REQUIRED)
+        add_library(rbq_sdk::rbq_sdk UNKNOWN IMPORTED GLOBAL)
+        set_target_properties(rbq_sdk::rbq_sdk PROPERTIES
+            IMPORTED_LOCATION_RELEASE "${RBQ_SDK_LIBRARY}"
+            INTERFACE_INCLUDE_DIRECTORIES "${RBQ_SDK_INCLUDE_DIR}"
+            INTERFACE_LINK_LIBRARIES "CycloneDDS-CXX::ddscxx;CycloneDDS::ddsc"
+        )
+    ENDIF ()
+
+ENDIF (RBQ_SDK_FOUND)
+
+MARK_AS_ADVANCED (
+    RBQ_SDK_INCLUDE_DIR
+    RBQ_SDK_LIBRARY
+)

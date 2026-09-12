@@ -1,0 +1,21 @@
+#include "RbqConstants_.idl"
+#include "JointRef_.idl"
+
+module rbq_msgs {
+  module msg {
+    module dds_ {
+
+      @extensibility(FINAL)
+      struct MotionRef_ {
+        // Time in seconds
+        double time;
+
+        JointRef_ leg_joint[MAX_LEG_JOINT];
+        JointRef_ arm_joint[MAX_ARM_JOINT];
+        JointRef_ whl_joint[MAX_WHL_JOINT];
+      };
+
+    };
+  };
+};
+

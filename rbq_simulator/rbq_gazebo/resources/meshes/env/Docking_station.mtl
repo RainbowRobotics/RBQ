@@ -1,0 +1,8 @@
+# Docking station material
+newmtl Default
+Ka 0.3 0.3 0.3
+Kd 0.7 0.7 0.7
+Ks 0.1 0.1 0.1
+Ns 50.0
+d 1.0
+illum 2

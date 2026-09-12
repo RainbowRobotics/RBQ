@@ -1,0 +1,21 @@
+// rcl_interfaces/msg/ParameterValue — variant storage; `type` selects the valid field
+// (0=NOT_SET, 1=BOOL, 2=INTEGER, 3=DOUBLE, 4=STRING, 5..9=arrays).
+module rcl_interfaces {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct ParameterValue_ {
+        uint8 type;
+        boolean bool_value;
+        int64 integer_value;
+        double double_value;
+        string string_value;
+        sequence<uint8> byte_array_value;
+        sequence<boolean> bool_array_value;
+        sequence<int64> integer_array_value;
+        sequence<double> double_array_value;
+        sequence<string> string_array_value;
+      };
+    };
+  };
+};

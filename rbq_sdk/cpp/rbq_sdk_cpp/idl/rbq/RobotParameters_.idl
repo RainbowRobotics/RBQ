@@ -1,0 +1,68 @@
+module rbq_msgs {
+  module msg {
+    module dds_ {
+
+      @extensibility(APPENDABLE)
+      struct RobotParameters_ {
+        // Transforms: body -> sensor / hip (m)
+        float bd2imu[3];
+        float bd2hip[3];
+
+        // Kinematic parameters
+        float roll2pitch;
+        float thigh_length;
+        float calf_length;
+
+        // Mass properties (kg)
+        float total_mass;
+        float body_mass;
+        float hip_mass;
+        float thigh_mass;
+        float calf_mass;
+
+        // Center of mass positions (m)
+        float body_com[3];
+        float hip_com[3];
+        float thigh_com[3];
+        float calf_com[3];
+
+        // Inertia tensors (kg·m^2)
+        float body_ixx;
+        float body_iyy;
+        float body_izz;
+        float body_ixy;
+        float body_iyz;
+        float body_izx;
+
+        float hip_ixx;
+        float hip_iyy;
+        float hip_izz;
+        float hip_ixy;
+        float hip_iyz;
+        float hip_izx;
+
+        float thigh_ixx;
+        float thigh_iyy;
+        float thigh_izz;
+        float thigh_ixy;
+        float thigh_iyz;
+        float thigh_izx;
+
+        float calf_ixx;
+        float calf_iyy;
+        float calf_izz;
+        float calf_ixy;
+        float calf_iyz;
+        float calf_izx;
+
+        // Misc. mechanical parameters
+        float init_angle;
+        float i_rotor;
+        float i_rotor_knee;
+        float gear_ratio[3];
+      };
+
+    };
+  };
+};
+

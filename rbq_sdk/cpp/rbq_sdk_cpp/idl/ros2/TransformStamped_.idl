@@ -1,0 +1,15 @@
+#include "Header_.idl"
+#include "Transform_.idl"
+
+module geometry_msgs {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct TransformStamped_ {
+        std_msgs::msg::dds_::Header_ header;
+        string child_frame_id;
+        geometry_msgs::msg::dds_::Transform_ transform;
+      };
+    };
+  };
+};

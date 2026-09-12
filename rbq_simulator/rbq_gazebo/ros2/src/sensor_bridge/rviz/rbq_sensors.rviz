@@ -1,0 +1,403 @@
+Panels:
+  - Class: rviz_common/Displays
+    Help Height: 70
+    Name: Displays
+    Property Tree Widget:
+      Expanded:
+        - /LiDAR rear1/Topic1
+        - /LiDAR ouster1/Topic1
+        - /front RGB1/Topic1
+        - /rear RGB1/Topic1
+      Splitter Ratio: 0.5
+    Tree Height: 452
+  - Class: rviz_common/Views
+    Expanded:
+      - /Current View1
+    Name: Views
+    Splitter Ratio: 0.5
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Alpha: 0.5
+      Cell Size: 0.5
+      Class: rviz_default_plugins/Grid
+      Color: 160; 160; 164
+      Enabled: true
+      Line Style:
+        Line Width: 0.029999999329447746
+        Value: Lines
+      Name: Grid
+      Normal Cell Count: 0
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Plane: XY
+      Plane Cell Count: 20
+      Reference Frame: <Fixed Frame>
+      Value: true
+    - Class: rviz_default_plugins/TF
+      Enabled: true
+      Frame Timeout: 15
+      Frames:
+        All Enabled: true
+        FL_calf:
+          Value: true
+        FL_foot:
+          Value: true
+        FL_hip:
+          Value: true
+        FL_thigh:
+          Value: true
+        FR_calf:
+          Value: true
+        FR_foot:
+          Value: true
+        FR_hip:
+          Value: true
+        FR_thigh:
+          Value: true
+        HL_calf:
+          Value: true
+        HL_foot:
+          Value: true
+        HL_hip:
+          Value: true
+        HL_thigh:
+          Value: true
+        HR_calf:
+          Value: true
+        HR_foot:
+          Value: true
+        HR_hip:
+          Value: true
+        HR_thigh:
+          Value: true
+        base_link:
+          Value: true
+        trunk:
+          Value: true
+        world:
+          Value: true
+      Marker Scale: 0.5
+      Name: TF
+      Show Arrows: true
+      Show Axes: true
+      Show Names: false
+      Tree:
+        world:
+          base_link:
+            trunk:
+              FL_hip:
+                FL_thigh:
+                  FL_calf:
+                    FL_foot:
+                      {}
+              FR_hip:
+                FR_thigh:
+                  FR_calf:
+                    FR_foot:
+                      {}
+              HL_hip:
+                HL_thigh:
+                  HL_calf:
+                    HL_foot:
+                      {}
+              HR_hip:
+                HR_thigh:
+                  HR_calf:
+                    HR_foot:
+                      {}
+      Update Interval: 0
+      Value: true
+    - Alpha: 1
+      Class: rviz_default_plugins/RobotModel
+      Collision Enabled: false
+      Description File: ""
+      Description Source: Topic
+      Description Topic:
+        Depth: 5
+        Durability Policy: Transient Local
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /robot_description
+      Enabled: true
+      Links:
+        All Links Enabled: true
+        Expand Joint Details: false
+        Expand Link Details: false
+        Expand Tree: false
+        FL_calf:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        FL_foot:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        FL_hip:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        FL_thigh:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        FR_calf:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        FR_foot:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        FR_hip:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        FR_thigh:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        HL_calf:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        HL_foot:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        HL_hip:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        HL_thigh:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        HR_calf:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        HR_foot:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        HR_hip:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        HR_thigh:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        Link Tree Style: Links in Alphabetic Order
+        trunk:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+      Mass Properties:
+        Inertia: false
+        Mass: false
+      Name: RobotModel
+      TF Prefix: ""
+      Update Interval: 0
+      Value: true
+      Visual Enabled: true
+    - Alpha: 1
+      Autocompute Intensity Bounds: false
+      Autocompute Value Bounds:
+        Max Value: 10.006413459777832
+        Min Value: -0.24556326866149902
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz_default_plugins/PointCloud2
+      Color: 255; 255; 255
+      Color Transformer: AxisColor
+      Decay Time: 0
+      Enabled: true
+      Invert Rainbow: true
+      Max Color: 255; 255; 255
+      Max Intensity: 0
+      Min Color: 0; 0; 0
+      Min Intensity: 0
+      Name: LiDAR front
+      Position Transformer: XYZ
+      Selectable: true
+      Size (Pixels): 2
+      Size (m): 0.014999999664723873
+      Style: Squares
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /rbq/lidar/lidar_front/points
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: true
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 10.01590633392334
+        Min Value: -0.35744816064834595
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz_default_plugins/PointCloud2
+      Color: 255; 255; 255
+      Color Transformer: AxisColor
+      Decay Time: 0
+      Enabled: true
+      Invert Rainbow: false
+      Max Color: 255; 255; 255
+      Max Intensity: 0
+      Min Color: 0; 0; 0
+      Min Intensity: 0
+      Name: LiDAR rear
+      Position Transformer: XYZ
+      Selectable: true
+      Size (Pixels): 2
+      Size (m): 0.014999999664723873
+      Style: Squares
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /rbq/lidar/lidar_rear/points
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: true
+    - Alpha: 1
+      Autocompute Intensity Bounds: true
+      Autocompute Value Bounds:
+        Max Value: 1.30378258228302
+        Min Value: -0.43673038482666016
+        Value: true
+      Axis: Z
+      Channel Name: intensity
+      Class: rviz_default_plugins/PointCloud2
+      Color: 255; 255; 255
+      Color Transformer: AxisColor
+      Decay Time: 0
+      Enabled: true
+      Invert Rainbow: true
+      Max Color: 255; 255; 255
+      Max Intensity: 4096
+      Min Color: 0; 0; 0
+      Min Intensity: 0
+      Name: LiDAR ouster
+      Position Transformer: XYZ
+      Selectable: true
+      Size (Pixels): 2
+      Size (m): 0.009999999776482582
+      Style: Points
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /rbq/lidar/lidar_ouster/points
+      Use Fixed Frame: true
+      Use rainbow: true
+      Value: true
+    - Class: rviz_default_plugins/Image
+      Enabled: true
+      Max Value: 1
+      Median window: 5
+      Min Value: 0
+      Name: front RGB
+      Normalize Range: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /rbq/vision/sensor_4/rgb/compressed
+      Value: true
+    - Class: rviz_default_plugins/Image
+      Enabled: true
+      Max Value: 1
+      Median window: 5
+      Min Value: 0
+      Name: rear RGB
+      Normalize Range: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /rbq/vision/sensor_5/rgb/compressed
+      Value: true
+  Enabled: true
+  Global Options:
+    Background Color: 48; 48; 48
+    Fixed Frame: local_world
+    Frame Rate: 30
+  Name: root
+  Tools:
+    - Class: rviz_default_plugins/MoveCamera
+    - Class: rviz_default_plugins/FocusCamera
+    - Class: rviz_default_plugins/Measure
+      Line color: 128; 128; 0
+  Transformation:
+    Current:
+      Class: rviz_default_plugins/TF
+  Value: true
+  Views:
+    Current:
+      Class: rviz_default_plugins/Orbit
+      Distance: 5.093830108642578
+      Enable Stereo Rendering:
+        Stereo Eye Separation: 0.05999999865889549
+        Stereo Focal Distance: 1
+        Swap Stereo Eyes: false
+        Value: false
+      Focal Point:
+        X: -0.24674052000045776
+        Y: -0.2077307403087616
+        Z: 0.009107209742069244
+      Focal Shape Fixed Size: false
+      Focal Shape Size: 0.05000000074505806
+      Invert Z Axis: false
+      Name: Current View
+      Near Clip Distance: 0.009999999776482582
+      Pitch: 0.5297969579696655
+      Target Frame: local_world
+      Value: Orbit (rviz_default_plugins)
+      Yaw: 2.161756753921509
+    Saved: ~
+Window Geometry:
+  Displays:
+    collapsed: false
+  Height: 1376
+  Hide Left Dock: false
+  Hide Right Dock: true
+  QMainWindow State: 000000ff00000000fd00000002000000000000017100000506fc0200000003fb000000100044006900730070006c006100790073010000003d00000247000000c900fffffffb0000001200660072006f006e00740020005200470042010000028a0000015d0000002800fffffffb000000100072006500610072002000520047004201000003ed000001560000002800ffffff00000001000001000000039efc0200000001fb0000000a00560069006500770073000000003d0000039e000000a400ffffff000008430000050600000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  Views:
+    collapsed: true
+  Width: 2490
+  X: 2630
+  Y: 27
+  front RGB:
+    collapsed: false
+  rear RGB:
+    collapsed: false

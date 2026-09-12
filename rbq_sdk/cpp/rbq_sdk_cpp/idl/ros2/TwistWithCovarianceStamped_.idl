@@ -1,0 +1,14 @@
+#include "TwistWithCovariance_.idl"
+#include "Header_.idl"
+
+module geometry_msgs {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct TwistWithCovarianceStamped_ {
+        std_msgs::msg::dds_::Header_ header;
+        geometry_msgs::msg::dds_::TwistWithCovariance_ twist;
+      };
+    };
+  };
+};

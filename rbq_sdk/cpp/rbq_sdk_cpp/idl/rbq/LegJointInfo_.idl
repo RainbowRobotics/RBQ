@@ -1,0 +1,13 @@
+#include "RbqConstants_.idl"
+#include "JointInfo_.idl"
+
+module rbq_msgs {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct LegJointInfo_ {
+        JointInfo_ joint[MAX_LEG_JOINT];
+      };
+    };
+  };
+};

@@ -1,0 +1,14 @@
+#include "../ros2/Header_.idl"
+
+module rbq_msgs {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct SystemLog_ {
+        std_msgs::msg::dds_::Header_ header;
+        string log_level;
+        string log_msg;
+      };
+    };
+  };
+};
