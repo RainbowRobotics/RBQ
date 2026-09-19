@@ -1,0 +1,16 @@
+module unitree_go {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct VoxelMapCompressed_ {
+        double stamp;
+        string frame_id;
+        double resolution;
+        double origin[3];
+        uint16 width[3];
+        uint64 src_size;
+        sequence<uint8> data;
+      };
+    };
+  };
+};
