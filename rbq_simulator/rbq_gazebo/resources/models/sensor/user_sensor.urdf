@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!-- USER SENSORS - add your own here. Spliced into the rbq10 trunk at spawn (always, if non-empty).
+     Put <sensor> blocks inside the <gazebo reference="trunk"> below (pose is relative to trunk =
+     robot center: x fwd, y left, z up). Give each a unique <topic>, then add a matching GZ_TO_ROS
+     entry to gz_sensor_bridge/config/bridge.yaml to expose it on ROS2. Sensors only - no actuated
+     joints (DDS joint contract). Ships empty; uncomment the example to start. -->
+<!-- @SENSOR@ -->
+<gazebo reference="trunk">
+  <!--
+  <sensor name="user_cam" type="camera">
+    <topic>/rbq/user_cam/image</topic>
+    <update_rate>15</update_rate>
+    <always_on>true</always_on>
+    <pose>0.30 0 0.10 0 0 0</pose>
+    <camera>
+      <horizontal_fov>1.047</horizontal_fov>
+      <image><width>640</width><height>480</height></image>
+      <clip><near>0.1</near><far>100</far></clip>
+    </camera>
+  </sensor>
+  -->
+</gazebo>
