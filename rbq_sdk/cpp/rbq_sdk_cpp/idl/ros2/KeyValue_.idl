@@ -1,0 +1,12 @@
+// diagnostic_msgs/msg/KeyValue
+module diagnostic_msgs {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct KeyValue_ {
+        string key;
+        string value;
+      };
+    };
+  };
+};

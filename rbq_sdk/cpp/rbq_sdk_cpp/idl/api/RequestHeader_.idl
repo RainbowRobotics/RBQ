@@ -1,0 +1,16 @@
+#include "RequestIdentity_.idl"
+#include "RequestLease_.idl"
+#include "RequestPolicy_.idl"
+
+module api {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct RequestHeader_ {
+        api::msg::dds_::RequestIdentity_ identity;
+        api::msg::dds_::RequestLease_ lease;
+        api::msg::dds_::RequestPolicy_ policy;
+      };
+    };
+  };
+};
