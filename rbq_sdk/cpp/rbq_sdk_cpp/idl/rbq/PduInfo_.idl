@@ -1,0 +1,74 @@
+module rbq_msgs {
+  module msg {
+    module dds_ {
+
+      @extensibility(APPENDABLE)
+      struct PduInfo_ {
+        octet         pdu_id;
+        unsigned long pdu_version;
+        unsigned long pdu_date;
+
+        boolean reboot_cha;
+        boolean reboot_chb;
+        boolean reboot_chc;
+
+        boolean imu_connected;
+        boolean l2c_connected;
+        boolean comm_connected;
+
+        boolean s_5v_cam;
+        boolean s_5v_audio;
+        boolean s_12v_vpc;
+        boolean s_12v_comm;
+        boolean s_12v_ld;
+        boolean s_12v_sc;
+        boolean s_12v_tc;
+        boolean s_12v_ir;
+        boolean s_12v_amp;
+
+        boolean s_bat_r;
+        boolean s_bat_l;
+
+        boolean s_chg_e;
+        boolean s_chg_s;
+
+        boolean s_emo_a;
+        boolean s_emo_b;
+        boolean s_buzzer;
+
+        boolean s_led_0;
+        boolean s_led_1;
+        boolean s_led_2;
+        boolean s_led_3;
+
+        boolean s_fet_cha;
+        boolean s_fet_chb;
+        boolean s_fet_chc;
+        boolean s_fet_chg_s;
+
+        boolean s_soft_cha;
+        boolean s_soft_chb;
+        boolean s_soft_chc;
+
+        octet temperature_pdu;
+        octet temperature_ps;
+        octet battery_percent_l;
+        octet battery_percent_r;
+
+        // Voltages and currents (V, A)
+        float bat_vol;
+        float bat_cur;
+        float cha_vol;
+        float chb_vol;
+        float chc_vol;
+        float cha_cur;
+        float chb_cur;
+        float chc_cur;
+        float bat_chg_vol;
+        float bat_chg_cur;
+      };
+
+    };
+  };
+};
+

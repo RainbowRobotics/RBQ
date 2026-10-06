@@ -1,0 +1,17 @@
+#include "RbqConstants_.idl"
+
+module rbq_msgs {
+  module msg {
+    module dds_ {
+
+      @extensibility(FINAL)
+      struct JointOwnershipCmd_ {
+        boolean leg_joint[MAX_LEG_JOINT];
+        boolean whl_joint[MAX_WHL_JOINT];
+        boolean arm_joint[MAX_ARM_JOINT];
+      };
+
+    };
+  };
+};
+

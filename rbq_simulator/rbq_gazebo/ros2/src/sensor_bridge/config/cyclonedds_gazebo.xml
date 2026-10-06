@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Pins DDS to loopback: SPDP multicast on lo + localhost unicast peer fallback; keeps sim traffic off the LAN. -->
+<CycloneDDS xmlns="https://cdds.io/config">
+    <Domain Id="any">
+        <General>
+            <Interfaces>
+                <NetworkInterface name="lo" priority="default" multicast="true" />
+            </Interfaces>
+            <AllowMulticast>spdp</AllowMulticast>
+        </General>
+        <Discovery>
+            <ParticipantIndex>auto</ParticipantIndex>
+            <MaxAutoParticipantIndex>64</MaxAutoParticipantIndex>
+            <Peers>
+                <Peer address="localhost"/>
+            </Peers>
+        </Discovery>
+    </Domain>
+</CycloneDDS>

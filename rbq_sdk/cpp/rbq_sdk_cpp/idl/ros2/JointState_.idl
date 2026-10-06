@@ -1,0 +1,16 @@
+#include "Header_.idl"
+
+module sensor_msgs {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct JointState_ {
+        std_msgs::msg::dds_::Header_ header;
+        sequence<string> name;
+        sequence<double> position;
+        sequence<double> velocity;
+        sequence<double> effort;
+      };
+    };
+  };
+};

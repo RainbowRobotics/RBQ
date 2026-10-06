@@ -1,0 +1,12 @@
+<CycloneDDS xmlns="https://cdds.io/config">
+  <Domain id="10">
+    <General>
+      <Interfaces><NetworkInterface autodetermine="true"/></Interfaces>
+      <AllowMulticast>true</AllowMulticast>
+    </General>
+    <Discovery>
+      <ParticipantIndex>7</ParticipantIndex>
+      <MaxAutoParticipantIndex>128</MaxAutoParticipantIndex>
+    </Discovery>
+  </Domain>
+</CycloneDDS>

@@ -1,0 +1,19 @@
+module rbq_msgs {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct TargetGo_ {
+        int32 gait;
+        int32 mode;
+        float x;
+        float y;
+        float theta;
+        float offset_x;
+        float offset_y;
+        boolean slow;
+        boolean wide;
+        boolean vision;
+      };
+    };
+  };
+};
