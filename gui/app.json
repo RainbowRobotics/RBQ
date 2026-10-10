@@ -1,0 +1,91 @@
+{
+  "expo": {
+    "name": "RBQ",
+    "slug": "rbq-controller",
+    "version": "1.1.0",
+    "orientation": "landscape",
+    "icon": "./assets/images/icon.png",
+    "scheme": "rbqcontroller",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "requireFullScreen": true,
+      "supportsTablet": true,
+      "bundleIdentifier": "com.rainbowrobotics.rbq",
+      "buildNumber": "6",
+      "infoPlist": {
+        "NSMicrophoneUsageDescription": "누르고 말하기(PTT)로 로봇 스피커에 음성을 전달할 때 마이크를 사용합니다. 음성은 로봇으로 직접 전송되며, 녹음을 켠 경우에만 사용자의 로봇에 저장됩니다. 서버로는 전송되지 않습니다.",
+        "NSCameraUsageDescription": "로봇 카메라 영상을 받아 보기 위해 WebRTC 를 사용합니다. 이 기기의 카메라로 촬영하지는 않습니다.",
+        "NSLocalNetworkUsageDescription": "로봇(로컬 네트워크)에 연결해 제어·영상·텔레메트리를 주고받습니다.",
+        "NSLocationWhenInUseUsageDescription": "연결된 WiFi가 로봇 네트워크인지 확인하는 데 위치 권한이 필요합니다.",
+        "ITSAppUsesNonExemptEncryption": false
+      },
+      "entitlements": {
+        "aps-environment": "production"
+      },
+      "googleServicesFile": "./GoogleService-Info.plist"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#FFFFFF",
+        "foregroundImage": "./assets/images/android-icon-foreground.png"
+      },
+      "predictiveBackGestureEnabled": false,
+      "package": "com.rainbowrobotics.rbq",
+      "permissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.ACCESS_WIFI_STATE",
+        "android.permission.REQUEST_INSTALL_PACKAGES"
+      ],
+      "versionCode": 5,
+      "googleServicesFile": "./google-services.json"
+    },
+    "web": {
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#EEF1F4",
+          "image": "./assets/images/splash-blank.png",
+          "imageWidth": 1,
+          "resizeMode": "contain"
+        }
+      ],
+      "expo-sharing",
+      "expo-video",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true
+          }
+        }
+      ],
+      [
+        "expo-navigation-bar",
+        {
+          "hidden": true,
+          "enforceContrast": false
+        }
+      ],
+      "./plugins/withJitsiWebrtcPin",
+      "./plugins/withSimAssets",
+      [
+        "expo-notifications",
+        {
+          "color": "#E8452B",
+          "defaultChannel": "rbq-alerts"
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    }
+  }
+}

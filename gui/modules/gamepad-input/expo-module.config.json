@@ -1,0 +1,9 @@
+{
+  "platforms": ["apple", "android", "web"],
+  "apple": {
+    "modules": ["GamepadInputModule"]
+  },
+  "android": {
+    "modules": ["expo.modules.gamepadinput.GamepadInputModule"]
+  }
+}

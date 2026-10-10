@@ -1,0 +1,5 @@
+version:  v1.2609.0-nightly.70c6b4d0
+commit:   70c6b4d065a9463a8550210451dc677d219a22c4
+branch:   develop
+arch:     bin-x86_64 + bin-aarch64
+built_at: 2026-10-10T17:55:56Z

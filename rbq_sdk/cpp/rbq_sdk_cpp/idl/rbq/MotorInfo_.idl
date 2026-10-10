@@ -1,0 +1,31 @@
+#include "MotorStatus_.idl"
+
+module rbq_msgs {
+  module msg {
+    module dds_ {
+
+      @extensibility(APPENDABLE)
+      struct MotorInfo_ {
+        // Position, velocity, acceleration (rad, rad/s, rad/s^2)
+        float pos;
+        float vel;
+        float acc;
+
+        // Current (A)
+        float cur;
+
+        // Temperatures in °C (board, motor)
+        octet board_temp;
+        octet motor_temp;
+
+        boolean connected;
+        boolean comm_ok;
+        boolean dq_check;
+
+        MotorStatus_ status;
+      };
+
+    };
+  };
+};
+

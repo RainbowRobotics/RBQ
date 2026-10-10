@@ -1,0 +1,11 @@
+node_modules
+android
+ios
+dist
+build-out
+.docker
+src-tauri/target
+src-tauri/binaries
+design
+assets
+docs

@@ -1,0 +1,23 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "remote-ipc",
+  "description": "웹뷰가 navigate로 로드하는 로컬 프록시 origin에 IPC 허용 — event(proxy-status 수신 / restart-proxy 송신)용. 앱 커맨드 invoke는 remote ACL로 불가하여 IP변경도 event로 통지. localhost 신뢰 대상. ⚠포트가 8090 하나면 나이틀리(8091)·포트 재선택본은 로봇 IP를 바꿀 수 없다(restart-proxy가 안 나감) — lib.rs 의 PORT_MIN~PORT_MAX(8090~8099, pick_free_port 가 그 범위만 고른다)를 그대로 나열한다.",
+  "windows": ["main"],
+  "remote": {
+    "urls": [
+      "http://localhost:8090",
+      "http://localhost:8091",
+      "http://localhost:8092",
+      "http://localhost:8093",
+      "http://localhost:8094",
+      "http://localhost:8095",
+      "http://localhost:8096",
+      "http://localhost:8097",
+      "http://localhost:8098",
+      "http://localhost:8099"
+    ]
+  },
+  "permissions": [
+    "core:event:default"
+  ]
+}

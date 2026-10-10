@@ -1,0 +1,12 @@
+module geometry_msgs {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct Vector3_ {
+        double x;
+        double y;
+        double z;
+      };
+    };
+  };
+};

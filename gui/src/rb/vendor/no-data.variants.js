@@ -1,0 +1,1 @@
+import{cva as o}from"../tw/cva";const t=["sm","md","lg","xl"],m=o("",{variants:{size:{xs2:"typo-compact-xs-normal",sm:"typo-compact-xs2-normal",md:"typo-compact-sm2-normal",lg:"typo-compact-sm2-normal",xl:"typo-compact-lg-normal"}},defaultVariants:{size:"md"}});export{m as noDataSizeVariants,t as noDataSizes};
