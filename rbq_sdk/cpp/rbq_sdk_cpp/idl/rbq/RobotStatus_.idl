@@ -1,0 +1,24 @@
+#include "../ros2/Header_.idl"
+
+module rbq_msgs {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct RobotStatus_ {
+        std_msgs::msg::dds_::Header_ header;
+        boolean con_start;
+        boolean ready_pos;
+        boolean ground_pos;
+        boolean force_con;
+        boolean ext_joy;
+        boolean is_standing;
+        boolean can_check;
+        boolean find_home;
+        int8 gait_id;
+        boolean is_fall;
+        int8 docking_state;
+        boolean imu_success;
+      };
+    };
+  };
+};

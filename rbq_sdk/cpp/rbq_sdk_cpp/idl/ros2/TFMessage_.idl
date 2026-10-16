@@ -1,0 +1,12 @@
+#include "TransformStamped_.idl"
+
+module tf2_msgs {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct TFMessage_ {
+        sequence<geometry_msgs::msg::dds_::TransformStamped_> transforms;
+      };
+    };
+  };
+};

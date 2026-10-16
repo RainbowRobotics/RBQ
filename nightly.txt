@@ -1,0 +1,6 @@
+version:  v1.2609.0-nightly.28faa42a
+commit:   28faa42ab3ff11ee02144a5864db73bd327b663a
+branch:   develop
+arch:     bin-x86_64
+core:     core-v1.2609.0-1017-u22-x86_64.rbq core-v1.2609.0-1017-u22-aarch64.rbq core-v1.2609.0-1017-u24-x86_64.rbq core-v1.2609.0-1017-u24-aarch64.rbq
+built_at: 2026-10-16T15:09:16Z
