@@ -1,0 +1,14 @@
+#include "../ros2/PointCloud2_.idl"
+
+module rbq_msgs {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct CloudFrame_ {
+        sensor_msgs::msg::dds_::PointCloud2_ cloud;
+        uint8 kind;
+        double body_from_sensor[16];
+      };
+    };
+  };
+};

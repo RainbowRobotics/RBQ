@@ -1,0 +1,15 @@
+// diagnostic_msgs/msg/DiagnosticArray
+#include "DiagnosticStatus_.idl"
+#include "Header_.idl"
+
+module diagnostic_msgs {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct DiagnosticArray_ {
+        std_msgs::msg::dds_::Header_ header;
+        sequence<diagnostic_msgs::msg::dds_::DiagnosticStatus_> status;
+      };
+    };
+  };
+};

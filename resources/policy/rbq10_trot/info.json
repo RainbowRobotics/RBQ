@@ -1,0 +1,69 @@
+{
+    "export_info": {
+        "iteration": 49750,
+        "timestamp": "2025-10-09 14:13:27"
+    },
+    "config_info": {
+        "run_name": "rbq10_trot",
+        "control": {
+            "policy_dt": 0.01,
+            "action_scale": 0.1,
+            "stiffness": {
+                "R": 123.39138,
+                "P": 123.39138,
+                "K": 127.77215
+            },
+            "damping": {
+                "R": 2.5,
+                "P": 2.3,
+                "K": 2.3
+            }
+        },
+        "env": {
+            "num_observations": 130,
+            "num_actions": 12
+        },
+        "commands": {
+            "ranges": {
+                "lin_vel_x": [
+                    -1.5,
+                    3.0
+                ],
+                "lin_vel_y": [
+                    -1.0,
+                    1.0
+                ],
+                "ang_vel_yaw": [
+                    -1.8,
+                    1.8
+                ]
+            }
+        },
+        "init_state": {
+            "default_joint_angles": {
+                "joint0_HRR": -0.0,
+                "joint1_HRP": 0.8115779385,
+                "joint2_HRK": -1.39626312,
+                "joint3_HLR": 0.0,
+                "joint4_HLP": 0.8115779385,
+                "joint5_HLK": -1.39626312,
+                "joint6_FRR": -0.0,
+                "joint7_FRP": 0.7941246495000001,
+                "joint8_FRK": -1.431169698,
+                "joint9_FLR": 0.0,
+                "joint10_FLP": 0.7941246495000001,
+                "joint11_FLK": -1.431169698
+            }
+        },
+        "normalization": {
+            "obs_scales": {
+                "lin_vel": 2.0,
+                "ang_vel": 0.25,
+                "dof_pos": 1.0,
+                "dof_vel": 0.05
+            },
+            "clip_observations": 100.0,
+            "clip_actions": 100.0
+        }
+    }
+}

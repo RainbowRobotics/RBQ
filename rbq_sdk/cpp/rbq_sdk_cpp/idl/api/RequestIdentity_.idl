@@ -1,0 +1,11 @@
+module api {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct RequestIdentity_ {
+        long long id;
+        long long api_id;
+      };
+    };
+  };
+};

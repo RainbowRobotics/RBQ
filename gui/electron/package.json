@@ -1,0 +1,64 @@
+{
+  "name": "rbq-steam",
+  "private": true,
+  "description": "RBQ 데스크탑 셸(Electron) — Steam 빌드·윈도우 설치본·리눅스 AppImage. 구조·이유는 README.md",
+  "author": "Rainbow Robotics",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "dbus-next": "0.10.2"
+  },
+  "devDependencies": {
+    "electron": "44.4.1",
+    "electron-builder": "26.16.1"
+  },
+  "build": {
+    "appId": "com.rainbowrobotics.rbq.desktop",
+    "productName": "RBQ",
+    "executableName": "rbq",
+    "copyright": "Copyright © Rainbow Robotics",
+    "asar": false,
+    "directories": {
+      "output": "../build-out/win"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "wifi.js",
+      "wifi-netsh.js",
+      "package.json",
+      {
+        "from": "../tools",
+        "to": "tools",
+        "filter": [
+          "rbq-web-proxy.js"
+        ]
+      },
+      {
+        "from": "../dist",
+        "to": "dist"
+      }
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "icons/icon.ico",
+      "artifactName": "rbq-controller-x64-setup.${ext}"
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "icons/icon.png",
+      "category": "Utility",
+      "artifactName": "rbq-controller.${ext}"
+    },
+    "toolsets": {
+      "appimage": "1.0.3"
+    }
+  }
+}

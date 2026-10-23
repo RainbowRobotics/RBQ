@@ -1,0 +1,19 @@
+diff --git a/node_modules/react-native-webrtc/ios/RCTWebRTC/WebRTCModule+RTCAudioSession.m b/node_modules/react-native-webrtc/ios/RCTWebRTC/WebRTCModule+RTCAudioSession.m
+index cd4fa13..4c04137 100644
+--- a/node_modules/react-native-webrtc/ios/RCTWebRTC/WebRTCModule+RTCAudioSession.m
++++ b/node_modules/react-native-webrtc/ios/RCTWebRTC/WebRTCModule+RTCAudioSession.m
+@@ -17,4 +17,14 @@ RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(audioSessionDidDeactivate) {
+     return nil;
+ }
+ 
++RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(setManualAudio : (nonnull NSNumber *)manual) {
++    [RTCAudioSession sharedInstance].useManualAudio = [manual boolValue];
++    return nil;
++}
++
++RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(setAudioEnabled : (nonnull NSNumber *)enabled) {
++    [RTCAudioSession sharedInstance].isAudioEnabled = [enabled boolValue];
++    return nil;
++}
++
+ @end
