@@ -1,0 +1,17 @@
+// diagnostic_msgs/msg/DiagnosticStatus — level: 0=OK, 1=WARN, 2=ERROR, 3=STALE
+#include "KeyValue_.idl"
+
+module diagnostic_msgs {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct DiagnosticStatus_ {
+        uint8 level;
+        string name;
+        string message;
+        string hardware_id;
+        sequence<diagnostic_msgs::msg::dds_::KeyValue_> values;
+      };
+    };
+  };
+};

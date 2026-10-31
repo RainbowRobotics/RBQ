@@ -1,0 +1,23 @@
+// rcl_interfaces/srv/GetParameters as ROS2 service over bare DDS (rmw_cyclonedds wire
+// format). Leading rmw_client_guid/rmw_sequence_id model the 16-byte rmw request
+// header; the server must echo both into the reply for client-side correlation.
+#include "ParameterValue_.idl"
+
+module rcl_interfaces {
+  module srv {
+    module dds_ {
+      @extensibility(FINAL)
+      struct GetParameters_Request_ {
+        uint64 rmw_client_guid;
+        int64 rmw_sequence_id;
+        sequence<string> names;
+      };
+      @extensibility(FINAL)
+      struct GetParameters_Response_ {
+        uint64 rmw_client_guid;
+        int64 rmw_sequence_id;
+        sequence<rcl_interfaces::msg::dds_::ParameterValue_> values;
+      };
+    };
+  };
+};

@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<robot name="rbq" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find rbq_description)/urdf/rbq_macro.xacro" />
+
+  <!-- Parameters -->
+  <xacro:arg name="arm" default="false" />
+  <xacro:arg name="tf_prefix" default="" />
+
+  <!-- Load RBQ -->
+  <xacro:load_rbq
+    arm="$(arg arm)"
+    tf_prefix="$(arg tf_prefix)" />
+
+</robot>

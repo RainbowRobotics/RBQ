@@ -1,0 +1,6 @@
+version:  v1.2609.0-nightly.ca748ea5
+commit:   ca748ea5e00acabb1b403afa873b8218bf358459
+branch:   develop
+arch:     bin-x86_64
+core:     core-v1.2609.0-1101-u22-x86_64.rbq core-v1.2609.0-1101-u22-aarch64.rbq core-v1.2609.0-1101-u24-x86_64.rbq core-v1.2609.0-1101-u24-aarch64.rbq
+built_at: 2026-10-31T15:02:17Z

@@ -1,0 +1,17 @@
+#include "Time_.idl"
+#include "Pose_.idl"
+
+module nav_msgs {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct MapMetaData_ {
+        builtin_interfaces::msg::dds_::Time_ map_load_time;
+        float resolution;
+        uint32 width;
+        uint32 height;
+        geometry_msgs::msg::dds_::Pose_ origin;
+      };
+    };
+  };
+};

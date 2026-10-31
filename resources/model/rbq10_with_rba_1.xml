@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mujoco model="rbq10">
+    <compiler
+        angle="radian"
+        coordinate="local"
+        autolimits="true"
+    />
+
+    <option
+        timestep="0.001"
+        gravity="0 0 -9.81"
+        integrator="RK4"
+        cone="elliptic"
+        impratio="100"
+        tolerance="1e-10"
+    >
+        <flag warmstart="enable" energy="enable" contact="enable" frictionloss="enable"/>
+    </option>
+
+    <default>
+        <default class="rbq">
+            <geom friction="0.0" margin="0.001" condim="1"/>
+
+            <default class="abduction">
+                <default class="left_abduction">
+                    <joint axis="1 0 0" range="-0.5411 0.7330" damping="0." armature="0.014058265" frictionloss="0.5"/>
+                    <motor ctrlrange="-100 100" ctrllimited="true"/>
+                </default>
+                <default class="right_abduction">
+                    <joint axis="1 0 0" range="-0.7330 0.5411" damping="0." armature="0.014058265" frictionloss="0.5"/>
+                    <motor ctrlrange="-100 100" ctrllimited="true"/>
+                </default>
+            </default>
+            <default class="hip">
+                <joint axis="0 1 0" range="-6.2832 6.2832" damping="0." armature="0.014058265" frictionloss="0.5"/>
+                <motor ctrlrange="-100. 100" ctrllimited="true"/>
+            </default>
+            <default class="knee">
+                <joint axis="0 1 0" range="-2.8274 -0.4189" damping="0." armature="0.0214816" frictionloss="0.5"/>
+                <motor ctrlrange="-150. 150" ctrllimited="true"/>
+            </default>
+            <default class="visual">
+                <geom type="mesh" contype="0" conaffinity="0" group="2"/>
+            </default>
+            <default class="collision">
+                <geom contype="1" conaffinity="1" group="3"/>
+                <default class="foot">
+                    <geom type="sphere" size="0.03" priority="1" condim="6"
+                        friction="0.8 0.8 0.8"/>
+                </default>
+            </default>
+        </default>
+    </default>
+
+    <equality>
+        <joint joint1="RBA_1_finger_upper_joint" joint2="RBA_1_finger_lower_joint" polycoef="0 1 0 0 0" active="true"/>
+    </equality>
+
+    <asset>
+        <material name="metal" rgba=".9 .95 .95 1"/>
+        <material name="black" rgba="0 0 0 1"/>
+        <material name="white" rgba="1 1 1 1"/>
+        <material name="gray" rgba="0.671705 0.692426 0.774270 1"/>
+        <material name="tan" rgba="0.823 0.706 0.549 1"/>
+        <material name="palegoldenrod" rgba="0.9334 0.91 0.667 1.0"/>
+        <material name="charcoal" rgba="0.3 0.3 0.3 1.0"/>
+        <material name="darker_gray" rgba="0.2 0.2 0.2 1.0"/>
+
+        <mesh name="trunk" file="../meshes/rbq/trunk.obj" scale="1 1 1"/>
+        <mesh name="hip2" file="../meshes/rbq/hip2.obj" scale="1 1 1"/>
+        <mesh name="hip3" file="../meshes/rbq/hip3.obj" scale="1 1 1"/>
+        <mesh name="thigh" file="../meshes/rbq/thigh.obj" scale="1 1 1"/>
+        <mesh name="calf" file="../meshes/rbq/calf.obj" scale="1 1 1"/>
+
+        <!-- RBA-1 Manipulator meshes (Inventor STL export, millimeters -> scaled to meters) -->
+        <mesh name="RBA_1_Base"  file="../meshes/rba-1/LINK0.stl" scale="0.001 0.001 0.001"/>
+        <mesh name="RBA_1_ASY"   file="../meshes/rba-1/LINK1.stl" scale="0.001 0.001 0.001"/>
+        <mesh name="RBA_1_ASP"   file="../meshes/rba-1/LINK2.stl" scale="0.001 0.001 0.001"/>
+        <mesh name="RBA_1_AEP"   file="../meshes/rba-1/LINK3.stl" scale="0.001 0.001 0.001"/>
+        <mesh name="RBA_1_AER"   file="../meshes/rba-1/LINK4.stl" scale="0.001 0.001 0.001"/>
+        <mesh name="RBA_1_AWP"   file="../meshes/rba-1/LINK5.stl" scale="0.001 0.001 0.001"/>
+
+        <!-- RBA-1 Gripper meshes -->
+        <mesh name="RBA_1_Palm"          file="../meshes/rba-1/PALM.stl" scale="0.001 0.001 0.001"/>
+        <mesh name="RBA_1_finger_upper"  file="../meshes/rba-1/Finger_Upper.stl" scale="0.001 0.001 0.001"/>
+        <mesh name="RBA_1_finger_lower"  file="../meshes/rba-1/Finger_Lower.stl" scale="0.001 0.001 0.001"/>
+    </asset>
+
+    <worldbody>
+        <body name="base_link" pos="0 0 0.7" quat="1 0 0 0" childclass="rbq">
+            <inertial
+                pos="-0.013265 0.0 0.011765"
+                mass="16.758"
+                fullinertia="0.163831629266 0.590891341306 0.678714788268 -0.000271071491 0.040352639311 0.000216428332"/>
+            <freejoint/>
+            <site name="imu" pos="-0.02557 0 0.04232"/>
+            <geom type="mesh" mesh="trunk" material="darker_gray" class="visual"/>
+            <geom type="box" size="0.4 0.1 0.074" class="collision"/>
+            <camera name="track_cam" mode="track" target="base_link" pos="0 -2 1" euler="20 0 0"/>
+
+            <!-- RR leg -->
+            <body name="RR_hip" pos="-0.31218 -0.09 0." euler="0 0 0">
+                <inertial pos="0.027522 -0.01681 -0.00187" mass="3.669344"
+                    fullinertia="0.006957590282 0.00993982268 0.012145140245 -0.0017011378 -0.000029676183 0.000087952172"/>
+                <joint name="joint0_HRR" class="right_abduction"/>
+                <geom type="mesh" mesh="hip3" material="gray" euler="0 0 3.141592" class="visual"/>
+
+                <body name="RR_thigh" pos="0 -0.10285 0" euler="0 0 0">
+                    <inertial pos="-0.004765 -0.00441 -0.06311" mass="1.80014"
+                        fullinertia="0.018990787558 0.019770882672 0.001828257915 0.000045769435 -0.001024809563 0.000510504233"/>
+                    <joint name="joint1_HRP" class="hip"/>
+                    <geom type="mesh" mesh="thigh" material="darker_gray" class="visual"/>
+                    <geom type="cylinder" size="0.06 0.035" euler="1.57 0 0" class="collision"/>
+                    <geom type="box" size="0.025 0.02 0.125" pos="-0.035 0 -0.125" class="collision"/>
+
+                    <body name="RR_calf" pos="0 0 -0.33" euler="0 0 0">
+                        <inertial pos="0.008988 0.000072 -0.14911" mass="0.4520"
+                            fullinertia="0.00214256 0.00216568 0.0000616440919 0.000000075939 0.0000230368745 0.000009344688"/>
+                        <joint name="joint2_HRK" class="knee"/>
+                        <geom type="mesh" mesh="calf" material="charcoal" class="visual"/>
+                        <geom type="box" size="0.01 0.015 0.105" pos="0.01 0 -0.065" euler="0 -0.226893 0" class="collision"/>
+                        <geom type="box" size="0.01 0.015 0.04" pos="0.03 0 -0.23" euler="0 0.11 0" class="collision"/>
+
+                        <body name="RR_foot" pos="0 0 -0.33">
+                            <inertial pos="0 0 0" mass="0.06"
+                                fullinertia="9.6e-06 9.6e-06 9.6e-06 0 0 0"/>
+                            <geom name="RR" type="sphere" pos="-0.01 0 -0.005" size="0.03" class="foot"/>
+                        </body>
+                    </body>
+                </body>
+            </body>
+
+            <!-- RL leg -->
+            <body name="RL_hip" pos="-0.31218 0.09 0">
+                <inertial pos="0.027522 0.01681 -0.00187" mass="3.669344"
+                    fullinertia="0.006957590282 0.00993982268 0.012145140245 0.0017011378 -0.000029676183 -0.000087952172"/>
+                <joint name="joint3_HLR" class="left_abduction"/>
+                <geom type="mesh" mesh="hip2" material="gray" euler="0 0 -3.141592" class="visual"/>
+
+                <body name="RL_thigh" pos="0 0.10285 0">
+                    <inertial pos="-0.004765 0.00441 -0.06311" mass="1.80014"
+                        fullinertia="0.018990787558 0.019770882672 0.001828257915 -0.000045769435 -0.001024809563 -0.000510504233"/>
+                    <joint name="joint4_HLP" class="hip"/>
+                    <geom type="mesh" mesh="thigh" material="darker_gray" class="visual"/>
+                    <geom type="cylinder" size="0.06 0.035" euler="1.57 0 0" class="collision"/>
+                    <geom type="box" size="0.025 0.02 0.125" pos="-0.035 0 -0.125" class="collision"/>
+
+                    <body name="RL_calf" pos="0 0 -0.33">
+                        <inertial pos="0.008988 -0.000072 -0.14911" mass="0.4520"
+                            fullinertia="0.00214256 0.00216568 0.0000616440919 -0.000000075939 0.0000230368745 -0.000009344688"/>
+                        <joint name="joint5_HLK" class="knee"/>
+                        <geom type="mesh" mesh="calf" material="charcoal" class="visual"/>
+                        <geom type="box" size="0.01 0.015 0.105" pos="0.01 0 -0.065" euler="0 -0.226893 0" class="collision"/>
+                        <geom type="box" size="0.01 0.015 0.04" pos="0.03 0 -0.23" euler="0 0.11 0" class="collision"/>
+
+                        <body name="RL_foot" pos="0 0 -0.33">
+                            <inertial pos="0 0 0" mass="0.06"
+                                fullinertia="9.6e-06 9.6e-06 9.6e-06 0 0 0"/>
+                            <geom name="RL"  pos="-0.01 0 -0.005" type="sphere" size="0.03" class="foot"/>
+                        </body>
+                    </body>
+                </body>
+            </body>
+
+            <!-- FR leg -->
+            <body name="FR_hip" pos="0.31218 -0.09 0" euler="0 0 0">
+                <inertial pos="-0.027522 -0.01681 -0.00187" mass="3.669344"
+                    fullinertia="0.006957590282 0.00993982268 0.012145140245 0.0017011378 0.000029676183 0.000087952172"/>
+                <joint name="joint6_FRR" class="right_abduction"/>
+                <geom type="mesh" mesh="hip2" material="gray" euler="0 0 0" class="visual"/>
+
+                <body name="FR_thigh" pos="0 -0.10285 0" euler="0 0 0">
+                    <inertial pos="-0.004765 -0.00441 -0.06311" mass="1.80014"
+                        fullinertia="0.018990787558 0.019770882672 0.001828257915 0.000045769435 -0.001024809563 0.000510504233"/>
+                    <joint name="joint7_FRP" class="hip"/>
+                    <geom type="mesh" mesh="thigh" material="darker_gray" class="visual"/>
+                    <geom type="cylinder" size="0.06 0.035" euler="1.57 0 0" class="collision"/>
+                    <geom type="box" size="0.025 0.02 0.125" pos="-0.035 0 -0.125" class="collision"/>
+
+                    <body name="FR_calf" pos="0 0 -0.33" euler="0 0 0">
+                        <inertial pos="0.008988 0.000072 -0.14911" mass="0.4520"
+                            fullinertia="0.00214256 0.00216568 0.0000616440919 0.000000075939 0.0000230368745 0.000009344688"/>
+                        <joint name="joint8_FRK" class="knee"/>
+                        <geom type="mesh" mesh="calf" material="charcoal" class="visual"/>
+                        <geom type="box" size="0.01 0.015 0.105" pos="0.01 0 -0.065" euler="0 -0.226893 0" class="collision"/>
+                        <geom type="box" size="0.01 0.015 0.04" pos="0.03 0 -0.23" euler="0 0.11 0" class="collision"/>
+
+                        <body name="FR_foot" pos="0 0 -0.33">
+                            <inertial pos="0 0 0" mass="0.06"
+                                fullinertia="9.6e-06 9.6e-06 9.6e-06 0 0 0"/>
+                            <geom name="FR"  pos="-0.01 0 -0.005" type="sphere" size="0.03" class="foot"/>
+                        </body>
+                    </body>
+                </body>
+            </body>
+
+            <!-- FL leg -->
+            <body name="FL_hip" pos="0.31218 0.09 0">
+                <inertial pos="-0.027522 0.01681 -0.00187" mass="3.669344"
+                    fullinertia="0.006957590282 0.00993982268 0.012145140245 -0.0017011378 0.000029676183 -0.000087952172"/>
+                <joint name="joint9_FLR" class="left_abduction"/>
+                <geom type="mesh" mesh="hip3" material="gray" euler="0 0 0" class="visual"/>
+
+                <body name="FL_thigh" pos="0 0.10285 0">
+                    <inertial pos="-0.004765 0.00441 -0.06311" mass="1.80014"
+                        fullinertia="0.018990787558 0.019770882672 0.001828257915 -0.000045769435 -0.001024809563 -0.000510504233"/>
+                    <joint name="joint10_FLP" class="hip"/>
+                    <geom type="mesh" mesh="thigh" material="darker_gray" class="visual"/>
+                    <geom type="cylinder" size="0.06 0.035" euler="1.57 0 0" class="collision"/>
+                    <geom type="box" size="0.025 0.02 0.125" pos="-0.035 0 -0.125" class="collision"/>
+
+                    <body name="FL_calf" pos="0 0 -0.33">
+                        <inertial pos="0.008988 -0.000072 -0.14911" mass="0.4520"
+                            fullinertia="0.00214256 0.00216568 0.0000616440919 -0.000000075939 0.0000230368745 -0.000009344688"/>
+                        <joint name="joint11_FLK" class="knee"/>
+                        <geom type="mesh" mesh="calf" material="charcoal" class="visual"/>
+                        <geom type="box" size="0.01 0.015 0.105" pos="0.01 0 -0.065" euler="0 -0.226893 0" class="collision"/>
+                        <geom type="box" size="0.01 0.015 0.04" pos="0.03 0 -0.23" euler="0 0.11 0" class="collision"/>
+
+                        <body name="FL_foot" pos="0 0 -0.33">
+                            <inertial pos="0 0 0" mass="0.06"
+                                fullinertia="9.6e-06 9.6e-06 9.6e-06 0 0 0"/>
+                            <geom name="FL"  pos="-0.01 0 -0.005" type="sphere" size="0.03" class="foot"/>
+                        </body>
+                    </body>
+                </body>
+            </body>
+
+            <!-- RBA-1 Manipulator -->
+            <!-- Offsets/masses/CoM/inertia from "[260831] RBA-1 물성치(좌표계)_for_claude.pptx".
+                 Joint ranges/armature/frictionloss are placeholders copied from RB1 pending real
+                 RBA-1 actuator specs (TODO). Base-to-arm mount offset (0.238 0 0.0605) is reused
+                 from RB1/LIMS_EX, not covered by the RBA-1 property deck (TODO verify). -->
+            <body name="RBA_1_Base" pos="0.23800 0 0.0605" euler="0 0 0">
+                <inertial pos="-0.00605 -0.000025 0.01312" mass="0.612"
+                    fullinertia="0.0009285016 0.0010844258 0.0011109016 -0.0000009573 -0.0000469933 -0.0000000266"/>
+                <geom material="darker_gray" mesh="RBA_1_Base" type="mesh" class="visual"/>
+
+                <body name="RBA_1_ASY" pos="0.0 0.0 0.085707">
+                    <inertial pos="-0.001065 0.000155 -0.050867" mass="0.434"
+                        fullinertia="0.0005832022 0.0006398729 0.0004997409 -0.0000082990 0.0000084483 -0.0000010519"/>
+                    <geom material="darker_gray" mesh="RBA_1_ASY" type="mesh" class="visual"/>
+                    <joint name="RBA_1_ASY_joint" type="hinge" axis="0 0 1" range="-6.283186 6.283186" damping="0.0" armature="0.1647" frictionloss="4.5"/>
+                    <geom type="cylinder" size="0.045 0.028" pos="0 0 0.028" euler="0 0 0" class="collision"/>
+
+                    <body name="RBA_1_ASP" pos="0.0 0.0 0.056207">
+                        <inertial pos="0.016071 0.134641 -0.000286" mass="1.617"
+                            fullinertia="0.0240507655 0.0020847862 0.0236332963 0.0020196301 -0.0000109486 0.0001246976"/>
+                        <geom material="darker_gray" mesh="RBA_1_ASP" type="mesh" class="visual"/>
+                        <joint name="RBA_1_ASP_joint" type="hinge" axis="0 1 0" range="0 3.141593" damping="0.0" armature="0.1647" frictionloss="4.5"/>
+                        <geom type="cylinder" size="0.04 0.16" pos="-0.16175 0 0.0325" euler="0 1.5708 0" class="collision"/>
+
+                        <body name="RBA_1_AEP" pos="-0.3235 0.0 0.065">
+                            <inertial pos="-0.036719 -0.008160 -0.014421" mass="0.560"
+                                fullinertia="0.0004457268 0.0012907874 0.0012095508 0.0001421562 -0.0000849507 0.0000113147"/>
+                            <geom material="darker_gray" mesh="RBA_1_AEP" type="mesh" class="visual"/>
+                            <!-- AEP (elbow) only bends one way, like a real elbow - every pose table entry is
+                                 <= 0 deg. Range restricted to -180..0 (with a small margin) to keep the QP from
+                                 ever commanding a "backward-bent" elbow, which self-overlaps the upper arm/forearm. -->
+                            <joint name="RBA_1_AEP_joint" type="hinge" axis="0 1 0" range="-3.141593 0.034907" damping="0.0" armature="0.0324" frictionloss="1.7"/>
+                            <geom type="cylinder" size="0.035 0.055" pos="0.055 0 0.0075" euler="0 1.5708 0" class="collision"/>
+
+                            <body name="RBA_1_AER" pos="0.109 0.0 0.015">
+                                <inertial pos="-0.107238 -0.002955 -0.003380" mass="0.400"
+                                    fullinertia="0.0002389541 0.0010173214 0.0009961955 -0.0000081978 0.0000666254 0.0000220425"/>
+                                <geom material="darker_gray" mesh="RBA_1_AER" type="mesh" class="visual"/>
+                                <joint name="RBA_1_AER_joint" type="hinge" axis="1 0 0" range="-6.283186 6.283186" damping="0.0" armature="0.0324" frictionloss="1.7"/>
+                                <geom type="cylinder" size="0.03 0.07" pos="0.0701 0 0" euler="0 1.5708 0" class="collision"/>
+
+                                <body name="RBA_1_AWP" pos="0.1402 0.0 0.0">
+                                    <inertial pos="0.069185 -0.000014 0.034824" mass="0.301"
+                                        fullinertia="0.0001924750 0.0004449807 0.0003956772 0.0000000441 0.0000000710 0.0000001119"/>
+                                    <geom material="darker_gray" mesh="RBA_1_AWP" type="mesh" class="visual"/>
+                                    <joint name="RBA_1_AWP_joint" type="hinge" axis="0 1 0" range="-6.283186 6.283186" damping="0.0" armature="0.0324" frictionloss="1.7"/>
+                                    <geom type="cylinder" size="0.028 0.0544" pos="0.0544 0 0" euler="0 1.5708 0" class="collision"/>
+
+                                    <!-- AWR link inertial = Palm+Finger_upper+Finger_lower gripper assembly (closed/rigid),
+                                         from "[260902] RBA-1 물성치(좌표계)_그리퍼_포함.pptx" p.11, same as RBA_1_Parameters.cpp -->
+                                    <body name="RBA_1_AWR" pos="0.10875 0.0 0.0">
+                                        <inertial pos="0.075628 0.003911 -0.000016" mass="0.608"
+                                            fullinertia="0.0005987945 0.0018321600 0.0016594394 0.0001272653 0.0000841268 0.0000059086"/>
+                                        <geom material="darker_gray" mesh="RBA_1_Palm" type="mesh" class="visual"/>
+                                        <joint name="RBA_1_AWR_joint" type="hinge" axis="1 0 0" range="-6.283186 6.283186" damping="0.08" armature="0.15" frictionloss="1.2"/>
+                                        <geom type="cylinder" size="0.03 0.055" pos="0.055 0 0" euler="0 1.5708 0" class="collision"/>
+                                        <!-- Z=0, not RBA_1_6toE's -0.015: the finger pads are symmetric about the
+                                             geom offset plane (upper pad bottom +5 mm / lower pad top -5 mm), so the
+                                             actual grasp centre sits at Z=0 relative to the finger geoms. -->
+                                        <site name="ee_site" pos="0.1737 0.015 0.0" size="0.005" rgba="1 0 0 1"/>
+
+                                        <body name="RBA_1_finger_upper" pos="0.0 0.0 0.0">
+                                            <!-- Nominal near-zero mass: the measured gripper mass (RBA_1_AWR inertial,
+                                                 see RBA_1_Parameters.cpp) already covers Palm+Finger_upper+Finger_lower
+                                                 as one assembly; a separate nonzero finger mass here would double-count it.
+                                                 Kept nonzero only because MuJoCo requires positive body mass. -->
+                                            <inertial pos="0.1737 0.015 -0.015" mass="0.001"
+                                                fullinertia="0.0000006 0.0000006 0.0000002 0 0 0"/>
+                                            <!-- Finger_Upper.stl's own local origin is forward of the AWR joint origin
+                                                 like the other RBA-1 meshes - offset in X. The gripper's grasp centerline
+                                                 is not on the palm's own Y centerline by design - shifted +15mm Y
+                                                 (confirmed by user against CAD, not derivable from the mesh's own
+                                                 bounding box, which is Y-symmetric on its own). -->
+                                            <geom material="darker_gray" mesh="RBA_1_finger_upper" type="mesh" class="visual" pos="0.1737 0.015 0.0"/>
+                                            <!-- The old near-zero damping/armature/frictionloss here was sized around a
+                                                 since-fixed bug where Mujoco/main.cpp fought the incoming gripper torque
+                                                 with a stale position ref, so the gripper barely moved at all; those
+                                                 values then made a step-like motion once that bug was fixed. The finger
+                                                 body itself is intentionally near-massless (mass already counted in the
+                                                 AWR link inertial above), so there's little physical mass for
+                                                 damping/frictionloss to act against - armature (reflected joint inertia)
+                                                 is used instead to give the DOF a realistic open/close time (~0.25s full
+                                                 travel) under the shared Kp=650/Kd=10 bang-bang gripper control in
+                                                 Mujoco/main.cpp. Tuned with both finger_upper/lower joints matched,
+                                                 since the joint1/joint2 equality constraint above couples them and an
+                                                 upper/lower mismatch silently changes the effective response. -->
+                                            <joint name="RBA_1_finger_upper_joint" type="slide" axis="0 0 1" range="0.0 0.04" damping="24.0" armature="15.5" frictionloss="12.0" solreflimit="0.01 1"/>
+                                            <geom name="RBA_1_finger_upper_collision" type="box" size="0.012 0.017 0.012" pos="0.19 0.015 0.011" euler="0 0 0" class="collision"/>
+                                        </body>
+
+                                        <body name="RBA_1_finger_lower" pos="0.0 0.0 0.0">
+                                            <!-- Nominal near-zero mass: see RBA_1_finger_upper comment above. -->
+                                            <inertial pos="0.1737 0.015 -0.015" mass="0.001"
+                                                fullinertia="0.0000006 0.0000006 0.0000002 0 0 0"/>
+                                            <!-- Finger_Lower.stl origin convention: see RBA_1_finger_upper comment above. -->
+                                            <geom material="darker_gray" mesh="RBA_1_finger_lower" type="mesh" class="visual" pos="0.1737 0.015 0.0"/>
+                                            <!-- Mirrors RBA_1_finger_upper_joint - see comment there. -->
+                                            <joint name="RBA_1_finger_lower_joint" type="slide" axis="0 0 -1" range="0.0 0.04" damping="30.0" armature="16.0" frictionloss="16.0" solreflimit="0.01 1"/>
+                                            <geom name="RBA_1_finger_lower_collision" type="box" size="0.012 0.017 0.012" pos="0.19 0.015 -0.011" euler="0 0 0" class="collision"/>
+                                        </body>
+                                    </body>
+                                </body>
+                            </body>
+                        </body>
+                    </body>
+                </body>
+            </body>
+        </body>
+        <!-- Small dynamic target cube (declared after robot to keep robot qpos/qvel ordering) -->
+        <body name="target_cube_green_body" pos="0.8 0.0 0.02">
+            <freejoint/>
+            <inertial pos="0 0 0" mass="0.15" diaginertia="4.0e-05 4.0e-05 4.0e-05"/>
+            <geom name="target_cube_green" type="box" size="0.02 0.02 0.02" rgba="0 1 0 1" friction="0.8 0.02 0.005"/>
+        </body>
+    </worldbody>
+
+    <!-- Actuators -->
+    <actuator>
+        <!-- RR leg motors -->
+        <motor class="abduction" name="motor0_HRR" joint="joint0_HRR"/>
+        <motor class="hip" name="motor1_HRP" joint="joint1_HRP"/>
+        <motor class="knee" name="motor2_HRK" joint="joint2_HRK"/>
+
+        <!-- RL leg motors -->
+        <motor class="abduction" name="motor3_HLR" joint="joint3_HLR"/>
+        <motor class="hip" name="motor4_HLP" joint="joint4_HLP"/>
+        <motor class="knee" name="motor5_HLK" joint="joint5_HLK"/>
+
+        <!-- FR leg motors -->
+        <motor class="abduction" name="motor6_FRR" joint="joint6_FRR"/>
+        <motor class="hip" name="motor7_FRP" joint="joint7_FRP"/>
+        <motor class="knee" name="motor8_FRK" joint="joint8_FRK"/>
+
+        <!-- FL leg motors -->
+        <motor class="abduction" name="motor9_FLR" joint="joint9_FLR"/>
+        <motor class="hip" name="motor10_FLP" joint="joint10_FLP"/>
+        <motor class="knee" name="motor11_FLK" joint="joint11_FLK"/>
+
+        <!-- RBA-1 manipulator motors -->
+        <motor name="RBA_1_ASY" ctrllimited="true" ctrlrange="-100 100" joint="RBA_1_ASY_joint"/>
+        <motor name="RBA_1_ASP" ctrllimited="true" ctrlrange="-100 100" joint="RBA_1_ASP_joint"/>
+        <motor name="RBA_1_AEP" ctrllimited="true" ctrlrange="-100 100" joint="RBA_1_AEP_joint"/>
+        <motor name="RBA_1_AER" ctrllimited="true" ctrlrange="-100 100" joint="RBA_1_AER_joint"/>
+        <motor name="RBA_1_AWP" ctrllimited="true" ctrlrange="-100 100" joint="RBA_1_AWP_joint"/>
+        <motor name="RBA_1_AWR" ctrllimited="true" ctrlrange="-100 100" joint="RBA_1_AWR_joint"/>
+
+        <!-- RBA-1 gripper motor (torque control for slide joint) -->
+        <motor name="RBA_1_finger_upper" ctrllimited="true" ctrlrange="-100 100" joint="RBA_1_finger_upper_joint"/>
+    </actuator>
+
+    <!-- Sensors -->
+    <sensor>
+        <!-- Joint position sensors -->
+        <jointpos name="joint0_HRR_pos" joint="joint0_HRR"/>
+        <jointpos name="joint1_HRP_pos" joint="joint1_HRP"/>
+        <jointpos name="joint2_HRK_pos" joint="joint2_HRK"/>
+        <jointpos name="joint3_HLR_pos" joint="joint3_HLR"/>
+        <jointpos name="joint4_HLP_pos" joint="joint4_HLP"/>
+        <jointpos name="joint5_HLK_pos" joint="joint5_HLK"/>
+        <jointpos name="joint6_FRR_pos" joint="joint6_FRR"/>
+        <jointpos name="joint7_FRP_pos" joint="joint7_FRP"/>
+        <jointpos name="joint8_FRK_pos" joint="joint8_FRK"/>
+        <jointpos name="joint9_FLR_pos" joint="joint9_FLR"/>
+        <jointpos name="joint10_FLP_pos" joint="joint10_FLP"/>
+        <jointpos name="joint11_FLK_pos" joint="joint11_FLK"/>
+
+        <!-- Joint velocity sensors -->
+        <jointvel name="joint0_HRR_vel" joint="joint0_HRR"/>
+        <jointvel name="joint1_HRP_vel" joint="joint1_HRP"/>
+        <jointvel name="joint2_HRK_vel" joint="joint2_HRK"/>
+        <jointvel name="joint3_HLR_vel" joint="joint3_HLR"/>
+        <jointvel name="joint4_HLP_vel" joint="joint4_HLP"/>
+        <jointvel name="joint5_HLK_vel" joint="joint5_HLK"/>
+        <jointvel name="joint6_FRR_vel" joint="joint6_FRR"/>
+        <jointvel name="joint7_FRP_vel" joint="joint7_FRP"/>
+        <jointvel name="joint8_FRK_vel" joint="joint8_FRK"/>
+        <jointvel name="joint9_FLR_vel" joint="joint9_FLR"/>
+        <jointvel name="joint10_FLP_vel" joint="joint10_FLP"/>
+        <jointvel name="joint11_FLK_vel" joint="joint11_FLK"/>
+
+        <!-- Joint torque sensors -->
+        <jointactuatorfrc name="joint0_HRR_torque" joint="joint0_HRR" noise="0.0"/>
+        <jointactuatorfrc name="joint1_HRP_torque" joint="joint1_HRP" noise="0.0"/>
+        <jointactuatorfrc name="joint2_HRK_torque" joint="joint2_HRK" noise="0.0"/>
+        <jointactuatorfrc name="joint3_HLR_torque" joint="joint3_HLR" noise="0.0"/>
+        <jointactuatorfrc name="joint4_HLP_torque" joint="joint4_HLP" noise="0.0"/>
+        <jointactuatorfrc name="joint5_HLK_torque" joint="joint5_HLK" noise="0.0"/>
+        <jointactuatorfrc name="joint6_FRR_torque" joint="joint6_FRR" noise="0.0"/>
+        <jointactuatorfrc name="joint7_FRP_torque" joint="joint7_FRP" noise="0.0"/>
+        <jointactuatorfrc name="joint8_FRK_torque" joint="joint8_FRK" noise="0.0"/>
+        <jointactuatorfrc name="joint9_FLR_torque" joint="joint9_FLR" noise="0.0"/>
+        <jointactuatorfrc name="joint10_FLP_torque" joint="joint10_FLP" noise="0.0"/>
+        <jointactuatorfrc name="joint11_FLK_torque" joint="joint11_FLK" noise="0.0"/>
+
+        <!-- IMU sensors -->
+        <framequat name="imu_quat" objtype="site" objname="imu"/>
+        <gyro name="imu_gyro" site="imu"/>
+        <accelerometer name="imu_acc" site="imu"/>
+
+        <!-- Frame sensors -->
+        <framepos name="frame_pos" objtype="site" objname="imu"/>
+        <framelinvel name="frame_vel" objtype="site" objname="imu"/>
+
+        <!-- RBA-1 gripper sensors -->
+        <jointpos name="RBA_1_finger_upper_pos" joint="RBA_1_finger_upper_joint"/>
+        <jointpos name="RBA_1_finger_lower_pos" joint="RBA_1_finger_lower_joint"/>
+        <jointvel name="RBA_1_finger_upper_vel" joint="RBA_1_finger_upper_joint"/>
+        <jointvel name="RBA_1_finger_lower_vel" joint="RBA_1_finger_lower_joint"/>
+    </sensor>
+
+    <!-- Contacts -->
+    <contact>
+        <!-- Floor contact -->
+        <pair geom1="RR" geom2="floor"/>
+        <pair geom1="RL" geom2="floor"/>
+        <pair geom1="FR" geom2="floor"/>
+        <pair geom1="FL" geom2="floor"/>
+
+        <!-- RBA-1 arm self-collision: only these 5 non-adjacent pairs are excluded - they
+             genuinely overlap at the arm's tightest folds (homeJointFolding, homeJointPacking)
+             even with tightly-fit collision cylinders, because the real link cross-sections
+             taper in ways a simple cylinder can't capture. Direct parent-child pairs are
+             already excluded by MuJoCo by default. Every other non-adjacent pair (Base-*,
+             ASY-*, AEP-AWP) is verified collision-free across all pose tables and left active. -->
+        <exclude body1="RBA_1_ASP" body2="RBA_1_AER"/>
+        <exclude body1="RBA_1_ASP" body2="RBA_1_AWP"/>
+        <exclude body1="RBA_1_ASP" body2="RBA_1_AWR"/>
+        <exclude body1="RBA_1_AEP" body2="RBA_1_AWR"/>
+        <exclude body1="RBA_1_AER" body2="RBA_1_AWR"/>
+    </contact>
+
+</mujoco>

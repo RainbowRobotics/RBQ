@@ -1,0 +1,20 @@
+#include "LedBottomSide_.idl"
+
+// Bottom status LED state (rt/rbq/led_bottom, 1 Hz, CAN FD robots only) - GET /api/led/bottom as a message.
+// age_ms: ms since the IF board last answered, -1 = no answer yet
+// configured: false = the IF board rebooted and holds no setting (Motion resends the last one)
+// if_fw: IF firmware version (yyyymmddnn), 0 = unknown
+module rbq_msgs {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct LedBottomState_ {
+        int32          age_ms;
+        boolean        configured;
+        uint32         if_fw;
+        LedBottomSide_ right;
+        LedBottomSide_ left;
+      };
+    };
+  };
+};

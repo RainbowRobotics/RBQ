@@ -1,0 +1,18 @@
+#include "Header_.idl"
+
+module sensor_msgs {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct Image_ {
+        std_msgs::msg::dds_::Header_ header;
+        uint32 height;
+        uint32 width;
+        string encoding;
+        uint8 is_bigendian;
+        uint32 step;
+        sequence<uint8> data;
+      };
+    };
+  };
+};
