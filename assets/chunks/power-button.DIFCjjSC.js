@@ -1,0 +1,1 @@
+const i="/RBQ/images/operation/initial-pose-1.png",o="/RBQ/images/operation/initial-pose-2.png",s="/RBQ/images/operation/initial-pose-3.png",t="/RBQ/images/operation/initial-pose-4.png",p="/RBQ/images/operation/power-button.png";export{i as _,o as a,s as b,t as c,p as d};
