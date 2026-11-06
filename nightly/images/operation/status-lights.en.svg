@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 290" width="480" height="290" font-family="Arial, Helvetica, sans-serif">
+  <rect x="10" y="44" width="460" height="166" rx="18" fill="#2b313c" stroke="#8a93a5" stroke-width="2"/>
+  <!-- top row: battery, 4 cells -->
+  <path d="M65 70 V62 H435 V70" stroke="#e8590c" stroke-width="2" fill="none"/>
+  <circle cx="160" cy="22" r="12" fill="#e8590c"/>
+  <text x="160" y="28" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
+  <text x="180" y="28" font-size="17" font-weight="700" fill="#e8590c">Battery level (4 cells)</text>
+  <g fill="#3fbf6f" stroke="#1d232d" stroke-width="2">
+    <circle cx="85" cy="98" r="20"/>
+    <circle cx="195" cy="98" r="20"/>
+    <circle cx="305" cy="98" r="20"/>
+    <circle cx="415" cy="98" r="20" fill="#4a515e"/>
+  </g>
+  <!-- bottom row: 3 status lights + network light -->
+  <g stroke="#1d232d" stroke-width="2">
+    <circle cx="85" cy="162" r="20" fill="#3fbf6f"/>
+    <circle cx="195" cy="162" r="20" fill="#3fbf6f"/>
+    <circle cx="305" cy="162" r="20" fill="#3d7bff"/>
+    <rect x="392" y="146" width="46" height="32" rx="6" fill="#4a515e"/>
+  </g>
+  <circle cx="406" cy="162" r="7" fill="#e5484d"/>
+  <circle cx="424" cy="162" r="7" fill="#3d7bff"/>
+  <g font-size="11" font-weight="700" fill="#cfd5df" text-anchor="middle">
+    <text x="406" y="141">U</text>
+    <text x="424" y="141">R</text>
+  </g>
+  <g stroke="#e8590c" stroke-width="2">
+    <path d="M85 184 V226 M195 184 V226 M305 184 V226 M415 180 V226"/>
+  </g>
+  <g fill="#e8590c">
+    <circle cx="85" cy="238" r="12"/>
+    <circle cx="195" cy="238" r="12"/>
+    <circle cx="305" cy="238" r="12"/>
+    <circle cx="415" cy="238" r="12"/>
+  </g>
+  <g font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">
+    <text x="85" y="243">2</text>
+    <text x="195" y="243">3</text>
+    <text x="305" y="243">4</text>
+    <text x="415" y="243">5</text>
+  </g>
+  <g font-size="15" font-weight="700" fill="#e8590c" text-anchor="middle">
+    <text x="85" y="276">E-STOP</text>
+    <text x="195" y="276">Comm module</text>
+    <text x="305" y="276">Control mode</text>
+    <text x="415" y="276">Network</text>
+  </g>
+</svg>
