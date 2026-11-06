@@ -1,0 +1,12 @@
+module std_msgs {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct MultiArrayDimension_ {
+        string label;
+        uint32 size;
+        uint32 stride;
+      };
+    };
+  };
+};

@@ -1,0 +1,17 @@
+#include "../ros2/Header_.idl"
+
+module rbq_msgs {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct WallMap_ {
+        std_msgs::msg::dds_::Header_ header;
+        int32 rows;
+        int32 cols;
+        float cell_size;
+        double body_from_map[16];
+        sequence<uint8> cells;
+      };
+    };
+  };
+};

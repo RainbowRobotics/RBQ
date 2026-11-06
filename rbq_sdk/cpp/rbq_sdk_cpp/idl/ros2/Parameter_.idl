@@ -1,0 +1,14 @@
+// rcl_interfaces/msg/Parameter
+#include "ParameterValue_.idl"
+
+module rcl_interfaces {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct Parameter_ {
+        string name;
+        rcl_interfaces::msg::dds_::ParameterValue_ value;
+      };
+    };
+  };
+};

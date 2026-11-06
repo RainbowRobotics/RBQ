@@ -1,0 +1,10 @@
+module api {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct ResponseStatus_ {
+        long code;
+      };
+    };
+  };
+};

@@ -1,0 +1,39 @@
+diff --git a/node_modules/three/build/three.cjs b/node_modules/three/build/three.cjs
+index d6f842a..9fb2db0 100644
+--- a/node_modules/three/build/three.cjs
++++ b/node_modules/three/build/three.cjs
+@@ -22993,7 +22993,7 @@ function WebGLState( gl ) {
+ 
+ 		let needsUpdate = false;
+ 
+-		if ( renderTarget ) {
++		if ( renderTarget && framebuffer !== null && typeof framebuffer === 'object' ) {
+ 
+ 			drawBuffers = currentDrawbuffers.get( framebuffer );
+ 
+diff --git a/node_modules/three/build/three.module.js b/node_modules/three/build/three.module.js
+index d33f9c3..d73a2a8 100644
+--- a/node_modules/three/build/three.module.js
++++ b/node_modules/three/build/three.module.js
+@@ -22991,7 +22991,7 @@ function WebGLState( gl ) {
+ 
+ 		let needsUpdate = false;
+ 
+-		if ( renderTarget ) {
++		if ( renderTarget && framebuffer !== null && typeof framebuffer === 'object' ) {
+ 
+ 			drawBuffers = currentDrawbuffers.get( framebuffer );
+ 
+diff --git a/node_modules/three/src/renderers/webgl/WebGLState.js b/node_modules/three/src/renderers/webgl/WebGLState.js
+index 9f21f45..9324277 100644
+--- a/node_modules/three/src/renderers/webgl/WebGLState.js
++++ b/node_modules/three/src/renderers/webgl/WebGLState.js
+@@ -471,7 +471,7 @@ function WebGLState( gl ) {
+ 
+ 		let needsUpdate = false;
+ 
+-		if ( renderTarget ) {
++		if ( renderTarget && framebuffer !== null && typeof framebuffer === 'object' ) {
+ 
+ 			drawBuffers = currentDrawbuffers.get( framebuffer );
+ 

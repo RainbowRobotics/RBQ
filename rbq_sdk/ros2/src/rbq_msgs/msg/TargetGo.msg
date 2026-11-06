@@ -1,0 +1,10 @@
+int32 gait
+int32 mode
+float32 x
+float32 y
+float32 theta
+float32 offset_x
+float32 offset_y
+bool slow
+bool wide
+bool vision

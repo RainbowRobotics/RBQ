@@ -1,0 +1,1 @@
+import{jsx as l}from"react/jsx-runtime";import{View as n}from"../native";function b({color:t,radius:o,width:i=1,inset:r=0,style:e}){return!t&&!e?null:l(n,{pointerEvents:"none",style:[{position:"absolute",top:r,left:r,right:r,bottom:r,borderWidth:i,borderColor:t??"transparent",borderRadius:Math.max(0,o-r)},e]})}export{b as Outline};

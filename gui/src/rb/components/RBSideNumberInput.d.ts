@@ -1,0 +1,21 @@
+import { type StyleProp, type ViewStyle } from 'react-native';
+export type SideNumberInputSize = 'xs2' | 'sm' | 'md' | 'lg';
+export type RBSideNumberInputProps = {
+    size?: SideNumberInputSize;
+    variant?: 'default' | 'success';
+    value?: number | string;
+    defaultValue?: number;
+    step?: number;
+    min?: number;
+    max?: number;
+    digit?: number;
+    error?: boolean;
+    disabled?: boolean;
+    readOnly?: boolean;
+    inputDisabled?: boolean;
+    isDirect?: boolean;
+    onChange?: (v: number) => void;
+    style?: StyleProp<ViewStyle>;
+    testID?: string;
+};
+export declare function RBSideNumberInput({ size, variant, value, step, min, max, digit, error, disabled, readOnly, inputDisabled, isDirect, onChange, style, testID }: RBSideNumberInputProps): import("react").JSX.Element;
