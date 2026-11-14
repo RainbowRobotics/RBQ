@@ -1,0 +1,23 @@
+#include "BmsCmd_.idl"
+#include "PathPoint_.idl"
+
+module unitree_go {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct SportModeCmd_ {
+        uint8 mode;
+        uint8 gait_type;
+        uint8 speed_level;
+        float foot_raise_height;
+        float body_height;
+        float position[2];
+        float euler[3];
+        float velocity[2];
+        float yaw_speed;
+        unitree_go::msg::dds_::BmsCmd_ bms_cmd;
+        unitree_go::msg::dds_::PathPoint_ path_point[30];
+      };
+    };
+  };
+};

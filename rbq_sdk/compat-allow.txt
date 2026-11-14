@@ -1,0 +1,7 @@
+# Breaks against the last SDK release that the owner has accepted — read by rbq_sdk/scripts/compat_check.py.
+# One id per line, then "#" and the reason with its issue number. A line without a reason fails the check.
+# Delete a line when the check calls it STALE (fixed, or shipped in a release that is now the base).
+idl:rbq_msgs::JointRef_     # #1333 — 담당(HyobinJeong) 결정 대기, 고쳐지면 지운다
+idl:rbq_msgs::MotionRef_    # #1333 — 담당(HyobinJeong) 결정 대기, 고쳐지면 지운다
+ros2:rbq_msgs/msg/JointRef  # #1333 — 담당(HyobinJeong) 결정 대기, 고쳐지면 지운다
+ros2:rbq_msgs/msg/MotionRef # #1333 — 담당(HyobinJeong) 결정 대기, 고쳐지면 지운다

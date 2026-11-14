@@ -1,0 +1,38 @@
+module rbq_msgs {
+  module msg {
+    module dds_ {
+
+      @extensibility(FINAL)
+      struct TaskInfo_ {
+        // Cartesian position / velocity / acceleration (m, m/s, m/s^2)
+        float pos[3];
+        float vel[3];
+        float acc[3];
+
+        // Cartesian force (N)
+        float force[3];
+
+        // Orientation as quaternion (w, x, y, z)
+        float quat[4];
+
+        // Rotation matrix, row-major 3x3
+        float rot[9];
+
+        // Euler roll / pitch / yaw, rad
+        float rpy[3];
+
+        // Angular velocity, rad/s
+        float omega[3];
+
+        // Jacobian, row-major 3x3
+        float jacobian[9];
+
+        // Task-space gains
+        float kp[3];
+        float kd[3];
+      };
+
+    };
+  };
+};
+

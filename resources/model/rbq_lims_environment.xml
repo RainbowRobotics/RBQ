@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mujoco model="rbq environment">
+    <include file="rbq10_with_lims_ex.xml"/>
+    <include file="env/environment_arm.xml"/>
+</mujoco> 

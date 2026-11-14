@@ -1,0 +1,24 @@
+// One bottom status LED as the IF board reports it (part of LedBottomState_).
+// mode, rgb, on_ms, off_ms, count: the setting the board holds (times and count are 0 unless blinking)
+// actual: the last 10 ms output after the power limit, 0 when off
+// limited: the power limit reduced the output within the last second
+// legacy: set through the old 0xB5 command, so the setting shown is approximate
+// lpf_w: filtered LED power [W]
+module rbq_msgs {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct LedBottomSide_ {
+        uint8   mode;
+        uint8   rgb[3];
+        uint16  on_ms;
+        uint16  off_ms;
+        uint8   count;
+        uint8   actual[3];
+        boolean limited;
+        boolean legacy;
+        float   lpf_w;
+      };
+    };
+  };
+};

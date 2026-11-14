@@ -1,0 +1,16 @@
+module rbq_msgs {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct LidarImu_ {
+        double t;
+        double acc_x;
+        double acc_y;
+        double acc_z;
+        double gyr_x;
+        double gyr_y;
+        double gyr_z;
+      };
+    };
+  };
+};

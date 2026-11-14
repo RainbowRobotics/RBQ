@@ -1,0 +1,1 @@
+import{jsx as m}from"react/jsx-runtime";import{Text as i}from"../native";import{transition as n}from"./web";function p({color:t,ms:e=150,ease:o,children:r}){return m(i,{style:[{color:t,lineHeight:0},n("color",e,o)],children:r})}export{p as Tint};

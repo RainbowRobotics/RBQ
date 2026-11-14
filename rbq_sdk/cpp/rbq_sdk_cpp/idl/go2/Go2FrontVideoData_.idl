@@ -1,0 +1,13 @@
+module unitree_go {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct Go2FrontVideoData_ {
+        uint64 time_frame;
+        sequence<uint8> video720p;
+        sequence<uint8> video360p;
+        sequence<uint8> video180p;
+      };
+    };
+  };
+};
