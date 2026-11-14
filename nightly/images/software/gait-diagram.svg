@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 720" width="1180" height="720" role="img" aria-labelledby="t">
+  <title id="t">RBQ gait state transition diagram</title>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1a1a1a"/>
+    </marker>
+  </defs>
+  <style>
+    .node { fill:#fff; stroke:#1a1a1a; stroke-width:2; }
+    .dec  { fill:#fff; stroke:#1a1a1a; stroke-width:1.5; stroke-dasharray:3 3; }
+    .zone { fill:none; stroke:#1a1a1a; stroke-width:2; stroke-dasharray:12 8; }
+    .pill { fill:#f2f2f2; stroke:#d4d4d4; stroke-width:1; }
+    .note { fill:#fff; stroke:#9a9a9a; stroke-width:1; }
+    .e    { fill:none; stroke:#1a1a1a; stroke-width:2; marker-end:url(#arrow); }
+    .p    { fill:none; stroke:#1a1a1a; stroke-width:2; }
+    text  { fill:#1a1a1a; font-family:Helvetica,Arial,sans-serif; font-size:15px; text-anchor:middle; dominant-baseline:middle; }
+    .lbl  { font-size:12px; }
+    .sm   { font-size:13px; text-anchor:start; }
+  </style>
+
+  <rect x="0" y="0" width="1180" height="720" fill="#ffffff"/>
+  <rect class="zone" x="470" y="55" width="660" height="470"/>
+
+  <path class="e" d="M 160 265 H 280"/>
+  <path class="e" d="M 640 265 H 395"/>
+  <path class="e" d="M 715 240 V 163"/>
+  <path class="e" d="M 640 139 H 587"/>
+  <path class="e" d="M 495 139 H 350 V 240"/>
+  <path class="e" d="M 540 177 V 212 H 690 V 240"/>
+
+  <path class="p" d="M 830 168 V 428"/>
+  <path class="e" d="M 830 265 H 765"/>
+  <path class="e" d="M 830 168 H 880"/>
+  <path class="e" d="M 830 233 H 880"/>
+  <path class="e" d="M 830 298 H 880"/>
+  <path class="e" d="M 830 363 H 880"/>
+  <path class="e" d="M 830 428 H 880"/>
+
+  <path class="e" d="M 330 344 V 290"/>
+  <path class="e" d="M 180 415 V 380 H 282"/>
+  <path class="e" d="M 180 520 V 469"/>
+  <path class="e" d="M 330 416 V 544 H 240"/>
+  <path class="e" d="M 700 525 V 690 H 180 V 568"/>
+  <path class="p" d="M 512 672 V 690"/>
+
+  <rect class="node" x="30"  y="240" width="130" height="50"/>
+  <text x="95"  y="265">Control Off (-1)</text>
+  <rect class="node" x="280" y="240" width="115" height="50"/>
+  <text x="337" y="265">SITTING (0)</text>
+  <rect class="node" x="640" y="240" width="125" height="50"/>
+  <text x="702" y="265">STANDING (1)</text>
+  <rect class="node" x="640" y="115" width="125" height="48"/>
+  <text x="702" y="139">Docking (10)</text>
+
+  <polygon class="dec" points="540,101 585,139 540,177 495,139"/>
+  <text class="lbl" x="540" y="131">Marker</text>
+  <text class="lbl" x="540" y="148">Found</text>
+
+  <rect class="node" x="880" y="145" width="185" height="46"/>
+  <text x="972" y="168">RL_WALK (49)</text>
+  <rect class="node" x="880" y="210" width="185" height="46"/>
+  <text x="972" y="233">RL_WALK_VISION (48)</text>
+  <rect class="node" x="880" y="275" width="185" height="46"/>
+  <text x="972" y="298">TROT (3)</text>
+  <rect class="node" x="880" y="340" width="185" height="46"/>
+  <text x="972" y="363">STAIRS (4)</text>
+  <rect class="node" x="880" y="405" width="185" height="46"/>
+  <text x="972" y="428">WAVE (5)</text>
+
+  <polygon class="dec" points="330,344 378,380 330,416 282,380"/>
+  <text class="lbl" x="330" y="371">if</text>
+  <text class="lbl" x="330" y="389">success</text>
+
+  <rect class="node" x="120" y="415" width="120" height="54"/>
+  <text x="180" y="433">Fall Recovery</text>
+  <text x="180" y="452">(-3)</text>
+  <rect class="node" x="120" y="520" width="120" height="48"/>
+  <text x="180" y="544">Fall Mode (-2)</text>
+
+  <rect class="pill" x="178" y="252" width="84" height="26" rx="13"/>
+  <text class="lbl" x="220" y="265">Auto Start</text>
+  <rect class="pill" x="398" y="126" width="58" height="26" rx="13"/>
+  <text class="lbl" x="427" y="139">Yes</text>
+  <rect class="pill" x="555" y="195" width="52" height="26" rx="13"/>
+  <text class="lbl" x="581" y="208">No</text>
+  <rect class="pill" x="345" y="305" width="76" height="26" rx="13"/>
+  <text class="lbl" x="383" y="318">success</text>
+  <rect class="pill" x="196" y="481" width="80" height="26" rx="13"/>
+  <text class="lbl" x="236" y="494">Recovery</text>
+  <rect class="pill" x="344" y="428" width="48" height="26" rx="13"/>
+  <text class="lbl" x="368" y="441">fail</text>
+
+  <rect class="note" x="400" y="572" width="225" height="100"/>
+  <text class="sm" x="414" y="594">- Fall detection</text>
+  <text class="sm" x="414" y="616">- EMO push</text>
+  <text class="sm" x="414" y="638">- soft EMO (EMO signal)</text>
+  <text class="sm" x="414" y="660">- H/W Error</text>
+</svg>
