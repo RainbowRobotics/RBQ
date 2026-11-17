@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 410 280" width="410" height="280" font-family="Inter, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#e8590c"/>
+    </marker>
+    <marker id="dir" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#495057"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="410" height="280" rx="12" fill="#ffffff"/>
+
+  <!-- top view of one grating tread: bars are the grey grid, openings are the light cells -->
+  <rect x="98" y="70" width="260" height="145" fill="#868e96" stroke="#495057" stroke-width="2"/>
+  <g>
+    <rect x="100" y="72" width="84" height="21" fill="#ffe8d6"/>
+    <rect x="186" y="72" width="84" height="21" fill="#f8f9fa"/>
+    <rect x="272" y="72" width="84" height="21" fill="#f8f9fa"/>
+    <rect x="100" y="96" width="84" height="21" fill="#f8f9fa"/>
+    <rect x="186" y="96" width="84" height="21" fill="#f8f9fa"/>
+    <rect x="272" y="96" width="84" height="21" fill="#f8f9fa"/>
+    <rect x="100" y="120" width="84" height="21" fill="#f8f9fa"/>
+    <rect x="186" y="120" width="84" height="21" fill="#f8f9fa"/>
+    <rect x="272" y="120" width="84" height="21" fill="#f8f9fa"/>
+    <rect x="100" y="144" width="84" height="21" fill="#f8f9fa"/>
+    <rect x="186" y="144" width="84" height="21" fill="#f8f9fa"/>
+    <rect x="272" y="144" width="84" height="21" fill="#f8f9fa"/>
+    <rect x="100" y="168" width="84" height="21" fill="#f8f9fa"/>
+    <rect x="186" y="168" width="84" height="21" fill="#f8f9fa"/>
+    <rect x="272" y="168" width="84" height="21" fill="#f8f9fa"/>
+    <rect x="100" y="192" width="84" height="21" fill="#f8f9fa"/>
+    <rect x="186" y="192" width="84" height="21" fill="#f8f9fa"/>
+    <rect x="272" y="192" width="84" height="21" fill="#f8f9fa"/>
+  </g>
+  <!-- front edge of the tread -->
+  <rect x="98" y="215" width="260" height="6" fill="#495057"/>
+
+  <!-- 95 mm: opening width across the tread -->
+  <line x1="100" y1="54" x2="184" y2="54" stroke="#e8590c" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+  <line x1="100" y1="48" x2="100" y2="68" stroke="#e8590c" stroke-width="1" stroke-dasharray="3 3"/>
+  <line x1="184" y1="48" x2="184" y2="68" stroke="#e8590c" stroke-width="1" stroke-dasharray="3 3"/>
+  <text x="142" y="44" font-size="15" font-weight="700" fill="#e8590c" text-anchor="middle">95 mm</text>
+  <!-- 25 mm: opening depth front to back -->
+  <line x1="78" y1="72" x2="78" y2="93" stroke="#e8590c" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+  <line x1="70" y1="72" x2="96" y2="72" stroke="#e8590c" stroke-width="1" stroke-dasharray="3 3"/>
+  <line x1="70" y1="93" x2="96" y2="93" stroke="#e8590c" stroke-width="1" stroke-dasharray="3 3"/>
+  <text x="64" y="88" font-size="15" font-weight="700" fill="#e8590c" text-anchor="end">25 mm</text>
+
+  <!-- direction of travel: onto the tread from its front edge -->
+  <line x1="228" y1="268" x2="228" y2="234" stroke="#495057" stroke-width="2" marker-end="url(#dir)"/>
+</svg>
