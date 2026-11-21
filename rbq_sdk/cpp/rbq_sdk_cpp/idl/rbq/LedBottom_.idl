@@ -1,0 +1,19 @@
+// Bottom status LED command (rt/rbq/cmd/led_bottom) - the same fields as PUT /api/led/bottom.
+// side: 1 right / 2 left / 3 both (the other LED keeps its setting)
+// mode: 0 off / 1 on / 2 blink
+// on_ms, off_ms: blink only, 10-2550 ms (10 ms steps). count: blink only, repeats, 0 = forever
+module rbq_msgs {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct LedBottom_ {
+        uint8  side;
+        uint8  mode;
+        uint8  rgb[3];
+        uint16 on_ms;
+        uint16 off_ms;
+        uint8  count;
+      };
+    };
+  };
+};

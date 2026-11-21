@@ -1,0 +1,18 @@
+#include "../ros2/PointCloud2_.idl"
+#include "LidarImu_.idl"
+
+module rbq_msgs {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct LidarFrame_ {
+        sensor_msgs::msg::dds_::PointCloud2_ cloud;
+        double time_end;
+        sequence<rbq_msgs::msg::dds_::LidarImu_> imu;
+        double body_from_sensor[16];
+        double body_from_imu[16];
+        uint8 time_type;
+      };
+    };
+  };
+};

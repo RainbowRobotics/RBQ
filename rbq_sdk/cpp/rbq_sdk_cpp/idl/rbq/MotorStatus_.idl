@@ -1,0 +1,35 @@
+module rbq_msgs {
+  module msg {
+    module dds_ {
+
+      @extensibility(APPENDABLE)
+      struct MotorStatus_ {
+        // Basic status flags (bit positions preserved in comments)
+        boolean fet;      // bit0
+        boolean run;      // bit1
+        boolean init;     // bit2
+        boolean mod;      // bit3
+        boolean non_ctr;  // bit4
+        boolean init_enc; // bit5
+        boolean calib;    // bit6
+        boolean mt_err;   // bit7
+
+        // Error flags
+        boolean jam;  // jam error
+        boolean cur;  // over-current error
+        boolean big;  // big position error
+        boolean inp;  // big input error
+        boolean flt;  // FET driver fault
+        boolean tmp;  // over-temperature
+        boolean ps1;  // position lower limit
+        boolean ps2;  // position upper limit
+
+        // 16-bit fixed-point gains (definition in API docs)
+        unsigned short kp_16;
+        unsigned short kd_16;
+      };
+
+    };
+  };
+};
+

@@ -1,0 +1,15 @@
+#include "MapMetaData_.idl"
+#include "Header_.idl"
+
+module nav_msgs {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct OccupancyGrid_ {
+        std_msgs::msg::dds_::Header_ header;
+        nav_msgs::msg::dds_::MapMetaData_ info;
+        sequence<uint8> data;
+      };
+    };
+  };
+};

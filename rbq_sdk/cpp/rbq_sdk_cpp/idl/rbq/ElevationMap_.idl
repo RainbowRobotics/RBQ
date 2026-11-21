@@ -1,0 +1,19 @@
+#include "../ros2/Header_.idl"
+
+module rbq_msgs {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct ElevationMap_ {
+        std_msgs::msg::dds_::Header_ header;
+        int32 rows;
+        int32 cols;
+        float cell_size;
+        float origin_x;
+        float origin_y;
+        sequence<float> height;
+        sequence<uint8> valid;
+      };
+    };
+  };
+};

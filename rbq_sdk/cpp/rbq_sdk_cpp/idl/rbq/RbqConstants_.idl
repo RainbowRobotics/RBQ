@@ -1,0 +1,14 @@
+module rbq_msgs {
+  module msg {
+    module dds_ {
+
+      const long MAX_LEG_JOINT   = 12;
+      const long MAX_WHL_JOINT   = 4;
+      const long MAX_ARM_JOINT   = 8;
+      const long MAX_LEG_CONTACT = 4;
+      const long MAX_GAMEPAD_BTN = 16;
+
+    };
+  };
+};
+

@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- RBA-1 manipulator (팔 단독, LINK0 = 고정 베이스).
+     Source: "261112_로봇팔_물성치_정리.xlsx" - 링크 n 의 질량·COM·관성은 좌표계 n(관절 n 원점, 영점 자세에서
+     축이 베이스와 나란함) 기준, 관성은 COM 기준 텐서. 로터 질량은 링크 질량에 포함. RBA_1_AWR 은 그리퍼
+     (Palm+Finger_upper+Finger_lower, 닫힌·강체 가정) 포함값이고 손가락은 따로 움직이지 않는다.
+     같은 값: src/ManiControl/RobotParameters/RBA_1_Parameters.cpp, resources/model/rbq10_with_rba_1.xml.
+     관절 범위는 MuJoCo 모델과 같다(실제 액추에이터 사양 아님). effort/velocity 는 자리 채움 값. -->
+<robot name="rba_1">
+  <material name="darker_gray">
+    <color rgba="0.2 0.2 0.2 1.0"/>
+  </material>
+
+  <link name="RBA_1_Base">
+    <inertial>
+      <origin xyz="-0.002538 -0.000009 0.034035" rpy="0 0 0"/>
+      <mass value="1.076311"/>
+      <inertia ixx="0.0010601506" ixy="-0.0000008947" ixz="-0.0000583718" iyy="0.0012264539" iyz="-0.0000002100" izz="0.0013712185"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="../meshes/rba-1/LINK0.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="darker_gray"/>
+    </visual>
+  </link>
+
+  <link name="RBA_1_ASY">
+    <inertial>
+      <origin xyz="-0.000002 -0.000878 0.049170" rpy="0 0 0"/>
+      <mass value="1.100938"/>
+      <inertia ixx="0.0014881682" ixy="-0.0000002071" ixz="0.0000004497" iyy="0.0015128801" iyz="0.0000075363" izz="0.0008567292"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="../meshes/rba-1/LINK1.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="darker_gray"/>
+    </visual>
+  </link>
+
+  <link name="RBA_1_ASP">
+    <inertial>
+      <origin xyz="-0.183659 0.002758 0.014889" rpy="0 0 0"/>
+      <mass value="1.351528"/>
+      <inertia ixx="0.0019785596" ixy="-0.0004594207" ixz="0.0022948088" iyy="0.0312205039" iyz="0.0000140272" izz="0.0316675431"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="../meshes/rba-1/LINK2.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="darker_gray"/>
+    </visual>
+  </link>
+
+  <link name="RBA_1_AEP">
+    <inertial>
+      <origin xyz="0.036261 -0.000157 0.007933" rpy="0 0 0"/>
+      <mass value="0.940150"/>
+      <inertia ixx="0.0006114344" ixy="-0.0000033655" ixz="-0.0002442612" iyy="0.0018147947" iyz="-0.0000007811" izz="0.0018897059"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="../meshes/rba-1/LINK3.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="darker_gray"/>
+    </visual>
+  </link>
+
+  <link name="RBA_1_AER">
+    <inertial>
+      <origin xyz="0.164385 0.001759 -0.000027" rpy="0 0 0"/>
+      <mass value="0.604046"/>
+      <inertia ixx="0.0003121422" ixy="-0.0000702509" ixz="0.0000001638" iyy="0.0027237615" iyz="-0.0000002439" izz="0.0027557690"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="../meshes/rba-1/LINK4.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="darker_gray"/>
+    </visual>
+  </link>
+
+  <link name="RBA_1_AWP">
+    <inertial>
+      <origin xyz="0.062625 -0.000099 -0.000031" rpy="0 0 0"/>
+      <mass value="0.440043"/>
+      <inertia ixx="0.0002478104" ixy="-0.0000016444" ixz="-0.0000000998" iyy="0.0004611513" iyz="-0.0000001842" izz="0.0005240407"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="../meshes/rba-1/LINK5.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="darker_gray"/>
+    </visual>
+  </link>
+
+  <link name="RBA_1_AWR">
+    <inertial>
+      <origin xyz="0.072061 -0.004050 0.000162" rpy="0 0 0"/>
+      <mass value="0.634019"/>
+      <inertia ixx="0.0005480545" ixy="0.0001578974" ixz="0.0000573517" iyy="0.0020855637" iyz="-0.0000328699" izz="0.0019724548"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="../meshes/rba-1/PALM.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="darker_gray"/>
+    </visual>
+    <visual>
+      <origin xyz="0.1744 -0.015 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="../meshes/rba-1/Finger_Upper.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="darker_gray"/>
+    </visual>
+    <visual>
+      <origin xyz="0.1744 -0.015 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="../meshes/rba-1/Finger_Lower.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="darker_gray"/>
+    </visual>
+  </link>
+
+  <joint name="RBA_1_ASY_joint" type="revolute">
+    <parent link="RBA_1_Base"/>
+    <child link="RBA_1_ASY"/>
+    <origin xyz="0 0 0.0806" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-6.283186" upper="6.283186" effort="100" velocity="10"/>
+  </joint>
+
+  <joint name="RBA_1_ASP_joint" type="revolute">
+    <parent link="RBA_1_ASY"/>
+    <child link="RBA_1_ASP"/>
+    <origin xyz="0 0 0.0613" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="0.0" upper="3.141593" effort="100" velocity="10"/>
+  </joint>
+
+  <joint name="RBA_1_AEP_joint" type="revolute">
+    <parent link="RBA_1_ASP"/>
+    <child link="RBA_1_AEP"/>
+    <origin xyz="-0.3835 0 0.065" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-3.141593" upper="0.034907" effort="100" velocity="10"/>
+  </joint>
+
+  <joint name="RBA_1_AER_joint" type="revolute">
+    <parent link="RBA_1_AEP"/>
+    <child link="RBA_1_AER"/>
+    <origin xyz="0.1072 0 0.015" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="-6.283186" upper="6.283186" effort="100" velocity="10"/>
+  </joint>
+
+  <joint name="RBA_1_AWP_joint" type="revolute">
+    <parent link="RBA_1_AER"/>
+    <child link="RBA_1_AWP"/>
+    <origin xyz="0.202 0 0" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-6.283186" upper="6.283186" effort="100" velocity="10"/>
+  </joint>
+
+  <joint name="RBA_1_AWR_joint" type="revolute">
+    <parent link="RBA_1_AWP"/>
+    <child link="RBA_1_AWR"/>
+    <origin xyz="0.10875 0 0" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="-6.283186" upper="6.283186" effort="100" velocity="10"/>
+  </joint>
+
+  <!-- 파지 중심점(RBA_1_6toE). 엑셀 표의 (174.4, 0, -15) mm. 메시상 손가락 중심은 (174.4, -15, 0) - 확인 필요. -->
+  <link name="RBA_1_EE"/>
+  <joint name="RBA_1_EE_joint" type="fixed">
+    <parent link="RBA_1_AWR"/>
+    <child link="RBA_1_EE"/>
+    <origin xyz="0.1744 0 -0.015" rpy="0 0 0"/>
+  </joint>
+</robot>

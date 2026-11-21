@@ -1,0 +1,16 @@
+#include "../ros2/Image_.idl"
+
+module rbq_msgs {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct CameraFrame_ {
+        sensor_msgs::msg::dds_::Image_ image;
+        float intrinsics[4];
+        float coeffs[8];
+        float extrinsics[12];
+        double body_from_sensor[16];
+      };
+    };
+  };
+};

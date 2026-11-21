@@ -1,0 +1,222 @@
+<?xml version="1.0"?>
+<!-- Required camera fragment (6 RGB-D cameras: BT0-3 bottom, FT0 front, RR0 rear).
+     Always spliced into the rbq10 trunk at spawn. Sensor-only (no <visual>). -->
+<!-- @SENSOR@ -->
+<gazebo reference="trunk">
+  <sensor name="BT0_depth" type="depth_camera">
+          <always_on>true</always_on>
+          <update_rate>15</update_rate>
+          <topic>/rbq/camera/BT0/depth</topic>
+          <camera>
+            <horizontal_fov>0.98599999999999999</horizontal_fov>
+            <image>
+              <width>640</width>
+              <height>360</height>
+              <format>R_FLOAT32</format>
+            </image>
+            <clip>
+              <near>0.10000000000000001</near>
+              <far>5</far>
+            </clip>
+          </camera>
+          <pose>0.36462 0 -0.02663 1.5708 1.22173 0</pose>
+        </sensor>
+  <sensor name="BT0_color" type="camera">
+          <always_on>true</always_on>
+          <update_rate>15</update_rate>
+          <topic>/rbq/camera/BT0/color</topic>
+          <camera>
+            <horizontal_fov>0.98599999999999999</horizontal_fov>
+            <image>
+              <width>640</width>
+              <height>360</height>
+              <format>R8G8B8</format>
+            </image>
+            <clip>
+              <near>0.10000000000000001</near>
+              <far>100</far>
+            </clip>
+          </camera>
+          <pose>0.36462 0 -0.02663 1.5708 1.22173 0</pose>
+        </sensor>
+  <sensor name="BT1_depth" type="depth_camera">
+          <always_on>true</always_on>
+          <update_rate>15</update_rate>
+          <topic>/rbq/camera/BT1/depth</topic>
+          <camera>
+            <horizontal_fov>0.98599999999999999</horizontal_fov>
+            <image>
+              <width>640</width>
+              <height>360</height>
+              <format>R_FLOAT32</format>
+            </image>
+            <clip>
+              <near>0.10000000000000001</near>
+              <far>5</far>
+            </clip>
+          </camera>
+          <pose>0.26053 0 -0.04759 -1.5708 1.32645 -3.14159</pose>
+        </sensor>
+  <sensor name="BT1_color" type="camera">
+          <always_on>true</always_on>
+          <update_rate>15</update_rate>
+          <topic>/rbq/camera/BT1/color</topic>
+          <camera>
+            <horizontal_fov>0.98599999999999999</horizontal_fov>
+            <image>
+              <width>640</width>
+              <height>360</height>
+              <format>R8G8B8</format>
+            </image>
+            <clip>
+              <near>0.10000000000000001</near>
+              <far>100</far>
+            </clip>
+          </camera>
+          <pose>0.26053 0 -0.04759 -1.5708 1.32645 -3.14159</pose>
+        </sensor>
+  <sensor name="BT2_depth" type="depth_camera">
+          <always_on>true</always_on>
+          <update_rate>15</update_rate>
+          <topic>/rbq/camera/BT2/depth</topic>
+          <camera>
+            <horizontal_fov>0.98599999999999999</horizontal_fov>
+            <image>
+              <width>640</width>
+              <height>360</height>
+              <format>R_FLOAT32</format>
+            </image>
+            <clip>
+              <near>0.10000000000000001</near>
+              <far>5</far>
+            </clip>
+          </camera>
+          <pose>-0.19515 0 -0.04832 0 1.5708 -1.5708</pose>
+        </sensor>
+  <sensor name="BT2_color" type="camera">
+          <always_on>true</always_on>
+          <update_rate>15</update_rate>
+          <topic>/rbq/camera/BT2/color</topic>
+          <camera>
+            <horizontal_fov>0.98599999999999999</horizontal_fov>
+            <image>
+              <width>640</width>
+              <height>360</height>
+              <format>R8G8B8</format>
+            </image>
+            <clip>
+              <near>0.10000000000000001</near>
+              <far>100</far>
+            </clip>
+          </camera>
+          <pose>-0.19515 0 -0.04832 0 1.5708 -1.5708</pose>
+        </sensor>
+  <sensor name="BT3_depth" type="depth_camera">
+          <always_on>true</always_on>
+          <update_rate>15</update_rate>
+          <topic>/rbq/camera/BT3/depth</topic>
+          <camera>
+            <horizontal_fov>0.98599999999999999</horizontal_fov>
+            <image>
+              <width>640</width>
+              <height>360</height>
+              <format>R_FLOAT32</format>
+            </image>
+            <clip>
+              <near>0.10000000000000001</near>
+              <far>5</far>
+            </clip>
+          </camera>
+          <pose>-0.352993 0 -0.020514 1.5708 1.22173 -3.14159</pose>
+        </sensor>
+  <sensor name="BT3_color" type="camera">
+          <always_on>true</always_on>
+          <update_rate>15</update_rate>
+          <topic>/rbq/camera/BT3/color</topic>
+          <camera>
+            <horizontal_fov>0.98599999999999999</horizontal_fov>
+            <image>
+              <width>640</width>
+              <height>360</height>
+              <format>R8G8B8</format>
+            </image>
+            <clip>
+              <near>0.10000000000000001</near>
+              <far>100</far>
+            </clip>
+          </camera>
+          <pose>-0.352993 0 -0.020514 1.5708 1.22173 -3.14159</pose>
+        </sensor>
+  <sensor name="FT0_depth" type="depth_camera">
+          <always_on>true</always_on>
+          <update_rate>15</update_rate>
+          <topic>/rbq/camera/FT0/depth</topic>
+          <camera>
+            <horizontal_fov>1.0069999999999999</horizontal_fov>
+            <image>
+              <width>640</width>
+              <height>360</height>
+              <format>R_FLOAT32</format>
+            </image>
+            <clip>
+              <near>0.10000000000000001</near>
+              <far>5</far>
+            </clip>
+          </camera>
+          <pose>0.388031 -0.0375 0.037764 0 -0 0</pose>
+        </sensor>
+  <sensor name="FT0_color" type="camera">
+          <always_on>true</always_on>
+          <update_rate>15</update_rate>
+          <topic>/rbq/camera/FT0/color</topic>
+          <camera>
+            <horizontal_fov>1.0069999999999999</horizontal_fov>
+            <image>
+              <width>640</width>
+              <height>360</height>
+              <format>R8G8B8</format>
+            </image>
+            <clip>
+              <near>0.10000000000000001</near>
+              <far>100</far>
+            </clip>
+          </camera>
+          <pose>0.388031 -0.0375 0.037764 0 -0 0</pose>
+        </sensor>
+  <sensor name="RR0_depth" type="depth_camera">
+          <always_on>true</always_on>
+          <update_rate>15</update_rate>
+          <topic>/rbq/camera/RR0/depth</topic>
+          <camera>
+            <horizontal_fov>1.0069999999999999</horizontal_fov>
+            <image>
+              <width>640</width>
+              <height>360</height>
+              <format>R_FLOAT32</format>
+            </image>
+            <clip>
+              <near>0.10000000000000001</near>
+              <far>5</far>
+            </clip>
+          </camera>
+          <pose>-0.388031 0.0375 0.037764 0 -0 -3.14159</pose>
+        </sensor>
+  <sensor name="RR0_color" type="camera">
+          <always_on>true</always_on>
+          <update_rate>15</update_rate>
+          <topic>/rbq/camera/RR0/color</topic>
+          <camera>
+            <horizontal_fov>1.0069999999999999</horizontal_fov>
+            <image>
+              <width>640</width>
+              <height>360</height>
+              <format>R8G8B8</format>
+            </image>
+            <clip>
+              <near>0.10000000000000001</near>
+              <far>100</far>
+            </clip>
+          </camera>
+          <pose>-0.388031 0.0375 0.037764 0 -0 -3.14159</pose>
+        </sensor>
+</gazebo>

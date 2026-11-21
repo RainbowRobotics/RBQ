@@ -1,0 +1,152 @@
+# Cases for arm_examples_check.py - one line each: example | arguments | exit code | checks...
+#   example    the number of the example (01 .. 08)
+#   arguments  as typed after the program name (may be empty)
+#   exit code  what the example must return
+#   checks     each one a piece of its output: plain text must be there, !text must not
+# Every case runs on the C++ and the Python example, and the two must print the same (bar the program name).
+# A valid command ends at its "[dry-run] <target> <call>" line - the call it would make, without connecting.
+
+# --- target: left out = sim; -s / sim, -r / robot, or a network device of this PC
+04 | 1                                   | 0 | [dry-run] sim MoveJ pose=Ready
+04 | sim 1                               | 0 | [dry-run] sim MoveJ pose=Ready
+04 | -s 1                                | 0 | [dry-run] sim MoveJ pose=Ready
+04 | -r 1                                | 0 | [dry-run] robot MoveJ pose=Ready
+04 | robot 1                             | 0 | [dry-run] robot MoveJ pose=Ready
+04 | lo 1                                | 0 | [dry-run] lo MoveJ pose=Ready
+01 | -r                                  | 0 | [dry-run] robot State
+# a misspelt target is read as the first argument - then, and only then, the hint about the target
+04 | robo 1                              | 1 | unknown pose 'robo' | no target given, so 'robo' was read as an argument
+01 | robo                                | 1 | unexpected argument 'robo' | no target given
+
+# --- 01 state
+01 |                                     | 0 | [dry-run] sim State
+01 | sim extra                           | 1 | unexpected argument 'extra' | !no target given
+
+# --- 02 power
+02 |                                     | 0 | [dry-run] sim Power action=on
+02 | status                              | 0 | [dry-run] sim Power action=status
+02 | release                             | 0 | [dry-run] sim Power action=release
+02 | estop                               | 0 | [dry-run] sim Power action=estop
+02 | -r clear                            | 0 | [dry-run] robot Power action=clear
+02 | off                                 | 1 | action must be on, status, release, estop or clear, not 'off'
+
+# --- 03 gripper
+03 | 0                                   | 0 | [dry-run] sim Gripper action=open seconds=1
+03 | open                                | 0 | [dry-run] sim Gripper action=open seconds=1
+03 | CLOSE 2.5                           | 0 | [dry-run] sim Gripper action=close seconds=2.5
+03 | 1 5                                 | 0 | [dry-run] sim Gripper action=close seconds=5
+03 |                                     | 1 | which action? 0 or open, 1 or close
+03 | 2                                   | 1 | action must be 0 / open or 1 / close, not '2'
+03 | 1 0                                 | 1 | seconds must be more than 0 and at most 5, not '0'
+03 | 1 6                                 | 1 | seconds must be more than 0 and at most 5, not '6'
+03 | 1 x                                 | 1 | seconds must be more than 0 and at most 5, not 'x'
+
+# --- 04 MoveJ: poses
+04 | 0                                   | 0 | [dry-run] sim MoveJ pose=Folding
+04 | home                                | 0 | [dry-run] sim MoveJ pose=Folding
+04 | Folding                             | 0 | [dry-run] sim MoveJ pose=Folding
+04 | READY                               | 0 | [dry-run] sim MoveJ pose=Ready
+04 | 3                                   | 0 | [dry-run] sim MoveJ pose=PickUpReady
+04 | pickup                              | 0 | [dry-run] sim MoveJ pose=PickUpReady
+04 | straight                            | 0 | [dry-run] sim MoveJ pose=Straight
+04 |                                     | 1 | which pose? one of: | or by joint angles | -r 1
+04 | 4                                   | 1 | unknown pose '4'
+04 | lift                                | 1 | unknown pose 'lift'
+04 | nope                                | 1 | unknown pose 'nope'
+# --- 04 MoveJ: six angles, to them (abs, the default) or by them (rel)
+04 | 0 30 -30 0 60 0                     | 0 | [dry-run] sim MoveJ q=0,30,-30,0,60,0 vel=0 acc=0
+04 | abs 0 30 -30 0 60 0 4               | 0 | [dry-run] sim MoveJ q=0,30,-30,0,60,0 seconds=4
+04 | 0 30 -30 0 60 0 vel=20              | 0 | [dry-run] sim MoveJ q=0,30,-30,0,60,0 vel=20 acc=0
+04 | 0 30 -30 0 60 0 vel=20 acc=40       | 0 | [dry-run] sim MoveJ q=0,30,-30,0,60,0 vel=20 acc=40
+04 | rel 0 0 10 0 -10 0                  | 0 | [dry-run] sim MoveJDelta q=0,0,10,0,-10,0 vel=0 acc=0
+04 | rel 0 0 100 0 0 0 2                 | 0 | [dry-run] sim MoveJDelta q=0,0,100,0,0,0 seconds=2
+04 | 0 30 -30 0 60                       | 1 | give six joint angles J0..J5 - got 5
+04 | 0 30 x 0 60 0                       | 1 | joint angles must be numbers, not 'x'
+04 | 0 30 30 20 50 60                    | 1 | J2 must be -180..2 deg, not 30
+04 | 0 190 -30 0 60 0                    | 1 | J1 must be 0..180 deg, not 190
+04 | 0 30 -30 0 60 0 0.4                 | 1 | the minimum time is 0.5 s, not 0.4
+04 | 0 30 -30 0 60 0 21                  | 1 | the maximum time is 20 s, not 21
+04 | 0 30 -30 0 60 0 4 5                 | 1 | after the angles: seconds (0.5..20) or vel= / acc=, not '5'
+04 | 0 30 -30 0 60 0 vel=fast            | 1 | not 'vel=fast'
+# --- 04 MoveJ: one joint
+04 | J1 120                              | 0 | [dry-run] sim MoveJ joint=1 q=120 vel=0 acc=0
+04 | J1 120 2                            | 0 | [dry-run] sim MoveJ joint=1 q=120 seconds=2
+04 | j5 -90 vel=45                       | 0 | [dry-run] sim MoveJ joint=5 q=-90 vel=45 acc=0
+04 | abs J4 -70                          | 0 | [dry-run] sim MoveJ joint=4 q=-70 vel=0 acc=0
+04 | rel J4 -15 2                        | 0 | [dry-run] sim MoveJDelta joint=4 q=-15 seconds=2
+04 | rel J0 -30 0.5                      | 0 | [dry-run] sim MoveJDelta joint=0 q=-30 seconds=0.5
+04 | rel J2 80                           | 0 | [dry-run] sim MoveJDelta joint=2 q=80 vel=0 acc=0
+04 | J2 80                               | 1 | J2 must be -180..2 deg, not 80
+04 | J1                                  | 1 | J1 needs the degrees
+04 | J1 up                               | 1 | J1 needs the degrees
+04 | rel J0 -30 0.1                      | 1 | the minimum time is 0.5 s, not 0.1 | !no target given
+04 | rel J0 -10 0.5                      | 0 | [dry-run] sim MoveJDelta joint=0 q=-10 seconds=0.5
+04 | J6 10                               | 1 | J6 - the joints are J0 .. J5
+04 | rel                                 | 1 | rel needs six joint angles or J<n> <degrees>
+04 | abs home                            | 1 | abs needs six joint angles or J<n> <degrees>
+
+# --- 05 MoveL family
+05 |                                     | 0 | [dry-run] sim RelativeMoves
+05 | pos 0.85 0.10 0.20                  | 0 | [dry-run] sim MoveL x=0.85 y=0.1 z=0.2 vel=0 acc=0 ang_vel=0 ang_acc=0
+05 | pos 0.85 0.10 0.20 3                | 0 | [dry-run] sim MoveL x=0.85 y=0.1 z=0.2 seconds=3
+05 | 0.85 0.10 0.20 3                    | 0 | [dry-run] sim MoveL x=0.85 y=0.1 z=0.2 seconds=3
+05 | pos 0.6 0 0.3 vel=0.05              | 0 | [dry-run] sim MoveL x=0.6 y=0 z=0.3 vel=0.05 acc=0 ang_vel=0 ang_acc=0
+05 | ori 0 30 0 2                        | 0 | [dry-run] sim RotateL roll=0 pitch=30 yaw=0 seconds=2
+05 | ori 0 0 20 ang_vel=10               | 0 | [dry-run] sim RotateL roll=0 pitch=0 yaw=20 vel=0 acc=0 ang_vel=10 ang_acc=0
+05 | pose 0.9 0 0.15 0 0 0 3             | 0 | [dry-run] sim MoveL x=0.9 y=0 z=0.15 roll=0 pitch=0 yaw=0 seconds=3
+05 | 0.9 0 0.15 0 60 0                   | 0 | [dry-run] sim MoveL x=0.9 y=0 z=0.15 roll=0 pitch=60 yaw=0 vel=0 acc=0 ang_vel=0 ang_acc=0
+05 | -r pos 0.6 0 0.3 3                  | 0 | [dry-run] robot MoveL x=0.6 y=0 z=0.3 seconds=3
+05 | pos 0.85 0.10                       | 1 | pos needs 3 numbers [+ seconds] - got 2
+05 | pose 0.9 0 0.15 3                   | 1 | pose needs 6 numbers [+ seconds] - got 4
+05 | 0.9 0 0.15 0 60                     | 1 | give 3 numbers (x y z) or 6 (x y z roll pitch yaw) [+ seconds] - got 5
+05 | ori 0 30 0 vel=0.1                  | 1 | ori takes ang_vel= / ang_acc=
+05 | pos 0.6 0 0.3 3 vel=0.05            | 1 | give seconds or vel= / acc=, not both
+05 | pos 0.6 0 0.3 0.4                   | 1 | the minimum time is 0.5 s, not 0.4
+05 | pos 0.6 0 0.3 11                    | 1 | the maximum time is 10 s, not 11
+05 | vel=0.05                            | 1 | vel= / acc= need a position
+05 | pos 0.6 zero 0.3                    | 1 | not 'zero'
+05 | pos 0.6 0 0.3 vel=0.05 1            | 1 | not '1'
+
+# --- 05 rel: by how much from where the end effector is (MoveLDelta / RotateLDelta)
+05 | rel pos -0.1 0 0 2                  | 0 | [dry-run] sim MoveLDelta x=-0.1 y=0 z=0 seconds=2
+05 | rel ori 0 0 15 2                    | 0 | [dry-run] sim RotateLDelta roll=0 pitch=0 yaw=15 seconds=2
+05 | rel pose 0 0 0.05 0 10 0 vel=0.05   | 0 | [dry-run] sim MoveLDelta x=0 y=0 z=0.05 roll=0 pitch=10 yaw=0 vel=0.05 acc=0 ang_vel=0 ang_acc=0
+05 | rel -0.1 0.0 0 0 0 0 2              | 0 | [dry-run] sim MoveLDelta x=-0.1 y=0 z=0 roll=0 pitch=0 yaw=0 seconds=2
+05 | abs pos 0.8 0 0.2 3                 | 0 | [dry-run] sim MoveL x=0.8 y=0 z=0.2 seconds=3
+05 | rel                                 | 1 | rel needs pos, ori or pose and its numbers
+05 | rel ori 0 0 15 vel=0.1              | 1 | ori takes ang_vel= / ang_acc=
+
+# --- 06 gamepad - stops before the gamepad is opened
+06 |                                     | 0 | [dry-run] sim HighLevel fast=0 joystick=-
+06 | fast                                | 0 | [dry-run] sim HighLevel fast=1 joystick=-
+06 | -r fast js1                         | 0 | [dry-run] robot HighLevel fast=1 joystick=js1
+06 | js0 js1                             | 1 | too many arguments
+
+# --- 07 low level
+07 |                                     | 0 | [dry-run] sim LowLevel joint=0 delta=15 seconds=4 grip=0
+07 | 4 -20 6                             | 0 | [dry-run] sim LowLevel joint=4 delta=-20 seconds=6 grip=0
+07 | 0 20 4 grip                         | 0 | [dry-run] sim LowLevel joint=0 delta=20 seconds=4 grip=1
+07 | 6                                   | 1 | joint must be 0..5 (J0..J5), not '6'
+07 | 0 31                                | 1 | delta_deg must be -30..30
+07 | 0 20 1                              | 1 | seconds must be 2..20
+07 | 0 20 4 open                         | 1 | the last argument can only be the word grip, not 'open'
+07 | 0 20 4 grip x                       | 1 | too many arguments
+
+# --- 08 torque
+08 |                                     | 0 | [dry-run] sim Torque stiffness=20 seconds=10
+08 | 0 30                                | 0 | [dry-run] sim Torque stiffness=0 seconds=30
+08 | -r 5.5 2                            | 0 | [dry-run] robot Torque stiffness=5.5 seconds=2
+08 | 51                                  | 1 | stiffness must be 0..50
+08 | sim -1                              | 1 | stiffness must be 0..50
+08 | 20 1                                | 1 | seconds must be 2..120
+08 | 20 10 x                             | 1 | too many arguments
+# --- 08 J<n> <Nm> [seconds]: a torque of your own on one joint
+08 | J4 2 1                              | 0 | [dry-run] sim Torque joint=4 torque=2 seconds=1
+08 | j0 -5                               | 0 | [dry-run] sim Torque joint=0 torque=-5 seconds=2
+08 | -r J1 15 0.5                        | 0 | [dry-run] robot Torque joint=1 torque=15 seconds=0.5
+08 | J4                                  | 1 | J4 needs the torque [Nm]
+08 | J4 9                                | 1 | J4 torque must be -8..8 [Nm], not '9'
+08 | J0 16                               | 1 | J0 torque must be -15..15 [Nm], not '16'
+08 | J4 2 0.4                            | 1 | seconds must be 0.5..20, not '0.4'
+08 | J6 2                                | 1 | J6 - the joints are J0 .. J5
+08 | J4 2 1 x                            | 1 | too many arguments
