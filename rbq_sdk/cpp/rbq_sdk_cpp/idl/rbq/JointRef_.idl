@@ -1,0 +1,14 @@
+module rbq_msgs {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct JointRef_ {
+        float pos;    // rad
+        float vel;    // rad/s — velocity reference, CAN FD robots only (a classic CAN robot keeps it 0)
+        float torque; // N·m
+        float kp;     // Nm/rad
+        float kd;     // Nm*s/rad
+      };
+    };
+  };
+};

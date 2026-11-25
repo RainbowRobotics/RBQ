@@ -1,0 +1,25 @@
+diff --git a/node_modules/expo-gl/build/GLView.js b/node_modules/expo-gl/build/GLView.js
+index 7575362..3e6524a 100644
+--- a/node_modules/expo-gl/build/GLView.js
++++ b/node_modules/expo-gl/build/GLView.js
+@@ -80,6 +80,9 @@ export class GLView extends React.Component {
+     };
+     _onSurfaceCreate = ({ nativeEvent: { exglCtxId } }) => {
+         const gl = getGl(exglCtxId);
++        if (!gl) {
++            return;
++        }
+         this.exglCtxId = exglCtxId;
+         if (this.props.onContextCreate) {
+             this.props.onContextCreate(gl);
+@@ -141,7 +146,9 @@ const getGl = (exglCtxId) => {
+         throw new CodedError('ERR_GL_NOT_AVAILABLE', 'GL is currently not available. (Have you enabled remote debugging? GL is not available while debugging remotely.)');
+     }
+     const gl = global.__EXGLContexts[String(exglCtxId)];
+-    configureLogging(gl);
++    if (gl) {
++        configureLogging(gl);
++    }
+     return gl;
+ };
+ const getContextId = (exgl) => {

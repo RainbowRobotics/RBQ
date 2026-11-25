@@ -1,0 +1,9 @@
+node_modules
+android
+ios
+dist
+build-out
+.docker
+design
+assets
+docs

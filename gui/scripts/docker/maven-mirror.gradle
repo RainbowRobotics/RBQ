@@ -1,0 +1,17 @@
+def mirror = '@MIRROR@'
+def prepend = { RepositoryHandler repos ->
+    if (repos.findByName('rbqMirrorCentral') != null) return
+    [['rbqMirrorGoogle', "$mirror/google"], ['rbqMirrorCentral', "$mirror/maven2"]].each { n, u ->
+        def r = repos.maven { name = n; url = u; allowInsecureProtocol = true }
+        repos.remove(r)
+        repos.addFirst(r)
+    }
+}
+gradle.beforeSettings { settings ->
+    prepend(settings.pluginManagement.repositories)
+    prepend(settings.dependencyResolutionManagement.repositories)
+}
+gradle.allprojects { p ->
+    prepend(p.repositories)
+    p.buildscript { prepend(repositories) }
+}

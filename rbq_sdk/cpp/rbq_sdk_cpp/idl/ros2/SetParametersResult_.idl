@@ -1,0 +1,12 @@
+// rcl_interfaces/msg/SetParametersResult
+module rcl_interfaces {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct SetParametersResult_ {
+        boolean successful;
+        string reason;
+      };
+    };
+  };
+};

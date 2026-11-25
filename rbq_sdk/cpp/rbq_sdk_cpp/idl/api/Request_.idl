@@ -1,0 +1,14 @@
+#include "RequestHeader_.idl"
+
+module api {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct Request_ {
+        api::msg::dds_::RequestHeader_ header;
+        string parameter;
+        sequence<uint8> binary;
+      };
+    };
+  };
+};

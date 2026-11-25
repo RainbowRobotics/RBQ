@@ -1,0 +1,25 @@
+#include "RbqConstants_.idl"
+#include "../ros2/Imu_.idl"
+#include "JointInfo_.idl"
+#include "TaskInfo_.idl"
+#include "ContactInfo_.idl"
+
+module rbq_msgs {
+  module msg {
+    module dds_ {
+
+      @extensibility(FINAL)
+      struct SimInfo_ {
+        sensor_msgs::msg::dds_::Imu_ imu;
+        JointInfo_ leg_joint[MAX_LEG_JOINT];
+        JointInfo_ arm_joint[MAX_ARM_JOINT];
+        JointInfo_ whl_joint[MAX_WHL_JOINT];
+
+        TaskInfo_    body_task;
+        ContactInfo_ leg_contact[MAX_LEG_CONTACT];
+      };
+
+    };
+  };
+};
+

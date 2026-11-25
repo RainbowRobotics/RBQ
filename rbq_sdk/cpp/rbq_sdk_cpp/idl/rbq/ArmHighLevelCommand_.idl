@@ -1,0 +1,14 @@
+module rbq_msgs {
+  module msg {
+    module dds_ {
+      // RBA-1 arm end-effector velocity command (rt/rbq/cmd/arm/high_level) — the arm counterpart of HighLevelCommand_.
+      // Read only while task-space control (ControlStart) and the arm's external control mode are on.
+      @extensibility(FINAL)
+      struct ArmHighLevelCommand_ {
+        float lin_vel[3];   // m/s   — x forward, y left, z up (the arm controller's foot-centre frame, like the app joystick)
+        float ang_vel[3];   // rad/s — roll, pitch, yaw about the end effector
+        int8  gripper;      // 1 open, -1 close, 0 stop
+      };
+    };
+  };
+};

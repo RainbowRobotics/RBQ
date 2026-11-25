@@ -1,0 +1,23 @@
+#include "../ros2/Header_.idl"
+
+module rbq_msgs {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct HighLevelCommand_ {
+        std_msgs::msg::dds_::Header_ header;
+        string identifier;
+        float roll;
+        float pitch;
+        float yaw;
+        float vel_x;
+        float vel_y;
+        float omega_z;
+        float delta_body_h;
+        float delta_foot_h;
+        int8 gait_state;
+        boolean gait_transition;
+      };
+    };
+  };
+};

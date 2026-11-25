@@ -1,0 +1,9 @@
+# RBQ right thigh skin (matches MuJoCo thigh_right_material)
+newmtl None
+Ka 1.000 1.000 1.000
+Kd 1.000 1.000 1.000
+Ks 0.100 0.100 0.100
+Ns 50.0
+d 1.0
+illum 2
+map_Kd thigh_right_skin.png

@@ -1,0 +1,128 @@
+diff --git a/node_modules/react-native-webrtc/ios/RCTWebRTC/WebRTCModule+RTCAudioSession.m b/node_modules/react-native-webrtc/ios/RCTWebRTC/WebRTCModule+RTCAudioSession.m
+index cd4fa13..4c04137 100644
+--- a/node_modules/react-native-webrtc/ios/RCTWebRTC/WebRTCModule+RTCAudioSession.m
++++ b/node_modules/react-native-webrtc/ios/RCTWebRTC/WebRTCModule+RTCAudioSession.m
+@@ -17,4 +17,14 @@ RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(audioSessionDidDeactivate) {
+     return nil;
+ }
+ 
++RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(setManualAudio : (nonnull NSNumber *)manual) {
++    [RTCAudioSession sharedInstance].useManualAudio = [manual boolValue];
++    return nil;
++}
++
++RCT_EXPORT_BLOCKING_SYNCHRONOUS_METHOD(setAudioEnabled : (nonnull NSNumber *)enabled) {
++    [RTCAudioSession sharedInstance].isAudioEnabled = [enabled boolValue];
++    return nil;
++}
++
+ @end
+diff --git a/node_modules/react-native-webrtc/ios/RCTWebRTC/RTCVideoViewManager.m b/node_modules/react-native-webrtc/ios/RCTWebRTC/RTCVideoViewManager.m
+index e64005d..74c16af 100644
+--- a/node_modules/react-native-webrtc/ios/RCTWebRTC/RTCVideoViewManager.m
++++ b/node_modules/react-native-webrtc/ios/RCTWebRTC/RTCVideoViewManager.m
+@@ -19,6 +19,37 @@
+ #import "RTCVideoViewManager.h"
+ #import "WebRTCModule.h"
+ 
++@interface RBQMonotonicRenderer : NSObject<RTCVideoRenderer>
++- (instancetype)initWithTarget:(id<RTCVideoRenderer>)target;
++@end
++
++@implementation RBQMonotonicRenderer {
++    id<RTCVideoRenderer> _target;
++    int64_t _lastNs;
++}
++- (instancetype)initWithTarget:(id<RTCVideoRenderer>)target {
++    if (self = [super init]) {
++        _target = target;
++        _lastNs = INT64_MIN;
++    }
++    return self;
++}
++- (void)setSize:(CGSize)size {
++    [_target setSize:size];
++}
++- (void)renderFrame:(nullable RTCVideoFrame *)frame {
++    if (frame && frame.timeStampNs <= _lastNs) {
++        RTCVideoFrame *f = [[RTCVideoFrame alloc] initWithBuffer:frame.buffer
++                                                        rotation:frame.rotation
++                                                     timeStampNs:_lastNs + 1];
++        f.timeStamp = frame.timeStamp;
++        frame = f;
++    }
++    if (frame) _lastNs = frame.timeStampNs;
++    [_target renderFrame:frame];
++}
++@end
++
+ /**
+  * Implements an equivalent of {@code HTMLVideoElement} i.e. Web's video
+  * element.
+@@ -53,6 +90,9 @@
+ @property(nonatomic, readonly) RTCMTLVideoView *videoView;
+ #endif
+ 
++/** PATCHED(rbq): 트랙에 붙이는 것은 videoView 가 아니라 이 대리자(위 RBQMonotonicRenderer) */
++@property(nonatomic, readonly) RBQMonotonicRenderer *renderer;
++
+ // Add a reference to the view manager
+ @property(nonatomic, weak) RTCVideoViewManager *viewManager;
+ 
+@@ -73,6 +113,7 @@
+ @implementation RTCVideoView
+ 
+ @synthesize videoView = _videoView;
++@synthesize renderer = _renderer;
+ @synthesize pipController = _pipController;
+ 
+ /**
+@@ -90,11 +131,11 @@
+     if (videoTrack) {
+         if (self.window) {
+             dispatch_async(_module.workerQueue, ^{
+-                [videoTrack addRenderer:self.videoView];
++                [videoTrack addRenderer:self.renderer];
+             });
+         } else {
+             dispatch_async(_module.workerQueue, ^{
+-                [videoTrack removeRenderer:self.videoView];
++                [videoTrack removeRenderer:self.renderer];
+             });
+         }
+     }
+@@ -117,6 +158,7 @@
+         _videoView = subview;
+ #endif
+         _objectFit = RTCVideoViewObjectFitCover;
++        _renderer = [[RBQMonotonicRenderer alloc] initWithTarget:_videoView];
+         [self addSubview:self.videoView];
+         self.videoView.delegate = self;
+     }
+@@ -248,7 +290,7 @@
+     if (oldValue != videoTrack) {
+         if (oldValue) {
+             dispatch_async(_module.workerQueue, ^{
+-                [oldValue removeRenderer:self.videoView];
++                [oldValue removeRenderer:self.renderer];
+             });
+         }
+ 
+@@ -284,7 +326,7 @@
+                                                                  rotation:RTCVideoRotation_0
+                                                               timeStampNs:time] newI420VideoFrame];
+ 
+-            [self.videoView renderFrame:frame];
++            [self.renderer renderFrame:frame];
+ 
+             CVPixelBufferRelease(pixelBuffer);
+         }
+@@ -292,7 +334,7 @@
+         // See "didMoveToWindow" above.
+         if (videoTrack && self.window) {
+             dispatch_async(_module.workerQueue, ^{
+-                [videoTrack addRenderer:self.videoView];
++                [videoTrack addRenderer:self.renderer];
+             });
+         }
+     }

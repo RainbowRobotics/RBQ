@@ -1,0 +1,17 @@
+#include "../ros2/Header_.idl"
+#include "../ros2/Point_.idl"
+
+module rbq_msgs {
+  module msg {
+    module dds_ {
+      @extensibility(FINAL)
+      struct FootStates_ {
+        std_msgs::msg::dds_::Header_ header;
+        geometry_msgs::msg::dds_::Point_ foot_position_rt_body[4];
+        geometry_msgs::msg::dds_::Point_ foot_velocity_rt_body[4];
+        uint8 foot_contact_est[4];
+        float foot_force_est[4];
+      };
+    };
+  };
+};

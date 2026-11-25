@@ -1,0 +1,13 @@
+export declare const nxButtonClass = "NxButton relative rounded-sm text-base select-none";
+export declare const nxNumberInputClass = "NxNumberInput h-10 gap-2 [&_.number-btn]:rounded-[6px] [&_.number-btn_svg]:size-4 [&_.number-btn_svg]:stroke-3";
+export declare const nxSelectBoxClass = "NxSelectBox rounded-sm";
+export declare const nxTextInputClass = "NxTextInput h-10 rounded-sm px-4";
+export declare const nxTextInputErrorClass = "border-red-600";
+export declare const nxTextInputDisabledClass = "!opacity-40";
+export declare const nxTextAreaClass = "NxTextArea rounded-sm";
+export declare const nxSwitchWrapClass = "NxSwitch gap-2";
+export declare const nxSwitchLabelClass = "leading-[normal] text-gray-300";
+export declare const nxSwitchClass = "data-[state=unchecked]:bg-slate-500 data-[state=checked]:bg-blue-500";
+export declare const shadSwitchRootClass = "peer data-[state=checked]:bg-primary data-[state=unchecked]:bg-input focus-visible:border-ring focus-visible:ring-ring/50 dark:data-[state=unchecked]:bg-input/80 inline-flex h-[1.15rem] w-8 shrink-0 items-center rounded-full border border-transparent shadow-xs transition-all outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50";
+export declare const shadSwitchThumbClass = "bg-background dark:data-[state=unchecked]:bg-foreground dark:data-[state=checked]:bg-primary-foreground pointer-events-none block size-4 rounded-full ring-0 transition-transform data-[state=checked]:translate-x-[calc(100%-2px)] data-[state=unchecked]:translate-x-0";
+export declare const nxPaginationClass: string;

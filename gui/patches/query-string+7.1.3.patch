@@ -1,0 +1,12 @@
+diff --git a/node_modules/query-string/index.js b/node_modules/query-string/index.js
+index d45e67d..6ac9501 100644
+--- a/node_modules/query-string/index.js
++++ b/node_modules/query-string/index.js
+@@ -1,6 +1,6 @@
+ 'use strict';
+ const strictUriEncode = require('strict-uri-encode');
+-const decodeComponent = require('decode-uri-component');
++const decodeComponent = (m => (typeof m === 'function' ? m : m.default))(require('decode-uri-component'));
+ const splitOnFirst = require('split-on-first');
+ const filterObject = require('filter-obj');
+ 

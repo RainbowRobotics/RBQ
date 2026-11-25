@@ -1,0 +1,10 @@
+import { ScrollView as RNScrollView, Text as RNText, TextInput as RNTextInput, View as RNView } from 'react-native';
+export declare const View: typeof RNView;
+export declare const Text: typeof RNText;
+export declare const Pressable: import("react").ForwardRefExoticComponent<import("react-native").PressableProps & import("react").RefAttributes<RNView>>;
+export declare const TextInput: typeof RNTextInput;
+export declare const ScrollView: typeof RNScrollView;
+export type View = RNView;
+export type Text = RNText;
+export type TextInput = RNTextInput;
+export type ScrollView = RNScrollView;

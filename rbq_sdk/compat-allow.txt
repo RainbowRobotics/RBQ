@@ -1,0 +1,8 @@
+# Breaks against the last SDK release that the owner has accepted — read by rbq_sdk/scripts/compat_check.py.
+# One id per line, then "#" and the reason with its issue number. A line without a reason fails the check.
+# Delete a line when the check calls it STALE (fixed, or shipped in a release that is now the base).
+idl:rbq_msgs::JointRef_     # #1333 — 담당(HyobinJeong) 11-18 결정: 받아들인 깨짐. 옛 SDK 로 지은 저수준·바퀴 프로그램은 새 SDK 로 다시 빌드한다. 정식판에 실려 STALE 이 되면 지운다
+idl:rbq_msgs::MotionRef_    # #1333 — 같은 이유(JointRef_ 를 품는 타입)
+ros2:rbq_msgs/msg/JointRef  # #1333 — 같은 이유(ROS 2 짝)
+ros2:rbq_msgs/msg/MotionRef # #1333 — 같은 이유(ROS 2 짝)
+idl:rbq_msgs::ArmJointInfo_ # 팔 SDK(feat/arm-sdk) 전까지 이 타입을 쓰는 토픽이 없었다 — ROS 2 와 맞추려고 LegJointInfo_ 처럼 FINAL 로. 이번 릴리스가 기준이 되면 지운다. 승인: shkim(팔 SDK 담당) 11-20

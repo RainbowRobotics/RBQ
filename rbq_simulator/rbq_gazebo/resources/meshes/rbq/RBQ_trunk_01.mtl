@@ -1,0 +1,9 @@
+# RBQ trunk skin (matches MuJoCo trunk_material)
+newmtl 01
+Ka 1.000 1.000 1.000
+Kd 1.000 1.000 1.000
+Ks 0.100 0.100 0.100
+Ns 50.0
+d 1.0
+illum 2
+map_Kd trunk_skin.png

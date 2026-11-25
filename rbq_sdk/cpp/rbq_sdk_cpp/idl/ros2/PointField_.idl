@@ -1,0 +1,23 @@
+module sensor_msgs {
+  module msg {
+    module dds_ {
+      module PointField_Constants {
+        const uint8 INT8_ = 1;
+        const uint8 UINT8_ = 2;
+        const uint8 INT16_ = 3;
+        const uint8 UINT16_ = 4;
+        const uint8 INT32_ = 5;
+        const uint8 UINT32_ = 6;
+        const uint8 FLOAT32_ = 7;
+        const uint8 FLOAT64_ = 8;
+      };
+      @extensibility(FINAL)
+      struct PointField_ {
+        string name;
+        uint32 offset;
+        uint8 datatype;
+        uint32 count;
+      };
+    };
+  };
+};

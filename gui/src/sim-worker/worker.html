@@ -1,0 +1,30 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>rbq sim worker</title>
+<script>
+  window.__MUJOCO_BASE = '.';
+  (function () {
+    if (location.protocol !== 'file:') return;
+    window.fetch = function (url) {
+      return new Promise(function (res, rej) {
+        var x = new XMLHttpRequest();
+        x.open('GET', String(url), true);
+        x.responseType = 'arraybuffer';
+        x.onload = function () {
+          var buf = x.response;
+          var okStatus = x.status === 0 ? !!buf && buf.byteLength > 0 : x.status >= 200 && x.status < 300;
+          if (!okStatus) { rej(new Error('자산 로드 실패(' + x.status + '): ' + url)); return; }
+          res({
+            ok: true, status: x.status || 200,
+            arrayBuffer: function () { return Promise.resolve(buf); },
+            text: function () { return Promise.resolve(new TextDecoder().decode(buf)); },
+            json: function () { return Promise.resolve(JSON.parse(new TextDecoder().decode(buf))); },
+          });
+        };
+        x.onerror = function () { rej(new Error('자산 로드 실패(XHR): ' + url)); };
+        x.send();
+      });
+    };
+  })();
+</script>
+<script src="./worker.js"></script>

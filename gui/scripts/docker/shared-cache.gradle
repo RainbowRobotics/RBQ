@@ -1,0 +1,11 @@
+gradle.startParameter.buildCacheEnabled = true
+gradle.settingsEvaluated { settings ->
+    if (settings.gradle.parent != null) return
+    settings.buildCache {
+        remote(HttpBuildCache) {
+            url = '@URL@/gradle/'
+            allowInsecureProtocol = true
+            push = @PUSH@
+        }
+    }
+}
