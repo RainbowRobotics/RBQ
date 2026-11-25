@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 410 280" width="410" height="280" font-family="Inter, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#e8590c"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="410" height="280" rx="12" fill="#ffffff"/>
+
+  <!-- side view: stairs with risers -->
+  <line x1="30" y1="240" x2="120" y2="240" stroke="#495057" stroke-width="2"/>
+  <polygon points="120,240 120,180 210,180 210,120 300,120 300,60 380,60 380,240" fill="#e9ecef" stroke="#495057" stroke-width="2" stroke-linejoin="round"/>
+  <!-- A: step height -->
+  <line x1="192" y1="180" x2="192" y2="120" stroke="#e8590c" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+  <line x1="186" y1="120" x2="208" y2="120" stroke="#e8590c" stroke-width="1" stroke-dasharray="3 3"/>
+  <text x="170" y="157" font-size="20" font-weight="700" fill="#e8590c">A</text>
+  <!-- B: tread depth -->
+  <line x1="210" y1="102" x2="300" y2="102" stroke="#e8590c" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+  <line x1="300" y1="96" x2="300" y2="118" stroke="#e8590c" stroke-width="1" stroke-dasharray="3 3"/>
+  <line x1="210" y1="96" x2="210" y2="118" stroke="#e8590c" stroke-width="1" stroke-dasharray="3 3"/>
+  <text x="248" y="92" font-size="20" font-weight="700" fill="#e8590c">B</text>
+</svg>

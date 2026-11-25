@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 768 120" width="768" height="120" font-family="Inter, 'Noto Sans KR', 'Segoe UI', sans-serif">
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#7b8494"/></marker></defs>
+<rect x="4" y="16" width="172" height="88" rx="12" fill="#fff5ea" stroke="#f0a35e" stroke-width="1.5"/>
+<text x="90.0" y="47.0" text-anchor="middle" font-size="19" font-weight="700" fill="#b4621d">Train</text>
+<text x="90.0" y="68.0" text-anchor="middle" font-size="13.5" fill="#5b6472">Isaac Gym or</text>
+<text x="90.0" y="86.0" text-anchor="middle" font-size="13.5" fill="#5b6472">Isaac Lab</text>
+<line x1="180" y1="60.0" x2="196" y2="60.0" stroke="#7b8494" stroke-width="1.8" marker-end="url(#a)"/>
+<rect x="200" y="16" width="172" height="88" rx="12" fill="#fff5ea" stroke="#f0a35e" stroke-width="1.5"/>
+<text x="286.0" y="47.0" text-anchor="middle" font-size="19" font-weight="700" fill="#b4621d">Play</text>
+<text x="286.0" y="68.0" text-anchor="middle" font-size="13.5" fill="#5b6472">verify policy in</text>
+<text x="286.0" y="86.0" text-anchor="middle" font-size="13.5" fill="#5b6472">same simulator</text>
+<line x1="376" y1="60.0" x2="392" y2="60.0" stroke="#7b8494" stroke-width="1.8" marker-end="url(#a)"/>
+<rect x="396" y="16" width="172" height="88" rx="12" fill="#eaf2ff" stroke="#5b8def" stroke-width="1.5"/>
+<text x="482.0" y="47.0" text-anchor="middle" font-size="19" font-weight="700" fill="#2f5fbf">Sim2Sim</text>
+<text x="482.0" y="68.0" text-anchor="middle" font-size="13.5" fill="#5b6472">MuJoCo,</text>
+<text x="482.0" y="86.0" text-anchor="middle" font-size="13.5" fill="#5b6472">via rbq_low_level</text>
+<line x1="572" y1="60.0" x2="588" y2="60.0" stroke="#7b8494" stroke-width="1.8" marker-end="url(#a)"/>
+<rect x="592" y="16" width="172" height="88" rx="12" fill="#f3f4f6" stroke="#9aa3ad" stroke-width="1.5"/>
+<text x="678.0" y="56.0" text-anchor="middle" font-size="19" font-weight="700" fill="#1f2937">Deploy</text>
+<text x="678.0" y="77.0" text-anchor="middle" font-size="13.5" fill="#5b6472">real robot</text>
+</svg>
